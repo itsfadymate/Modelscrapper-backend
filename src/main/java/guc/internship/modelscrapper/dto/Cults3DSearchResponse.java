@@ -19,6 +19,13 @@ public class Cults3DSearchResponse {
         public void setSearch(List<Cults3DDTO> search) {
             this.search = search;
         }
+        
+        @Override
+        public String toString() {
+            return "DataWrapper{" +
+                    "search=" + search +
+                    '}';
+        }
     }
     
     public DataWrapper getData() {
@@ -31,5 +38,12 @@ public class Cults3DSearchResponse {
  
     public List<Cults3DDTO> getSearchResults() {
         return data != null ? data.getSearch() : null;
+    }
+    
+    @Override
+    public String toString() {
+        return "Cults3DSearchResponse{" +
+                "data=" + data +
+                '}';
     }
 }
