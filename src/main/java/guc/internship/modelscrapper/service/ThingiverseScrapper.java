@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class ThingiverseScrapper implements PreviewScrapingService{
     
     private static final Logger logger = LoggerFactory.getLogger(ThingiverseScrapper.class);
+    private static final int hasMakes =1;
+    private static final String type ="thing";
+    private static final String sortCriteria = "relevant";
     
     @Autowired
     private ThingiverseApiClient thingiverseApiClient;
@@ -26,7 +29,7 @@ public class ThingiverseScrapper implements PreviewScrapingService{
         try {
             logger.debug("Searching Thingiverse API for: {}", searchTerm);
             
-            ThingiverseSearchResponse response = thingiverseApiClient.searchThings(searchTerm,"relevant" ,1);
+            ThingiverseSearchResponse response = thingiverseApiClient.searchThings(searchTerm,type,hasMakes,sortCriteria);
             
             
             List<ModelPreview> previews = response.getHits().stream()
