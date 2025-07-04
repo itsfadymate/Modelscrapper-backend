@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="thingiverse-api", url="${thingiverse.api.url}")
+@FeignClient(name="thingiverse-api", url="${thingiverse.api.url}", configuration = ThingiverseFeignConfig.class)
 public interface ThingiverseApiClient {
 
     @GetMapping("/search/{term}/")
