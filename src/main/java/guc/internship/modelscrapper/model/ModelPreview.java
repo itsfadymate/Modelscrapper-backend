@@ -1,49 +1,49 @@
 package guc.internship.modelscrapper.model;
 
 public class ModelPreview {
-    private String imagelink;
-    private String modelname;
-    private String websitename;
-    private String websitelink;
+    private String imageLink;
+    private String modelName;
+    private String websiteName;
+    private String websiteLink;
 
     public ModelPreview(){}
 
-    public ModelPreview(String imagelink, String modelname, String websitename, String websitelink) {
-        this.imagelink = imagelink;
-        this.modelname = modelname;
-        this.websitename = websitename;
-        this.websitelink = websitelink;
+    public ModelPreview(String imageLink, String modelName, String websiteName, String websiteLink) {
+        this.imageLink = imageLink;
+        this.modelName = modelName;
+        this.websiteName = websiteName;
+        this.websiteLink = websiteLink;
     }
 
-    public void setImagelink(String imagelink) {
-        this.imagelink = imagelink;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
-    public void setWebsitelink(String websitelink) {
-        this.websitelink = websitelink;
+    public void setWebsiteLink(String websiteLink) {
+        this.websiteLink = websiteLink;
     }
 
-    public void setWebsitename(String websitename) {
-        this.websitename = websitename;
+    public void setWebsiteName(String websiteName) {
+        this.websiteName = websiteName;
     }
 
-    public void setModelname(String modelname) {
-        this.modelname = modelname;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public String getImagelink() {
-        return imagelink;
+    public String getImageLink() {
+        return imageLink;
     }
 
-    public String getModelname() {
-        return modelname;
+    public String getModelName() {
+        return modelName;
     }
 
-    public String getWebsitename() {
-        return websitename;
+    public String getWebsiteName() {
+        return websiteName;
     }
 
-    public String getWebsitelink() {
-        return websitelink;
+    public String getWebsiteLink() {
+        return websiteLink;
     }
 }
