@@ -1,10 +1,10 @@
 package guc.internship.modelscrapper.service;
 
-import guc.internship.modelscrapper.model.Model3D;
+import guc.internship.modelscrapper.model.ModelPreview;
 import java.util.List;
 
 public interface PreviewScrapingService {
-    List<Model3D> scrape(String searchTerm);
+    List<ModelPreview> scrapePreviewData(String searchTerm);
     String getSourceName();
     boolean isEnabled();
 }

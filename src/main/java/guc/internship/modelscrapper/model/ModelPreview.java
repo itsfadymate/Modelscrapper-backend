@@ -1,14 +1,14 @@
 package guc.internship.modelscrapper.model;
 
-public class Model3D {
+public class ModelPreview {
     private String imagelink;
     private String modelname;
     private String websitename;
     private String websitelink;
 
-    public Model3D(){}
+    public ModelPreview(){}
 
-    public Model3D(String imagelink, String modelname, String websitename, String websitelink) {
+    public ModelPreview(String imagelink, String modelname, String websitename, String websitelink) {
         this.imagelink = imagelink;
         this.modelname = modelname;
         this.websitename = websitename;

@@ -1,6 +1,6 @@
 package guc.internship.modelscrapper.controller;
 
-import guc.internship.modelscrapper.model.Model3D;
+import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.ModelScrapingOrchestrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,9 @@ public class ModelController {
     private ModelScrapingOrchestrator scrapingOrchestrator;
 
     @GetMapping("/search")
-    public List<Model3D> searchModels(@RequestParam String searchTerm) {
+    public List<ModelPreview> searchModels(@RequestParam String searchTerm) {
         logger.debug("Received search request for: {}", searchTerm);
-        List<Model3D> results = scrapingOrchestrator.scrapeAll(searchTerm);
+        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm);
         logger.debug("Found {} models for search term: {}", results.size(), searchTerm);
         return results;
     }
