@@ -14,11 +14,6 @@ public class ThingiverseFeignConfig {
     
     @Bean
     public RequestInterceptor requestInterceptor() {
-        return new RequestInterceptor() {
-            @Override
-            public void apply(RequestTemplate template) {
-                template.header("Authorization", "Bearer " + apiToken);
-            }
-        };
+        return template -> template.header("Authorization", "Bearer " + apiToken);
     }
 }
