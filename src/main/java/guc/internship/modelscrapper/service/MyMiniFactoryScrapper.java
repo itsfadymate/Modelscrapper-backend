@@ -1,0 +1,57 @@
+package guc.internship.modelscrapper.service;
+
+import guc.internship.modelscrapper.client.Cults3DApiClient;
+import guc.internship.modelscrapper.client.MyMiniFactoryApiClient;
+import guc.internship.modelscrapper.dto.MyMiniFactorySearchResponse;
+import guc.internship.modelscrapper.dto.ThingiverseSearchResponse;
+import guc.internship.modelscrapper.model.ModelPreview;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class MyMiniFactoryScrapper implements PreviewScrapingService{
+    private static final Logger logger = LoggerFactory.getLogger(MyMiniFactoryScrapper.class);
+    @Autowired
+    private MyMiniFactoryApiClient apiClient;
+
+    @Override
+    public List<ModelPreview> scrapePreviewData(String searchTerm) {
+        try {
+            logger.debug("Searching MyMiniFactory API for: {}", searchTerm);
+
+            MyMiniFactorySearchResponse response = apiClient.searchMiniFactory(searchTerm);
+
+
+            List<ModelPreview> previews = response.getItems().stream()
+                    .map((dto)->new ModelPreview(
+                            dto.getThumbnailUrl(),
+                            dto.getName(),
+                            this.getSourceName(),
+                            dto.getUrl() )
+                    )
+                    .collect(Collectors.toList());
+
+            logger.debug("Found {} results from MyMiniFactory API", previews.size());
+            return previews;
+
+        } catch (Exception e) {
+            logger.error("Error calling MyMiniFactory API for search term: {}", searchTerm, e);
+            return List.of();
+        }
+    }
+
+    @Override
+    public String getSourceName() {
+        return "MyMiniFactory";
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+}
