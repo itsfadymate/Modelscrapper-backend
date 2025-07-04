@@ -1,0 +1,14 @@
+package guc.internship.modelscrapper.client;
+import guc.internship.modelscrapper.dto.Cults3DSearchResponse;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+
+@FeignClient(name = "cults3d-api", url = "${cults3D.api.url}", configuration = Cults3DFeignConfig.class)
+public interface Cults3DApiClient {
+    
+    @PostMapping("/graphql")
+    Cults3DSearchResponse searchCults(@RequestBody String query);
+}

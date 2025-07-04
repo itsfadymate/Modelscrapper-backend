@@ -1,12 +1,11 @@
 package guc.internship.modelscrapper.client;
 
 import feign.RequestInterceptor;
-import guc.internship.modelscrapper.service.ModelScrapingOrchestrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+
 
 import java.util.Base64;
 
@@ -27,6 +26,10 @@ public class Cults3DFeignConfig {
             String credentials = username + ":" + apiKey;
             String encodedCredentials = Base64.getEncoder().encodeToString(credentials.getBytes());
             template.header("Authorization", "Basic " + encodedCredentials);
+            template.header("Content-Type", "application/json");
+            template.header("Accept", "*/*");
+            template.header("User-Agent", "ModelScrapper/1.0");
+            template.header("Connection", "keep-alive");
         };
     }
 }
