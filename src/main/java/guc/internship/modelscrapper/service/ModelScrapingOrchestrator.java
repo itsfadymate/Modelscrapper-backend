@@ -1,6 +1,6 @@
 package guc.internship.modelscrapper.service;
 
-import guc.internship.modelscrapper.model.Model3D;
+import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,28 +18,28 @@ public class ModelScrapingOrchestrator {
     private static final Logger logger = LoggerFactory.getLogger(ModelScrapingOrchestrator.class);
 
     @Autowired
-    private List<PreviewScrapingService> previewScrapingServices;
+    private List<PreviewScrapingService> scrapingServices;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-    public List<Model3D> scrapeAll(String searchTerm) {
+    public List<ModelPreview> scrapeAll(String searchTerm) {
         logger.debug("Starting scrape for all services with search term: {}", searchTerm);
-        logger.debug("Found {} preview scraping services", previewScrapingServices.size());
+        logger.debug("Found {} preview scraping services", scrapingServices.size());
         
-        List<Model3D> allResults = new ArrayList<>();
-        List<CompletableFuture<List<Model3D>>> futures = new ArrayList<>();
+        List<ModelPreview> allResults = new ArrayList<>();
+        List<CompletableFuture<List<ModelPreview>>> futures = new ArrayList<>();
         
-        for (PreviewScrapingService service : previewScrapingServices) {
+        for (PreviewScrapingService service : scrapingServices) {
             logger.debug("Checking service: {}, enabled: {}", service.getSourceName(), service.isEnabled());
             
             if (service.isEnabled()) {
                 logger.debug("Starting async scrape for service: {}", service.getSourceName());
                 
-                CompletableFuture<List<Model3D>> future = CompletableFuture.supplyAsync(
+                CompletableFuture<List<ModelPreview>> future = CompletableFuture.supplyAsync(
                     () -> {
                         try {
                             logger.debug("Executing scrape for service: {}", service.getSourceName());
-                            List<Model3D> results = service.scrape(searchTerm);
+                            List<ModelPreview> results = service.scrapePreviewData(searchTerm);
                             logger.debug("Service {} returned {} results", service.getSourceName(), results.size());
                             return results;
                         } catch (Exception e) {
@@ -54,9 +54,9 @@ public class ModelScrapingOrchestrator {
         
         logger.debug("Waiting for {} futures to complete", futures.size());
         
-        for (CompletableFuture<List<Model3D>> future : futures) {
+        for (CompletableFuture<List<ModelPreview>> future : futures) {
             try {
-                List<Model3D> results = future.get();
+                List<ModelPreview> results = future.get();
                 logger.debug("Future completed with {} results", results.size());
                 allResults.addAll(results);
             } catch (Exception e) {
@@ -72,7 +72,7 @@ public class ModelScrapingOrchestrator {
         logger.debug("Getting available sources");
         List<String> sources = new ArrayList<>();
         
-        for (PreviewScrapingService service : previewScrapingServices) {
+        for (PreviewScrapingService service : scrapingServices) {
             if (service.isEnabled()) {
                 sources.add(service.getSourceName());
                 logger.debug("Added enabled source: {}", service.getSourceName());
