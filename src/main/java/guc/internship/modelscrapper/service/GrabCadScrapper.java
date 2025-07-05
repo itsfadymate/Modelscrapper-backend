@@ -93,17 +93,14 @@ public class GrabCadScrapper implements PreviewScrapingService {
             }
 
             if (modelName != null && !modelName.isEmpty() && modelLink != null) {
-                logger.debug("Extracted: {} - {}", modelName, modelLink);
                 return new ModelPreview(imageSrc, modelName, this.getSourceName(), modelLink);
-            } else {
-                logger.warn("Failed to extract essential data - name: {}, link: {}", modelName, modelLink);
-                return null;
             }
-            
+
+            logger.warn("Failed to extract essential data - name: {}, link: {}", modelName, modelLink);
         } catch (Exception e) {
             logger.error("Error extracting card data", e);
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -113,6 +110,6 @@ public class GrabCadScrapper implements PreviewScrapingService {
 
     @Override
     public boolean isEnabled() {
-        return true; // Changed to true to enable the scraper
+        return true;
     }
 }
