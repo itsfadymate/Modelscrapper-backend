@@ -110,6 +110,6 @@ public class GrabCadScrapper implements PreviewScrapingService {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }
