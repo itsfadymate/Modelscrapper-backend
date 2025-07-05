@@ -66,8 +66,6 @@ public class GrabCadScrapper implements PreviewScrapingService {
 
     private ModelPreview extractCardData(Element card){
         try {
-            logger.debug("Processing card HTML: {}", card.html());
-
             Element imageElement = card.selectFirst(".previewImage");
             String imageSrc = null;
             if (imageElement != null) {
