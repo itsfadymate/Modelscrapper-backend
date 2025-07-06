@@ -65,10 +65,10 @@ public class Cults3DScrapper implements PreviewScrapingService {
             
 
             List<ModelPreview> previews = response.stream().filter(dto-> {
-            if (showFreeOnly){
-                return isFree(dto.getFormattedPrice());
-            }
-            return true;
+                if (showFreeOnly){
+                 return isFree(dto.getFormattedPrice());
+                }
+                return true;
             }).map(dto ->
                  new ModelPreview()
                          .setImageLink(dto.getIllustrationImageUrl())

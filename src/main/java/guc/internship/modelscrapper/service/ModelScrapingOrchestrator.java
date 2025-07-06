@@ -38,7 +38,7 @@ public class ModelScrapingOrchestrator {
         for (PreviewScrapingService service : scrapingServices) {
             boolean shouldInclude = service.isEnabled() && 
                 (enabledSources == null || enabledSources.isEmpty() || 
-                 enabledSources.contains(service.getSourceName()));
+                 enabledSources.contains(service.getSourceName().toLowerCase()));
             
             logger.debug("Checking service: {}, enabled: {}, should include: {}", 
                 service.getSourceName(), service.isEnabled(), shouldInclude);
