@@ -33,11 +33,14 @@ public class ThingiverseScrapper implements PreviewScrapingService{
             
             
             List<ModelPreview> previews = response.getHits().stream()
-                .map((thing)->new ModelPreview(
-                                thing.getThumbnail(),
-                                thing.getName(),
-                                this.getSourceName(),
-                                thing.getPublicUrl() )
+                .map((thing)->new ModelPreview()
+                                .setImageLink(thing.getThumbnail())
+                                .setModelName(thing.getName())
+                                .setWebsiteName(this.getSourceName())
+                                .setWebsiteLink(thing.getPublicUrl())
+                                .setMakesCount(thing.getMakeCount())
+                                .setPrice(0)
+                                .setFiles(thing.getFiles())
                     )
                 .collect(Collectors.toList());
             
