@@ -64,6 +64,6 @@ public class ThingiverseScrapper implements PreviewScrapingService{
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
