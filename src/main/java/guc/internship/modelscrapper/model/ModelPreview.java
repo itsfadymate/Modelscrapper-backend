@@ -90,14 +90,12 @@ public class ModelPreview {
             this.downloadUrl = downloadUrl;
         }
 
-        public File setName(String name) {
+        public void setName(String name) {
             this.name = name;
-            return this;
         }
 
-        public File setDownloadUrl(String downloadUrl) {
+        public void setDownloadUrl(String downloadUrl) {
             this.downloadUrl = downloadUrl;
-            return this;
         }
 
         public String getName() {

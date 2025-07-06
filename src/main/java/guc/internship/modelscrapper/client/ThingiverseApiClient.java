@@ -1,6 +1,6 @@
 package guc.internship.modelscrapper.client;
 
-import guc.internship.modelscrapper.dto.ThingiverseSearchResponse;
+import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,9 +1,7 @@
 package guc.internship.modelscrapper.service;
 
-import guc.internship.modelscrapper.client.Cults3DApiClient;
 import guc.internship.modelscrapper.client.MyMiniFactoryApiClient;
-import guc.internship.modelscrapper.dto.MyMiniFactorySearchResponse;
-import guc.internship.modelscrapper.dto.ThingiverseSearchResponse;
+import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactorySearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

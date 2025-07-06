@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.dto;
+package guc.internship.modelscrapper.dto.myminifactory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

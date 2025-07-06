@@ -1,8 +1,8 @@
 package guc.internship.modelscrapper.service;
 
 import guc.internship.modelscrapper.client.Cults3DApiClient;
-import guc.internship.modelscrapper.dto.Cults3DDTO;
-import guc.internship.modelscrapper.dto.Cults3DSearchResponse;
+import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
+import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

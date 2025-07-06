@@ -1,16 +1,16 @@
-package guc.internship.modelscrapper.dto;
+package guc.internship.modelscrapper.dto.thingiverse;
 
 import java.util.List;
 
 public class ThingiverseSearchResponse {
-    private List<ThingiverseThing> hits;
+    private List<ThingiverseSearchObject> hits;
     private int total;
     
-    public List<ThingiverseThing> getHits() {
+    public List<ThingiverseSearchObject> getHits() {
         return hits;
     }
     
-    public void setHits(List<ThingiverseThing> hits) {
+    public void setHits(List<ThingiverseSearchObject> hits) {
         this.hits = hits;
     }
     

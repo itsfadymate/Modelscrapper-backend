@@ -1,11 +1,11 @@
-package guc.internship.modelscrapper.dto;
+package guc.internship.modelscrapper.dto.thingiverse;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guc.internship.modelscrapper.model.ModelPreview;
 
 import java.util.List;
 
-public class ThingiverseThing {
+public class ThingiverseSearchObject {
     private String id;
     private String name;
     @JsonProperty("preview_image")
