@@ -83,9 +83,9 @@ public class ModelPreview {
     }
 
     public static class File {
-        @JsonAlias({"name","fileName"})
+        @JsonAlias({"name","fileName","filename"})
         private String name;
-        @JsonProperty("url")
+        @JsonAlias({"url","download_url"})
         private String downloadUrl;
 
         public File() {}
