@@ -21,13 +21,16 @@ public class ThangsScrapper implements PreviewScrapingService{
     @Value("${Thangs.search.url}")
     private String url;
 
-    private static final String QUERY_PARAMETERS="?scope=thangs&view=grid";
+    private static final String QUERY_PARAMETERS="?scope=thangs"+
+            "&view=grid"+
+            "&fileTypes=stl"
+            +"&freeModels=true";
 
     private static final Logger logger = LoggerFactory.getLogger(ThangsScrapper.class);
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm) {
-        url = url+searchTerm+QUERY_PARAMETERS;
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
+        url = url+searchTerm+QUERY_PARAMETERS + (showFreeOnly? "" : "&paidModels=true" );
         logger.info("searching for {} in url {}",searchTerm,url);
         try{
             Document doc = Jsoup.connect(url)
@@ -72,7 +75,9 @@ public class ThangsScrapper implements PreviewScrapingService{
                         .setImageLink(imageSrc)
                         .setModelName(modelName)
                         .setWebsiteName(this.getSourceName())
-                        .setWebsiteLink(modelLink);
+                        .setWebsiteLink(modelLink)
+                        .setPrice("0")
+                        .setFiles(List.of(new ModelPreview.File("FileTypes: STL",null)));
             }
 
             logger.warn("Failed to extract essential data - name: {}, link: {} ,imageLink {}", modelName, modelLink,imageSrc);
