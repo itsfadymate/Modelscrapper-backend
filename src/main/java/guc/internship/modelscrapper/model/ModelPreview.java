@@ -1,63 +1,81 @@
 package guc.internship.modelscrapper.model;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class ModelPreview {
     private String imageLink;
     private String modelName;
     private String websiteName;
     private String websiteLink;
-    private String downloadLink;
     private double price;
     private int makesCount;
-    private String fileTypes;
-    private String totalFilesSize;
+    private List<File> files = new ArrayList<>();
 
-    public ModelPreview(){}
 
-    public ModelPreview(String imageLink, String modelName, String websiteName, String websiteLink, double price, int makesCount, String fileTypes, String totalFilesSize) {
+    public static class File {
+        private String name;
+        private String downloadUrl;
+
+        public File() {}
+
+        public File(String name, String downloadUrl) {
+            this.name = name;
+            this.downloadUrl = downloadUrl;
+        }
+
+        public File setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public File setDownloadUrl(String downloadUrl) {
+            this.downloadUrl = downloadUrl;
+            return this;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDownloadUrl() {
+            return downloadUrl;
+        }
+    }
+
+    public ModelPreview() {}
+
+    public ModelPreview setImageLink(String imageLink) {
         this.imageLink = imageLink;
-        this.modelName = modelName;
-        this.websiteName = websiteName;
+        return this;
+    }
+
+    public ModelPreview setWebsiteLink(String websiteLink) {
         this.websiteLink = websiteLink;
-        this.price = price;
-        this.makesCount = makesCount;
-        this.downloadLink = "";
-        this.fileTypes = fileTypes;
-        this.totalFilesSize = totalFilesSize;
-    }
-    public ModelPreview(String imageLink, String modelName, String websiteName, String websiteLink, double price, int makesCount, String fileTypes, String totalFilesSize, String downloadLink) {
-        this(imageLink, modelName, websiteName, websiteLink, price, makesCount, fileTypes, totalFilesSize);
-        this.downloadLink = downloadLink;
+        return this;
     }
 
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
-    }
-
-    public void setWebsiteLink(String websiteLink) {
-        this.websiteLink = websiteLink;
-    }
-
-    public void setWebsiteName(String websiteName) {
+    public ModelPreview setWebsiteName(String websiteName) {
         this.websiteName = websiteName;
+        return this;
     }
 
-    public void setModelName(String modelName) {
+    public ModelPreview setModelName(String modelName) {
         this.modelName = modelName;
+        return this;
     }
-    public void setPrice(double price) {
+    public ModelPreview setPrice(double price) {
         this.price = price;
+        return this;
     }
-    public void setMakesCount(int makesCount) {
+    public ModelPreview setMakesCount(int makesCount) {
         this.makesCount = makesCount;
+        return this;
     }
-    public void setDownloadLink(String downloadLink) {
-        this.downloadLink = downloadLink;
-    }
-    public void setFileTypes(String fileTypes) {
-        this.fileTypes = fileTypes;
-    }
-    public void setTotalFilesSize(String totalFilesSize) {
-        this.totalFilesSize = totalFilesSize;
+
+    public ModelPreview setFiles(List<File> files) {
+        this.files = files;
+        return this;
     }
 
     public String getImageLink() {
@@ -81,14 +99,9 @@ public class ModelPreview {
     public int getMakesCount() {
         return makesCount;
     }
-    public String getDownloadLink() {
-        return downloadLink;
-    }
-    public String getFileTypes() {
-        return fileTypes;
-    }
-    public String getTotalFilesSize() {
-        return totalFilesSize;
+
+    public List<File> getFiles() {
+        return files;
     }
 
 }
