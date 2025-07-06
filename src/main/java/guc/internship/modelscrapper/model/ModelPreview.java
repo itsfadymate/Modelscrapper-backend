@@ -2,6 +2,8 @@ package guc.internship.modelscrapper.model;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ModelPreview {
@@ -9,7 +11,7 @@ public class ModelPreview {
     private String modelName;
     private String websiteName;
     private String websiteLink;
-    private double price;
+    private String price;
     private int makesCount;
     private List<ModelPreview.File> files;
 
@@ -38,10 +40,12 @@ public class ModelPreview {
         this.modelName = modelName;
         return this;
     }
-    public ModelPreview setPrice(double price) {
-        this.price = price;
+    public ModelPreview setPrice(String formattedPrice) {
+        this.price = formattedPrice;
         return this;
     }
+
+
     public ModelPreview setMakesCount(int makesCount) {
         this.makesCount = makesCount;
         return this;
@@ -67,7 +71,7 @@ public class ModelPreview {
     public String getWebsiteLink() {
         return websiteLink;
     }
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
     public int getMakesCount() {
@@ -79,6 +83,7 @@ public class ModelPreview {
     }
 
     public static class File {
+        @JsonAlias({"name","fileName"})
         private String name;
         @JsonProperty("url")
         private String downloadUrl;

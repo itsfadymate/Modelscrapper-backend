@@ -42,7 +42,7 @@ public class ThingiverseScrapper implements PreviewScrapingService{
                                 .setWebsiteLink(thing.getPublicUrl())
                                 .setWebsiteName(this.getSourceName())
                                 .setMakesCount(thing.getMakeCount())
-                                .setPrice(0)
+                                .setPrice("0")
                                 .setFiles(thing.getFiles());
                         }
                     )
@@ -64,6 +64,6 @@ public class ThingiverseScrapper implements PreviewScrapingService{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }

@@ -1,6 +1,8 @@
 package guc.internship.modelscrapper.dto.cults3d;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import guc.internship.modelscrapper.model.ModelPreview;
+
 import java.util.List;
 
 public class Cults3DDTO {
@@ -15,28 +17,16 @@ public class Cults3DDTO {
     private String illustrationImageUrl;
     
     @JsonProperty("blueprints")
-    private List<Blueprint> blueprints;
+    private List<ModelPreview.File> files;
     
     @JsonProperty("description")
     private String description;
     
     @JsonProperty("details")
     private String details;
-    
 
-    public static class Blueprint {
-        @JsonProperty("fileName")
-        private String fileName;
-        
-        public String getFileName() {
-            return fileName;
-        }
-        
-        public void setFileName(String fileName) {
-            this.fileName = fileName;
-        }
-    }
-    
+    @JsonProperty("price")
+    private Price price;
 
     public String getName() {
         return name;
@@ -62,12 +52,12 @@ public class Cults3DDTO {
         this.illustrationImageUrl = illustrationImageUrl;
     }
     
-    public List<Blueprint> getBlueprints() {
-        return blueprints;
+    public List<ModelPreview.File> getFiles() {
+        return files;
     }
     
-    public void setBlueprints(List<Blueprint> blueprints) {
-        this.blueprints = blueprints;
+    public void setFiles(List<ModelPreview.File> files) {
+        this.files = files;
     }
     
     public String getDescription() {
@@ -85,16 +75,36 @@ public class Cults3DDTO {
     public void setDetails(String details) {
         this.details = details;
     }
-    
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    public String getFormattedPrice(){
+        return this.price.getFormatted();
+    }
+
     @Override
     public String toString() {
         return "Cults3DDTO{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", illustrationImageUrl='" + illustrationImageUrl + '\'' +
-                ", blueprints=" + blueprints +
+                ", blueprints=" + files +
                 ", description='" + description + '\'' +
                 ", details='" + details + '\'' +
                 '}';
+    }
+
+
+    private static class Price {
+        private String formatted;
+
+        public void setFormatted(String formatted) {
+            this.formatted = formatted;
+        }
+        public String getFormatted(){
+            return formatted;
+        }
     }
 }
