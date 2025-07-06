@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//The website API doesn't provide download APIs for "legal reasons"
 @Service
 public class Cults3DScrapper implements PreviewScrapingService {
 
@@ -38,6 +39,9 @@ public class Cults3DScrapper implements PreviewScrapingService {
                                 price(currency: EUR) {
                                     formatted(locale: EN)
                                 }
+                                makes {
+                                    id
+                                }
                             }
                         }"
                 }
@@ -45,7 +49,7 @@ public class Cults3DScrapper implements PreviewScrapingService {
 
 
 
-        logger.debug("Cults3D GraphQL query: "+ query);
+        //logger.debug("Cults3D GraphQL query: "+ query);
         
         try {
 
@@ -68,6 +72,7 @@ public class Cults3DScrapper implements PreviewScrapingService {
                          .setWebsiteLink(dto.getUrl())
                          .setPrice(dto.getFormattedPrice())
                          .setFiles(dto.getFiles())
+                         .setMakesCount(dto.getMakeCount())
             ).collect(Collectors.toList());
             
             logger.debug("Found {} results from Cults3D API", previews.size());

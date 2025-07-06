@@ -28,6 +28,9 @@ public class Cults3DDTO {
     @JsonProperty("price")
     private Price price;
 
+    @JsonProperty("makes")
+    private List<Object> makes;
+
     public String getName() {
         return name;
     }
@@ -82,6 +85,14 @@ public class Cults3DDTO {
 
     public String getFormattedPrice(){
         return this.price.getFormatted();
+    }
+
+    public void setMakes(List<Object> makes) {
+        this.makes = makes;
+    }
+
+    public int getMakeCount(){
+        return this.makes.size();
     }
 
     @Override
