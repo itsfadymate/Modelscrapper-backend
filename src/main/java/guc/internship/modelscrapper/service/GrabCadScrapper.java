@@ -26,7 +26,7 @@ public class GrabCadScrapper implements PreviewScrapingService {
     private String GRABCAD_SEARCH_URL;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
         logger.debug("Scraping GrabCAD for: {}", searchTerm);
 
         try (Playwright playwright = Playwright.create()) {
