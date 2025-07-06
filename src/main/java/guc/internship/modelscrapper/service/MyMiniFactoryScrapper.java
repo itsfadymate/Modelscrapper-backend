@@ -27,10 +27,13 @@ public class MyMiniFactoryScrapper implements PreviewScrapingService{
 
             List<ModelPreview> previews = response.getItems().stream()
                     .map((dto)->new ModelPreview()
-                            .setImageLink(dto.getThumbnailUrl())
+                            .setImageLink(dto.getPreviewImageUrl())
                             .setModelName(dto.getName())
                             .setWebsiteName(this.getSourceName())
                             .setWebsiteLink(dto.getUrl())
+                            .setMakesCount(dto.getMakesCount())
+                            .setFiles(dto.getFiles())
+                            .setPrice("$ 1.00")  //there is no API supporting getting price
                     )
                     .collect(Collectors.toList());
 
