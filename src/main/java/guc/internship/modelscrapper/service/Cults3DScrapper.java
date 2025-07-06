@@ -22,7 +22,7 @@ public class Cults3DScrapper implements PreviewScrapingService {
     private Cults3DApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
         logger.debug("Searching Cults3D API for: {}", searchTerm);
 
         String query = String.format("""
@@ -64,7 +64,12 @@ public class Cults3DScrapper implements PreviewScrapingService {
             }
             
 
-            List<ModelPreview> previews = response.stream().map(dto ->
+            List<ModelPreview> previews = response.stream().filter(dto-> {
+            if (showFreeOnly){
+                return isFree(dto.getFormattedPrice());
+            }
+            return true;
+            }).map(dto ->
                  new ModelPreview()
                          .setImageLink(dto.getIllustrationImageUrl())
                          .setModelName(dto.getName())
@@ -80,6 +85,19 @@ public class Cults3DScrapper implements PreviewScrapingService {
         } catch (Exception e) {
             logger.error("Error calling Cults API for search term: {}", searchTerm, e);
             return List.of();
+        }
+    }
+    private boolean isFree(String formattedPrice){
+        if (formattedPrice == null || formattedPrice.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            String numericPrice = formattedPrice.replaceAll("[^0-9.]", "");
+            double price = Double.parseDouble(numericPrice);
+            return price == 0;
+        } catch (NumberFormatException e) {
+            logger.warn("Could not parse price: {}", formattedPrice);
+            return false;
         }
     }
 

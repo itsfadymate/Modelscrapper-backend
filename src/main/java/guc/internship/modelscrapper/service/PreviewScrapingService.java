@@ -4,7 +4,7 @@ import guc.internship.modelscrapper.model.ModelPreview;
 import java.util.List;
 
 public interface PreviewScrapingService {
-    List<ModelPreview> scrapePreviewData(String searchTerm);
+    List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly);
     String getSourceName();
     boolean isEnabled();
 }

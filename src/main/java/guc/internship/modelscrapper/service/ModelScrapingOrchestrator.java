@@ -24,7 +24,7 @@ public class ModelScrapingOrchestrator {
 
     
 
-    public List<ModelPreview> scrapeAll(String searchTerm, List<String> enabledSources) {
+    public List<ModelPreview> scrapeAll(String searchTerm, List<String> enabledSources,boolean showFreeOnly) {
         logger.debug("Starting scrape for all services with search term: {}", searchTerm);
         logger.debug("Found {} preview scraping services", scrapingServices.size());
         
@@ -50,7 +50,7 @@ public class ModelScrapingOrchestrator {
                     () -> {
                         try {
                             logger.debug("Executing scrape for service: {}", service.getSourceName());
-                            List<ModelPreview> results = service.scrapePreviewData(searchTerm);
+                            List<ModelPreview> results = service.scrapePreviewData(searchTerm,showFreeOnly);
                             logger.debug("Service {} returned {} results", service.getSourceName(), results.size());
                             return results;
                         } catch (Exception e) {

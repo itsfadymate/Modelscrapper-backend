@@ -29,7 +29,7 @@ public class ModelController {
         logger.debug("Received search request for: {}", searchTerm);
         
         
-        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources);
+        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources,showFreeOnly);
         logger.debug("Found {} models for search term: {}", results.size(), searchTerm);
         return results;
     }

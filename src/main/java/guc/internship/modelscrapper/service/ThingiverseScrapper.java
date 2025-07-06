@@ -26,7 +26,7 @@ public class ThingiverseScrapper implements PreviewScrapingService{
    
     
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) { //haven't found a paid model here
         try {
             logger.debug("Searching Thingiverse API for: {}", searchTerm);
             
