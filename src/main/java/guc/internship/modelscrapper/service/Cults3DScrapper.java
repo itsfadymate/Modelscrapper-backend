@@ -23,16 +23,26 @@ public class Cults3DScrapper implements PreviewScrapingService {
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm) {
         logger.debug("Searching Cults3D API for: {}", searchTerm);
-        String query = String.format(
-                "{ \"query\": \"query Search { search(query: \\\"%s\\\", onlySafe: true) { " +
-                        "name(locale: EN) " +
-                        "url(locale: EN) " +
-                        "illustrationImageUrl(version: DEFAULT) " +
-                        "blueprints { fileName } " +
-                        "description(locale: EN) " +
-                        "details(locale: EN) } }\" }",
-                searchTerm
-        );
+
+        String query = String.format("""
+                {"query": "query Search {
+                            search(query: \\"%s\\", onlySafe: true) {
+                                name(locale: EN)
+                                url(locale: EN)
+                                illustrationImageUrl(version: DEFAULT)
+                                blueprints {
+                                    fileName
+                                }
+                                description(locale: EN)
+                                details(locale: EN)
+                                price(currency: EUR) {
+                                    formatted(locale: EN)
+                                }
+                            }
+                        }"
+                }
+                """,searchTerm).replaceAll("\n","");
+
 
 
         logger.debug("Cults3D GraphQL query: "+ query);
@@ -40,7 +50,7 @@ public class Cults3DScrapper implements PreviewScrapingService {
         try {
 
             Cults3DSearchResponse searchResponse = apiClient.searchCults(query);
-            logger.debug("Raw API response: {}", searchResponse);
+            //logger.debug("Raw API response: {}", searchResponse);
 
             List<Cults3DDTO> response = searchResponse.getSearchResults();
 
@@ -56,6 +66,8 @@ public class Cults3DScrapper implements PreviewScrapingService {
                          .setModelName(dto.getName())
                          .setWebsiteName(this.getSourceName())
                          .setWebsiteLink(dto.getUrl())
+                         .setPrice(dto.getFormattedPrice())
+                         .setFiles(dto.getFiles())
             ).collect(Collectors.toList());
             
             logger.debug("Found {} results from Cults3D API", previews.size());
