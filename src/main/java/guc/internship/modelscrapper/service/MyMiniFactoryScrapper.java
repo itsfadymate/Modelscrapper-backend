@@ -28,11 +28,11 @@ public class MyMiniFactoryScrapper implements PreviewScrapingService{
 
 
             List<ModelPreview> previews = response.getItems().stream()
-                    .map((dto)->new ModelPreview(
-                            dto.getThumbnailUrl(),
-                            dto.getName(),
-                            this.getSourceName(),
-                            dto.getUrl() )
+                    .map((dto)->new ModelPreview()
+                            .setImageLink(dto.getThumbnailUrl())
+                            .setModelName(dto.getName())
+                            .setWebsiteName(this.getSourceName())
+                            .setWebsiteLink(dto.getUrl())
                     )
                     .collect(Collectors.toList());
 

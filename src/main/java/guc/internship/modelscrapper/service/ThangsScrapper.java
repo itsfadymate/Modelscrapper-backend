@@ -68,7 +68,11 @@ public class ThangsScrapper implements PreviewScrapingService{
             }
 
             if (modelName != null && !modelName.isEmpty() && modelLink != null) {
-                return new ModelPreview(imageSrc, modelName, this.getSourceName(), modelLink);
+                return new ModelPreview()
+                        .setImageLink(imageSrc)
+                        .setModelName(modelName)
+                        .setWebsiteName(this.getSourceName())
+                        .setWebsiteLink(modelLink);
             }
 
             logger.warn("Failed to extract essential data - name: {}, link: {} ,imageLink {}", modelName, modelLink,imageSrc);

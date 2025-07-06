@@ -51,12 +51,11 @@ public class Cults3DScrapper implements PreviewScrapingService {
             
 
             List<ModelPreview> previews = response.stream().map(dto ->
-                 new ModelPreview(
-                    dto.getIllustrationImageUrl(),
-                    dto.getName(),
-                    this.getSourceName(),
-                    dto.getUrl()
-                )
+                 new ModelPreview()
+                         .setImageLink(dto.getIllustrationImageUrl())
+                         .setModelName(dto.getName())
+                         .setWebsiteName(this.getSourceName())
+                         .setWebsiteLink(dto.getUrl())
             ).collect(Collectors.toList());
             
             logger.debug("Found {} results from Cults3D API", previews.size());

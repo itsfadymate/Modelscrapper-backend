@@ -11,41 +11,13 @@ public class ModelPreview {
     private String websiteLink;
     private double price;
     private int makesCount;
-    private List<File> files = new ArrayList<>();
+    private List<ModelPreview.File> files;
 
 
-    public static class File {
-        private String name;
-        @JsonProperty("url")  
-        private String downloadUrl;
 
-        public File() {}
-
-        public File(String name, String downloadUrl) {
-            this.name = name;
-            this.downloadUrl = downloadUrl;
-        }
-
-        public File setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public File setDownloadUrl(String downloadUrl) {
-            this.downloadUrl = downloadUrl;
-            return this;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDownloadUrl() {
-            return downloadUrl;
-        }
+    public ModelPreview() {
+        files = new ArrayList<>();
     }
-
-    public ModelPreview() {}
 
     public ModelPreview setImageLink(String imageLink) {
         this.imageLink = imageLink;
@@ -75,7 +47,7 @@ public class ModelPreview {
         return this;
     }
 
-    public ModelPreview setFiles(List<File> files) {
+    public ModelPreview setFiles(List<ModelPreview.File> files) {
         this.files = files;
         return this;
     }
@@ -102,8 +74,40 @@ public class ModelPreview {
         return makesCount;
     }
 
-    public List<File> getFiles() {
+    public List<ModelPreview.File> getFiles() {
         return files;
     }
+
+    public static class File {
+        private String name;
+        @JsonProperty("url")
+        private String downloadUrl;
+
+        public File() {}
+
+        public File(String name, String downloadUrl) {
+            this.name = name;
+            this.downloadUrl = downloadUrl;
+        }
+
+        public File setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public File setDownloadUrl(String downloadUrl) {
+            this.downloadUrl = downloadUrl;
+            return this;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDownloadUrl() {
+            return downloadUrl;
+        }
+    }
+
 
 }
