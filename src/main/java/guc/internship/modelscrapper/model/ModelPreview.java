@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ModelPreview {
     private String imageLink;
@@ -15,6 +16,7 @@ public class ModelPreview {
 
     public static class File {
         private String name;
+        @JsonProperty("url")  
         private String downloadUrl;
 
         public File() {}

@@ -1,6 +1,9 @@
 package guc.internship.modelscrapper.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import guc.internship.modelscrapper.model.ModelPreview;
+
+import java.util.List;
 
 public class ThingiverseThing {
     private String id;
@@ -9,7 +12,10 @@ public class ThingiverseThing {
     private String thumbnail;
     @JsonProperty("public_url")
     private String publicUrl;
-    
+    @JsonProperty("make_count")
+    private int makeCount;
+    @JsonProperty("zip_data")
+    private ZipData zipData;
     
     public String getId() {
         return id;
@@ -43,11 +49,34 @@ public class ThingiverseThing {
         this.publicUrl = publicUrl;
     }
     
-    public String getUrl() {
-        return publicUrl;
+    public int getMakeCount() {
+        return makeCount;
+    }
+
+    public void setMakeCount(int makeCount) {
+        this.makeCount = makeCount;
     }
     
-    public void setUrl(String url) {
-        this.publicUrl = url;
+    public List<ModelPreview.File> getFiles(){
+        return this.zipData != null ? this.zipData.files : null;
     }
+    
+    public void setZipData(ZipData zipData) {
+        this.zipData = zipData;
+    }
+
+    
+
+    private static class ZipData{
+        private List<ModelPreview.File> files;
+
+        public List<ModelPreview.File> getFiles() {
+            return files;
+        }
+        public void setFiles(List<ModelPreview.File> files) {
+        this.files = files;
+    }
+    }
+
+
 }
