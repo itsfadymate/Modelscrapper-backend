@@ -1,6 +1,6 @@
 package guc.internship.modelscrapper.service;
 
-import guc.internship.modelscrapper.client.ThingiverseApiClient;
+import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.client;
+package guc.internship.modelscrapper.client.cults3d;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

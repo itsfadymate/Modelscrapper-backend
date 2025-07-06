@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.client;
+package guc.internship.modelscrapper.client.myminifactory;
 
 import feign.RequestInterceptor;
 import org.slf4j.Logger;

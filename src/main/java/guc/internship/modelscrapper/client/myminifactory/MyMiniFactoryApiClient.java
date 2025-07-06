@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.client;
+package guc.internship.modelscrapper.client.myminifactory;
 
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactorySearchResponse;
 import org.springframework.cloud.openfeign.FeignClient;

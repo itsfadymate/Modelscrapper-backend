@@ -1,6 +1,6 @@
 package guc.internship.modelscrapper.service;
 
-import guc.internship.modelscrapper.client.Cults3DApiClient;
+import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;

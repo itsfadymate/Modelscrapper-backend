@@ -1,9 +1,8 @@
-package guc.internship.modelscrapper.client;
+package guc.internship.modelscrapper.client.thingiverse;
 
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 
 public class ThingiverseFeignConfig {

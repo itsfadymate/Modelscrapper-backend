@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.client;
+package guc.internship.modelscrapper.client.cults3d;
 
 import feign.RequestInterceptor;
 import org.slf4j.Logger;

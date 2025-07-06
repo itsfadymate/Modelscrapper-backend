@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.client;
+package guc.internship.modelscrapper.client.thingiverse;
 
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import org.springframework.cloud.openfeign.FeignClient;
