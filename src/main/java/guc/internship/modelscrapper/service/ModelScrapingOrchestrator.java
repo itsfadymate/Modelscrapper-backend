@@ -22,17 +22,28 @@ public class ModelScrapingOrchestrator {
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-    public List<ModelPreview> scrapeAll(String searchTerm) {
+    
+
+    public List<ModelPreview> scrapeAll(String searchTerm, List<String> enabledSources) {
         logger.debug("Starting scrape for all services with search term: {}", searchTerm);
         logger.debug("Found {} preview scraping services", scrapingServices.size());
+        
+        if (enabledSources != null && !enabledSources.isEmpty()) {
+            logger.debug("Filtering by enabled sources: {}", enabledSources);
+        }
         
         List<ModelPreview> allResults = new ArrayList<>();
         List<CompletableFuture<List<ModelPreview>>> futures = new ArrayList<>();
         
         for (PreviewScrapingService service : scrapingServices) {
-            logger.debug("Checking service: {}, enabled: {}", service.getSourceName(), service.isEnabled());
+            boolean shouldInclude = service.isEnabled() && 
+                (enabledSources == null || enabledSources.isEmpty() || 
+                 enabledSources.contains(service.getSourceName()));
             
-            if (service.isEnabled()) {
+            logger.debug("Checking service: {}, enabled: {}, should include: {}", 
+                service.getSourceName(), service.isEnabled(), shouldInclude);
+            
+            if (shouldInclude) {
                 logger.debug("Starting async scrape for service: {}", service.getSourceName());
                 
                 CompletableFuture<List<ModelPreview>> future = CompletableFuture.supplyAsync(

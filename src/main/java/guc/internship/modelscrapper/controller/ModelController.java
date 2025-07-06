@@ -21,9 +21,15 @@ public class ModelController {
     private ModelScrapingOrchestrator scrapingOrchestrator;
 
     @GetMapping("/search")
-    public List<ModelPreview> searchModels(@RequestParam String searchTerm) {
+    public List<ModelPreview> searchModels(
+        @RequestParam String searchTerm,
+        @RequestParam(required = false) List<String> sources,
+        @RequestParam(required = false, defaultValue = "false") Boolean showFreeOnly) {
+        
         logger.debug("Received search request for: {}", searchTerm);
-        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm);
+        
+        
+        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources);
         logger.debug("Found {} models for search term: {}", results.size(), searchTerm);
         return results;
     }
