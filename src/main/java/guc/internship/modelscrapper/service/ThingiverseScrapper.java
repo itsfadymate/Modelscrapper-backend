@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
+import guc.internship.modelscrapper.dto.thingiverse.ThingiverseThing;
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +34,17 @@ public class ThingiverseScrapper implements PreviewScrapingService{
             
             
             List<ModelPreview> previews = response.getHits().stream()
-                .map((thing)->new ModelPreview()
-                                .setImageLink(thing.getThumbnail())
+                .map((searchObject)->{
+                        ThingiverseThing  thing = thingiverseApiClient.getThing(searchObject.getId());
+                        return new ModelPreview()
                                 .setModelName(thing.getName())
-                                .setWebsiteName(this.getSourceName())
+                                .setImageLink(searchObject.getPreviewImage())
                                 .setWebsiteLink(thing.getPublicUrl())
+                                .setWebsiteName(this.getSourceName())
                                 .setMakesCount(thing.getMakeCount())
                                 .setPrice(0)
-                                .setFiles(thing.getFiles())
+                                .setFiles(thing.getFiles());
+                        }
                     )
                 .collect(Collectors.toList());
             
