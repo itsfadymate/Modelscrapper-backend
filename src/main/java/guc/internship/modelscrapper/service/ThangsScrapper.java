@@ -61,19 +61,26 @@ public class ThangsScrapper implements PreviewScrapingService{
                 modelLink = href.startsWith("/") ? "https://thangs.com" + href : href;
             }
 
-            Element bottomRow = card.selectFirst(".ModelCard_BottomRow-0-2-411 h4");
-            if (bottomRow == null) {
-                bottomRow = card.selectFirst("h4[class*='ModelCard_ModelName']");
+            Element bottomRow = card.selectFirst(".ModelCard_BottomRow-0-2-411");
+            Element modelNameElement = bottomRow != null ? bottomRow.selectFirst("h4") : null;
+            if (modelNameElement == null) {
+                modelNameElement = card.selectFirst("h4[class*='ModelCard_ModelName']");
             }
             String modelName = null;
             boolean isPaid = false;
-            int likeCount =0;
+            String likeCount = "0";
+
+            if (modelNameElement != null) {
+                modelName = modelNameElement.text().trim();
+            }
+
             if (bottomRow != null) {
-                modelName = bottomRow.text().trim();
-                isPaid = bottomRow.selectFirst("svg[class*='DownloadButton_Icon']")==null;
-                Element likeElement = bottomRow.selectFirst(".vote_score");
-                if (likeElement!=null)
-                    likeCount = Integer.parseInt(likeElement.text());
+                Element likeElement = bottomRow.selectFirst("span[class*='Vote_Score']");
+                if (likeElement != null) {
+                    likeCount = likeElement.text();
+                }
+                Element downloadButton = bottomRow.selectFirst("svg[class*='DownloadButton']");
+                isPaid =  downloadButton == null;
             }
 
 
