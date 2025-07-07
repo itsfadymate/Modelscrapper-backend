@@ -24,6 +24,12 @@ public class MyMiniFactoryDTO {
 
     private Makes prints;
 
+    @JsonProperty("likes")
+    private int likeCount;
+
+    @JsonProperty("material_quantity")
+    private String materialQuantity;
+
     // Getters and setters
     public int getId() {
         return id;
@@ -82,6 +88,22 @@ public class MyMiniFactoryDTO {
 
     public int getMakesCount(){
         return this.prints.getMakeCount();
+    }
+
+    public void setLikeCount(int likeCount){
+        this.likeCount = likeCount;
+    }
+
+    public int getLikeCount(){
+        return this.likeCount;
+    }
+
+    public void setMaterialQuantity(String materialQuantity){
+        this.materialQuantity = materialQuantity;
+    }
+
+    public String getMaterialQuantity(){
+        return this.materialQuantity;
     }
 
     @Override
