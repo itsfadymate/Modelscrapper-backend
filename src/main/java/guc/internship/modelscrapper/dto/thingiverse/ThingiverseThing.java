@@ -14,7 +14,12 @@ public class ThingiverseThing {
     private int makeCount;
     @JsonProperty("zip_data")
     private ZipData zipData;
-
+    @JsonProperty("like_count")
+    private int likeCount;
+    @JsonProperty("comment_count")
+    private int commentCount;
+    @JsonProperty("is_featured")
+    private boolean isFeatured;
     
     public String getName() {
         return name;
@@ -46,6 +51,30 @@ public class ThingiverseThing {
 
     public void setZipData(ZipData zipData) {
         this.zipData = zipData;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
     }
 
     private static class ZipData{
