@@ -61,14 +61,21 @@ public class ThangsScrapper implements PreviewScrapingService{
                 modelLink = href.startsWith("/") ? "https://thangs.com" + href : href;
             }
 
-            Element nameElement = card.selectFirst(".ModelCard_BottomRow-0-2-411 h4");
-            if (nameElement == null) {
-                nameElement = card.selectFirst("h4[class*='ModelCard_ModelName']");
+            Element bottomRow = card.selectFirst(".ModelCard_BottomRow-0-2-411 h4");
+            if (bottomRow == null) {
+                bottomRow = card.selectFirst("h4[class*='ModelCard_ModelName']");
             }
             String modelName = null;
-            if (nameElement != null) {
-                modelName = nameElement.text().trim();
+            boolean isPaid = false;
+            int likeCount =0;
+            if (bottomRow != null) {
+                modelName = bottomRow.text().trim();
+                isPaid = bottomRow.selectFirst("svg[class*='DownloadButton_Icon']")==null;
+                Element likeElement = bottomRow.selectFirst(".vote_score");
+                if (likeElement!=null)
+                    likeCount = Integer.parseInt(likeElement.text());
             }
+
 
             if (modelName != null && !modelName.isEmpty() && modelLink != null) {
                 return new ModelPreview()
@@ -76,8 +83,9 @@ public class ThangsScrapper implements PreviewScrapingService{
                         .setModelName(modelName)
                         .setWebsiteName(this.getSourceName())
                         .setWebsiteLink(modelLink)
-                        .setPrice("0")
-                        .setFiles(List.of(new ModelPreview.File("FileTypes: STL",null)));
+                        .setPrice(isPaid? "paid" : "0")
+                        .setFiles(List.of(new ModelPreview.File("FileTypes: STL",null)))
+                        .setLikesCount(likeCount);
             }
 
             logger.warn("Failed to extract essential data - name: {}, link: {} ,imageLink {}", modelName, modelLink,imageSrc);
