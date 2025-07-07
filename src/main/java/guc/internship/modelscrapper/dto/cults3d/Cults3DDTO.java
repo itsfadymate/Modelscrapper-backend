@@ -35,7 +35,7 @@ public class Cults3DDTO {
     private List<Object> commentCount;
 
     @JsonProperty("likesCount")
-    private int likesCount;
+    private String likesCount;
 
     @JsonProperty("featured")
     private boolean featured;
@@ -112,11 +112,11 @@ public class Cults3DDTO {
         this.featured = featured;
     }
 
-    public int getLikesCount() {
+    public String getLikesCount() {
         return likesCount;
     }
 
-    public void setLikesCount(int likesCount) {
+    public void setLikesCount(String likesCount) {
         this.likesCount = likesCount;
     }
 

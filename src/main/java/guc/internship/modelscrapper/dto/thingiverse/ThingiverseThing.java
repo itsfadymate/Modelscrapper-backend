@@ -15,7 +15,7 @@ public class ThingiverseThing {
     @JsonProperty("zip_data")
     private ZipData zipData;
     @JsonProperty("like_count")
-    private int likeCount;
+    private String likeCount;
     @JsonProperty("comment_count")
     private int commentCount;
     @JsonProperty("is_featured")
@@ -53,11 +53,11 @@ public class ThingiverseThing {
         this.zipData = zipData;
     }
 
-    public int getLikeCount() {
+    public String getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
+    public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
 

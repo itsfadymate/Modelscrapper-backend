@@ -25,7 +25,7 @@ public class MyMiniFactoryDTO {
     private Makes prints;
 
     @JsonProperty("likes")
-    private int likeCount;
+    private String likeCount;
 
     @JsonProperty("material_quantity")
     private String materialQuantity;
@@ -90,11 +90,11 @@ public class MyMiniFactoryDTO {
         return this.prints.getMakeCount();
     }
 
-    public void setLikeCount(int likeCount){
+    public void setLikeCount(String likeCount){
         this.likeCount = likeCount;
     }
 
-    public int getLikesCount(){
+    public String getLikesCount(){
         return this.likeCount;
     }
 
