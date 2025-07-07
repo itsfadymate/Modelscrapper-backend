@@ -27,7 +27,7 @@ public class Cults3DScrapper implements PreviewScrapingService {
 
         String query = String.format("""
                 {"query": "query Search {
-                            search(query: \\"%s\\", onlySafe: true) {
+                            search(query: \\"%s\\", onlySafe: true, sort: BY_DOWNLOADS) {
                                 name(locale: EN)
                                 url(locale: EN)
                                 illustrationImageUrl(version: DEFAULT)
@@ -42,6 +42,11 @@ public class Cults3DScrapper implements PreviewScrapingService {
                                 makes {
                                     id
                                 }
+                                comments {
+                                     text
+                                }
+                                likesCount
+                                featured
                             }
                         }"
                 }
@@ -78,6 +83,9 @@ public class Cults3DScrapper implements PreviewScrapingService {
                          .setPrice(dto.getFormattedPrice())
                          .setFiles(dto.getFiles())
                          .setMakesCount(dto.getMakeCount())
+                         .setLikesCount(dto.getLikesCount())
+                         .setCommentsCount(dto.getCommentCount())
+                         .setFeatured(dto.isFeatured())
             ).collect(Collectors.toList());
             
             logger.debug("Found {} results from Cults3D API", previews.size());
