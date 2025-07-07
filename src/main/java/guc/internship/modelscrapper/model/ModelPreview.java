@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ModelPreview {
     private String imageLink;
@@ -16,7 +15,7 @@ public class ModelPreview {
     private List<ModelPreview.File> files;
     private int likesCount;
     private int commentsCount;
-    private boolean isAwardWinning;
+    private boolean isFeatured;
 
 
 
@@ -64,8 +63,8 @@ public class ModelPreview {
         return this;
     }
 
-    public ModelPreview setAwardWinning(boolean awardWinning) {
-        isAwardWinning = awardWinning;
+    public ModelPreview setFeatured(boolean featured) {
+        isFeatured = featured;
         return this;
     }
 
@@ -108,8 +107,8 @@ public class ModelPreview {
         return commentsCount;
     }
 
-    public boolean isAwardWinning() {
-        return isAwardWinning;
+    public boolean isFeatured() {
+        return isFeatured;
     }
 
     public static class File {
