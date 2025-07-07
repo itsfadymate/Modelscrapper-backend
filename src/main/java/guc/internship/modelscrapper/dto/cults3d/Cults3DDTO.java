@@ -31,6 +31,15 @@ public class Cults3DDTO {
     @JsonProperty("makes")
     private List<Object> makes;
 
+    @JsonProperty("comments")
+    private List<Object> commentCount;
+
+    @JsonProperty("likesCount")
+    private int likesCount;
+
+    @JsonProperty("featured")
+    private boolean featured;
+
     public String getName() {
         return name;
     }
@@ -95,6 +104,30 @@ public class Cults3DDTO {
         return this.makes.size();
     }
 
+    public boolean isFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount.size();
+    }
+
+    public void setCommentCount(List<Object> commentCount) {
+        this.commentCount = commentCount;
+    }
+
     @Override
     public String toString() {
         return "Cults3DDTO{" +
@@ -108,7 +141,7 @@ public class Cults3DDTO {
     }
 
 
-    private static class Price {
+     public static class Price {
         private String formatted;
 
         public void setFormatted(String formatted) {
