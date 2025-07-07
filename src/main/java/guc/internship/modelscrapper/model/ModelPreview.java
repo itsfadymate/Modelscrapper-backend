@@ -59,16 +59,19 @@ public class ModelPreview {
         return this;
     }
 
-    public void setLikesCount(int likesCount) {
+    public ModelPreview setLikesCount(int likesCount) {
         this.likesCount = likesCount;
+        return this;
     }
 
-    public void setAwardWinning(boolean awardWinning) {
+    public ModelPreview setAwardWinning(boolean awardWinning) {
         isAwardWinning = awardWinning;
+        return this;
     }
 
-    public void setCommentsCount(int commentsCount) {
+    public ModelPreview setCommentsCount(int commentsCount) {
         this.commentsCount = commentsCount;
+        return this;
     }
 
     public String getImageLink() {
