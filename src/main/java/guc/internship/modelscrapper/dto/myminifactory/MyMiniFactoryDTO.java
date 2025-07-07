@@ -94,7 +94,7 @@ public class MyMiniFactoryDTO {
         this.likeCount = likeCount;
     }
 
-    public int getLikeCount(){
+    public int getLikesCount(){
         return this.likeCount;
     }
 
