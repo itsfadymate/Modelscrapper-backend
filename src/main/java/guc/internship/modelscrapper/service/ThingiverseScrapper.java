@@ -34,7 +34,8 @@ public class ThingiverseScrapper implements PreviewScrapingService{
             
             
             List<ModelPreview> previews = response.getHits().stream()
-                .map((searchObject)->{
+                    .filter(searchObject -> !searchObject.isNsfw())
+                    .map((searchObject)->{
                         ThingiverseThing  thing = thingiverseApiClient.getThing(searchObject.getId());
                         return new ModelPreview()
                                 .setModelName(thing.getName())
@@ -43,10 +44,13 @@ public class ThingiverseScrapper implements PreviewScrapingService{
                                 .setWebsiteName(this.getSourceName())
                                 .setMakesCount(thing.getMakeCount())
                                 .setPrice("0")
-                                .setFiles(thing.getFiles());
+                                .setFiles(thing.getFiles())
+                                .setLikesCount(thing.getLikeCount())
+                                .setCommentsCount(thing.getCommentCount())
+                                .setFeatured(thing.isFeatured());
                         }
                     )
-                .collect(Collectors.toList());
+                    .collect(Collectors.toList());
             
             logger.debug("Found {} results from Thingiverse API", previews.size());
             return previews;
