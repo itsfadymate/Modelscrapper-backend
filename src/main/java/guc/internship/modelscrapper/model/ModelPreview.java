@@ -14,6 +14,9 @@ public class ModelPreview {
     private String price;
     private int makesCount;
     private List<ModelPreview.File> files;
+    private int likesCount;
+    private int commentsCount;
+    private boolean isAwardWinning;
 
 
 
@@ -56,6 +59,18 @@ public class ModelPreview {
         return this;
     }
 
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public void setAwardWinning(boolean awardWinning) {
+        isAwardWinning = awardWinning;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
+    }
+
     public String getImageLink() {
         return imageLink;
     }
@@ -80,6 +95,18 @@ public class ModelPreview {
 
     public List<ModelPreview.File> getFiles() {
         return files;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public boolean isAwardWinning() {
+        return isAwardWinning;
     }
 
     public static class File {
