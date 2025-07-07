@@ -35,7 +35,7 @@ public class MyMiniFactoryScrapper implements PreviewScrapingService{
                             .setMakesCount(dto.getMakesCount())
                             .setFiles(dto.getFiles())
                             .setLikesCount(dto.getLikesCount())
-                            .setPrice("$ 1.00")
+                            .setPrice("paid")
 
                     )
                     .collect(Collectors.toList());
