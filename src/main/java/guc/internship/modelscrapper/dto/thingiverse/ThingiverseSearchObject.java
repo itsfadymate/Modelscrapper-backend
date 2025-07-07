@@ -6,6 +6,8 @@ public class ThingiverseSearchObject {
     private String id;
     @JsonProperty("preview_image")
     private String previewImage;
+    @JsonProperty("is_nsfw")
+    private boolean isNsfw;
 
     public String getId() {
         return id;
@@ -23,4 +25,11 @@ public class ThingiverseSearchObject {
         this.previewImage = previewImage;
     }
 
+    public boolean isNsfw() {
+        return isNsfw;
+    }
+
+    public void setNsfw(boolean nsfw) {
+        isNsfw = nsfw;
+    }
 }
