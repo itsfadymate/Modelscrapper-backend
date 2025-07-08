@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class sketchfabSearchResponse {
+public class SketchfabSearchResponse {
 
     @JsonProperty("next")
     private String nextPageUrl;
@@ -13,7 +13,7 @@ public class sketchfabSearchResponse {
     private String previousPageUrl;
 
     @JsonProperty("results")
-    private List<sketchfabSearchResponse> results;
+    private List<SketchfabSearchResponse> results;
 
     public String getNextPageUrl() {
         return nextPageUrl;
@@ -31,11 +31,11 @@ public class sketchfabSearchResponse {
         this.previousPageUrl = previousPageUrl;
     }
 
-    public List<sketchfabSearchResponse> getResults() {
+    public List<SketchfabSearchResponse> getResults() {
         return results;
     }
 
-    public void setResults(List<sketchfabSearchResponse> results) {
+    public void setResults(List<SketchfabSearchResponse> results) {
         this.results = results;
     }
 }

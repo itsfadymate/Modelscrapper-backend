@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class sketchfabSearchObject {
+public class SketchfabSearchObject {
     @JsonProperty("uid")
     private String id;
     @JsonProperty("name")
