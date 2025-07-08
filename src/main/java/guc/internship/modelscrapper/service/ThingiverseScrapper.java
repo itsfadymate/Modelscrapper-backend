@@ -2,7 +2,6 @@ package guc.internship.modelscrapper.service;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
-import guc.internship.modelscrapper.dto.thingiverse.ThingiverseThing;
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,20 +34,17 @@ public class ThingiverseScrapper implements ScrapingService {
             
             List<ModelPreview> previews = response.getHits().stream()
                     .filter(searchObject -> !searchObject.isNsfw())
-                    .map((searchObject)->{
-                        ThingiverseThing  thing = thingiverseApiClient.getThing(searchObject.getId());
-                        return new ModelPreview()
-                                .setModelName(thing.getName())
-                                .setImageLink(searchObject.getPreviewImage())
-                                .setWebsiteLink(thing.getPublicUrl())
-                                .setWebsiteName(this.getSourceName())
-                                .setMakesCount(thing.getMakeCount())
-                                .setPrice("0")
-                                .setFiles(thing.getFiles())
-                                .setLikesCount(thing.getLikeCount())
-                                .setCommentsCount(thing.getCommentCount())
-                                .setFeatured(thing.isFeatured());
-                        }
+                    .map((searchObject)-> new ModelPreview()
+                            .setId(searchObject.getId())
+                            .setModelName(searchObject.getName())
+                            .setImageLink(searchObject.getPreviewImage())
+                            .setWebsiteLink(searchObject.getPublicUrl())
+                            .setWebsiteName(this.getSourceName())
+                            .setMakesCount(searchObject.getMakeCount())
+                            .setPrice("0")
+                            .setLikesCount(searchObject.getLikeCount())
+                            .setCommentsCount(searchObject.getCommentCount())
+                            .setFeatured(searchObject.isFeatured())
                     )
                     .collect(Collectors.toList());
             
@@ -68,7 +64,7 @@ public class ThingiverseScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id) {
-        return List.of();
+        return thingiverseApiClient.getThing(id).getFiles();
     }
 
     @Override
