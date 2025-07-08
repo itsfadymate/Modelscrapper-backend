@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 
 
 @Service
-public class SketchfabScrapper implements PreviewScrapingService{
+public class SketchfabScrapper implements ScrapingService {
 
     @Autowired
     private SketchfabApiClient apiClient;

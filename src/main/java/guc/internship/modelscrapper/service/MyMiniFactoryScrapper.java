@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MyMiniFactoryScrapper implements PreviewScrapingService{
+public class MyMiniFactoryScrapper implements ScrapingService {
     private static final Logger logger = LoggerFactory.getLogger(MyMiniFactoryScrapper.class);
     @Autowired
     private MyMiniFactoryApiClient apiClient;

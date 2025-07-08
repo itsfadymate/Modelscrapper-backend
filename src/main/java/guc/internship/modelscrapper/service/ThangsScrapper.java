@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ThangsScrapper implements PreviewScrapingService{
+public class ThangsScrapper implements ScrapingService {
 
     @Value("${Thangs.search.url}")
     private String url;

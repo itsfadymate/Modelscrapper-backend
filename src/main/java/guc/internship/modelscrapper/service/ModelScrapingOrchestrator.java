@@ -18,7 +18,7 @@ public class ModelScrapingOrchestrator {
     private static final Logger logger = LoggerFactory.getLogger(ModelScrapingOrchestrator.class);
 
     @Autowired
-    private List<PreviewScrapingService> scrapingServices;
+    private List<ScrapingService> scrapingServices;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
@@ -35,7 +35,7 @@ public class ModelScrapingOrchestrator {
         List<ModelPreview> allResults = new ArrayList<>();
         List<CompletableFuture<List<ModelPreview>>> futures = new ArrayList<>();
         
-        for (PreviewScrapingService service : scrapingServices) {
+        for (ScrapingService service : scrapingServices) {
             boolean shouldInclude = service.isEnabled() && 
                 (enabledSources == null || enabledSources.isEmpty() || 
                  enabledSources.contains(service.getSourceName().toLowerCase()));
@@ -83,7 +83,7 @@ public class ModelScrapingOrchestrator {
         logger.debug("Getting available sources");
         List<String> sources = new ArrayList<>();
         
-        for (PreviewScrapingService service : scrapingServices) {
+        for (ScrapingService service : scrapingServices) {
             if (service.isEnabled()) {
                 sources.add(service.getSourceName());
                 logger.debug("Added enabled source: {}", service.getSourceName());
@@ -97,7 +97,7 @@ public class ModelScrapingOrchestrator {
     }
 
     public List<ModelPreview.File> getDownloadLinks(String sourceName, String id) {
-        for (PreviewScrapingService service : scrapingServices){//I should probably use a map if the sources become too many
+        for (ScrapingService service : scrapingServices){//I should probably use a map if the sources become too many
             if (service.getSourceName().equals(sourceName)){
                 return service.getDownloadLinks(id);
             }

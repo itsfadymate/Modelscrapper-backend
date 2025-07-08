@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 //The website API doesn't provide download APIs for "legal reasons"
 @Service
-public class Cults3DScrapper implements PreviewScrapingService {
+public class Cults3DScrapper implements ScrapingService {
 
     private static final Logger logger = LoggerFactory.getLogger(Cults3DScrapper.class);
 

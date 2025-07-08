@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GrabCadScrapper implements PreviewScrapingService {
+public class GrabCadScrapper implements ScrapingService {
     
     private static final Logger logger = LoggerFactory.getLogger(GrabCadScrapper.class);
 

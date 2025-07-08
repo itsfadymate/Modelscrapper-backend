@@ -3,7 +3,7 @@ package guc.internship.modelscrapper.service;
 import guc.internship.modelscrapper.model.ModelPreview;
 import java.util.List;
 
-public interface PreviewScrapingService {
+public interface ScrapingService {
     List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly);
     String getSourceName();
     List<ModelPreview.File> getDownloadLinks(String id);

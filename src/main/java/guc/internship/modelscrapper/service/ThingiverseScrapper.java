@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ThingiverseScrapper implements PreviewScrapingService{
+public class ThingiverseScrapper implements ScrapingService {
     
     private static final Logger logger = LoggerFactory.getLogger(ThingiverseScrapper.class);
     private static final int hasMakes =1;
