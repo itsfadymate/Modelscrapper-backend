@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service;
 import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
+import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class Cults3DScrapper implements ScrapingService {
                                 }
                                 likesCount
                                 featured
-                                id
+                                slug
                             }
                         }"
                 }
@@ -77,7 +78,7 @@ public class Cults3DScrapper implements ScrapingService {
                 return true;
             }).map(dto ->
                  new ModelPreview()
-                         .setId(dto.getId())
+                         .setId(dto.getSlug())
                          .setImageLink(dto.getIllustrationImageUrl())
                          .setModelName(dto.getName())
                          .setWebsiteName(this.getSourceName())
@@ -120,6 +121,17 @@ public class Cults3DScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id) {
+        String query = String.format("""
+                {"query": "query Creation {
+                               creation(slug: \\"%s\\") {
+                                   url
+                               }
+                           }"
+                }
+                """,id).replaceAll("\n","");
+        Cults3DUrlResponse urlResponse = apiClient.getUrl(query);
+
+        //TODO: use playwright to try and fetch the download links
         return List.of();
     }
 

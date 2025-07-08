@@ -6,8 +6,8 @@ import guc.internship.modelscrapper.model.ModelPreview;
 import java.util.List;
 
 public class Cults3DDTO {
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("slug")
+    private String slug;
     @JsonProperty("name")
     private String name;
     
@@ -41,12 +41,12 @@ public class Cults3DDTO {
     @JsonProperty("featured")
     private boolean featured;
 
-    public String getId() {
-        return id;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getName() {
