@@ -45,7 +45,7 @@ public class SketchfabScrapper implements PreviewScrapingService{
 
     @Override
     public String getSourceName() {
-        return "";
+        return "Sketchfab";
     }
 
     @Override
