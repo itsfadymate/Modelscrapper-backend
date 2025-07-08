@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class ModelPreview {
+    private String id;
     private String imageLink;
     private String modelName;
     private String websiteName;
@@ -21,6 +22,14 @@ public class ModelPreview {
 
     public ModelPreview() {
         files = new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public ModelPreview setImageLink(String imageLink) {
