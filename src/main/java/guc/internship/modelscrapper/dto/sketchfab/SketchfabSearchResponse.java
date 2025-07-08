@@ -13,7 +13,7 @@ public class SketchfabSearchResponse {
     private String previousPageUrl;
 
     @JsonProperty("results")
-    private List<SketchfabSearchResponse> results;
+    private List<SketchfabSearchObject> results;
 
     public String getNextPageUrl() {
         return nextPageUrl;
@@ -31,11 +31,11 @@ public class SketchfabSearchResponse {
         this.previousPageUrl = previousPageUrl;
     }
 
-    public List<SketchfabSearchResponse> getResults() {
+    public List<SketchfabSearchObject> getResults() {
         return results;
     }
 
-    public void setResults(List<SketchfabSearchResponse> results) {
+    public void setResults(List<SketchfabSearchObject> results) {
         this.results = results;
     }
 }
