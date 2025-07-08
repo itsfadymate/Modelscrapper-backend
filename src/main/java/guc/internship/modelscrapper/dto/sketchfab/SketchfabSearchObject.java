@@ -21,6 +21,8 @@ public class SketchfabSearchObject {
     private Thumbnails thumbnails;
     @JsonProperty("viewerUrl")
     private String viewerUrl;
+    @JsonProperty("isDownloadable")
+    private boolean isDownloadable;
 
     public void setId(String id) {
         this.id = id;
@@ -54,6 +56,10 @@ public class SketchfabSearchObject {
         this.name = name;
     }
 
+    public void setDownloadable(boolean downloadable) {
+        isDownloadable = downloadable;
+    }
+
     public String getId() {
         return id;
     }
@@ -84,6 +90,9 @@ public class SketchfabSearchObject {
         return this.thumbnails.getPreviewImageUrl();
     }
 
+    public boolean isDownloadable() {
+        return isDownloadable;
+    }
 
     public static class Thumbnails {
         @JsonProperty("images")
