@@ -28,8 +28,9 @@ public class ModelPreview {
         return id;
     }
 
-    public void setId(String id) {
+    public ModelPreview setId(String id) {
         this.id = id;
+        return this;
     }
 
     public ModelPreview setImageLink(String imageLink) {
