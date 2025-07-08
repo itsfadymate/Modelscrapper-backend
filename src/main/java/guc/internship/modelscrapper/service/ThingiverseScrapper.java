@@ -21,9 +21,7 @@ public class ThingiverseScrapper implements ScrapingService {
     
     @Autowired
     private ThingiverseApiClient thingiverseApiClient;
-    
-   
-    
+
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) { //haven't found a paid model here
         try {
