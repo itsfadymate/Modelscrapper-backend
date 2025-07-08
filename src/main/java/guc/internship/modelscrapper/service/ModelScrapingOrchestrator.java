@@ -98,7 +98,7 @@ public class ModelScrapingOrchestrator {
 
     public List<ModelPreview.File> getDownloadLinks(String sourceName, String id) {
         for (ScrapingService service : scrapingServices){//I should probably use a map if the sources become too many
-            if (service.getSourceName().equals(sourceName)){
+            if (service.getSourceName().equalsIgnoreCase(sourceName)){
                 return service.getDownloadLinks(id);
             }
         }
