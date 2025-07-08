@@ -1,0 +1,55 @@
+package guc.internship.modelscrapper.service;
+
+import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
+import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchResponse;
+import guc.internship.modelscrapper.model.ModelPreview;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+
+
+@Service
+public class SketchfabScrapper implements PreviewScrapingService{
+
+    @Autowired
+    private SketchfabApiClient apiClient;
+
+    private static final Logger logger = LoggerFactory.getLogger(SketchfabScrapper.class);
+
+    @Override
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+        try{
+            SketchfabSearchResponse searchResponse = apiClient.searchSketchfab(searchTerm,showFreeOnly);
+
+            return searchResponse.getResults().stream()
+                    .filter(o->!o.isNsfw())
+                    .map(dto->new ModelPreview()
+                            .setModelName(dto.getName())
+                            .setImageLink(dto.getPreviewImageUrl())
+                            .setWebsiteName(this.getSourceName())
+                            .setCommentsCount(dto.getCommentCount())
+                            .setLikesCount(dto.getLikesCount())
+                            .setFeatured(dto.isFeatured())
+                            .setPrice(dto.isDownloadable()? "0":"paid")
+                    ).toList();
+        } catch (Exception e) {
+            logger.warn("An error occured while scrapping sketchfab {}",e.getMessage());
+            return List.of();
+        }
+    }
+
+    @Override
+    public String getSourceName() {
+        return "";
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+}
