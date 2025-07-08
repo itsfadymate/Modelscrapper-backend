@@ -28,6 +28,7 @@ public class MyMiniFactoryScrapper implements ScrapingService {
 
             List<ModelPreview> previews = response.getItems().stream()
                     .map((dto)->new ModelPreview()
+                            .setId(String.valueOf(dto.getId()))
                             .setImageLink(dto.getPreviewImageUrl())
                             .setModelName(dto.getName())
                             .setWebsiteName(this.getSourceName())

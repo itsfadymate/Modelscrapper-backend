@@ -47,6 +47,7 @@ public class Cults3DScrapper implements ScrapingService {
                                 }
                                 likesCount
                                 featured
+                                id
                             }
                         }"
                 }
@@ -76,6 +77,7 @@ public class Cults3DScrapper implements ScrapingService {
                 return true;
             }).map(dto ->
                  new ModelPreview()
+                         .setId(dto.getId())
                          .setImageLink(dto.getIllustrationImageUrl())
                          .setModelName(dto.getName())
                          .setWebsiteName(this.getSourceName())
