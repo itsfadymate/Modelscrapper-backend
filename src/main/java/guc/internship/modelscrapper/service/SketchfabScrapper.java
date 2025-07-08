@@ -51,6 +51,7 @@ public class SketchfabScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id) {
+        //TODO: get download links
         return List.of();
     }
 

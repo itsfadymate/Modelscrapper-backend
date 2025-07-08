@@ -114,6 +114,7 @@ public class GrabCadScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id) {
+        //TODO: As the method name suggests
         return List.of();
     }
 
