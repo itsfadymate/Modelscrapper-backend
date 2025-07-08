@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 
@@ -46,6 +45,11 @@ public class SketchfabScrapper implements PreviewScrapingService{
     @Override
     public String getSourceName() {
         return "Sketchfab";
+    }
+
+    @Override
+    public List<ModelPreview.File> getDownloadLinks(String id) {
+        return List.of();
     }
 
     @Override

@@ -55,6 +55,11 @@ public class MyMiniFactoryScrapper implements PreviewScrapingService{
     }
 
     @Override
+    public List<ModelPreview.File> getDownloadLinks(String id) {
+        return List.of();
+    }
+
+    @Override
     public boolean isEnabled() {
         return true;
     }
