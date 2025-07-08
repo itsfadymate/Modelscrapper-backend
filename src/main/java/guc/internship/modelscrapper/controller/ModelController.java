@@ -27,10 +27,16 @@ public class ModelController {
         @RequestParam(required = false, defaultValue = "false") Boolean showFreeOnly) {
         
         logger.debug("Received search request for: {}", searchTerm);
-        
-        
         List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources,showFreeOnly);
         logger.debug("Found {} models for search term: {}", results.size(), searchTerm);
+        return results;
+    }
+    @GetMapping("/download")
+    public List<ModelPreview.File> downloadLinks(@RequestParam String sourceName,
+                                                 @RequestParam String id){
+        logger.debug("Received request for model {} in {}",id,sourceName);
+        List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id);
+        logger.debug("found the following download links: {}",results);
         return results;
     }
 
