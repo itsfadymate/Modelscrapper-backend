@@ -106,7 +106,7 @@ public class SketchfabSearchObject {
             this.images = images;
         }
 
-        public class Images {
+        public static class Images {
             @JsonProperty("url")
             private String url;
 
