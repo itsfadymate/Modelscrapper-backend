@@ -92,12 +92,25 @@ public class GrabCadScrapper implements ScrapingService {
                 modelName = nameElement.text().trim();
             }
 
+            Element countsSection = card.selectFirst(".countsSection");
+            String likesCount ="0",commentCount="0";
+            if (countsSection!=null){
+                Element likeSpan = countsSection.selectFirst(".gc-icon-like + .text ");
+                if (likeSpan!=null)
+                    likesCount = likeSpan.text();
+                Element commentSpan = countsSection.selectFirst(".gc-icon-comment + .text ");
+                if (commentSpan!=null)
+                    commentCount = commentSpan.text();
+            }
+
             if (modelName != null && !modelName.isEmpty() && modelLink != null) {
                 return new ModelPreview()
                         .setImageLink(imageSrc)
                         .setModelName(modelName)
                         .setWebsiteName(this.getSourceName())
-                        .setWebsiteLink(modelLink);
+                        .setWebsiteLink(modelLink)
+                        .setLikesCount(likesCount)
+                        .setCommentsCount(commentCount);
             }
 
             logger.warn("Failed to extract essential data - name: {}, link: {}", modelName, modelLink);
