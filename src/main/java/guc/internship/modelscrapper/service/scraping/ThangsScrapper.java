@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.service;
+package guc.internship.modelscrapper.service.scraping;
 
 import guc.internship.modelscrapper.model.ModelPreview;
 import org.jsoup.Jsoup;

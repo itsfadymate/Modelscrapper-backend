@@ -1,7 +1,7 @@
 package guc.internship.modelscrapper.controller;
 
 import guc.internship.modelscrapper.model.ModelPreview;
-import guc.internship.modelscrapper.service.ModelScrapingOrchestrator;
+import guc.internship.modelscrapper.service.scraping.ModelScrapingOrchestrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

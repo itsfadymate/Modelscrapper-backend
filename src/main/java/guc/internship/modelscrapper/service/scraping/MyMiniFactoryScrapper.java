@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.service;
+package guc.internship.modelscrapper.service.scraping;
 
 import guc.internship.modelscrapper.client.myminifactory.MyMiniFactoryApiClient;
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactorySearchResponse;
@@ -36,7 +36,7 @@ public class MyMiniFactoryScrapper implements ScrapingService {
                             .setMakesCount(dto.getMakesCount())
                             .setFiles(dto.getFiles())
                             .setLikesCount(dto.getLikesCount())
-                            .setPrice("paid")
+                            .setPrice("could be paid")
 
                     )
                     .collect(Collectors.toList());

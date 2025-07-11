@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.service;
+package guc.internship.modelscrapper.service.scraping;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;

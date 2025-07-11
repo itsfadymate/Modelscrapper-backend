@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.service;
+package guc.internship.modelscrapper.service.scraping;
 
 import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
 import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchResponse;
