@@ -130,7 +130,7 @@ public class Cults3DDTO {
     }
 
     public int getCommentCount() {
-        return commentCount.size();
+        return commentCount.size() ;
     }
 
     public void setCommentCount(List<Object> commentCount) {

@@ -87,7 +87,7 @@ public class Cults3DScrapper implements ScrapingService {
                          .setFiles(dto.getFiles())
                          .setMakesCount(dto.getMakeCount())
                          .setLikesCount(dto.getLikesCount())
-                         .setCommentsCount(dto.getCommentCount())
+                         .setCommentsCount(String.valueOf(dto.getCommentCount()))
                          .setFeatured(dto.isFeatured())
             ).collect(Collectors.toList());
             

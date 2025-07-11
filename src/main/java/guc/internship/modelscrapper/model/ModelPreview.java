@@ -15,7 +15,7 @@ public class ModelPreview {
     private int makesCount;
     private List<ModelPreview.File> files;
     private String likesCount;
-    private int commentsCount;
+    private String commentsCount;
     private boolean isFeatured;
 
 
@@ -78,7 +78,7 @@ public class ModelPreview {
         return this;
     }
 
-    public ModelPreview setCommentsCount(int commentsCount) {
+    public ModelPreview setCommentsCount(String commentsCount) {
         this.commentsCount = commentsCount;
         return this;
     }
@@ -113,7 +113,7 @@ public class ModelPreview {
         return likesCount;
     }
 
-    public int getCommentsCount() {
+    public String getCommentsCount() {
         return commentsCount;
     }
 

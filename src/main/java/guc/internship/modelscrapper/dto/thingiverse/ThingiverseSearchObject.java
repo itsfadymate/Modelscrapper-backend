@@ -14,7 +14,7 @@ public class ThingiverseSearchObject {
     @JsonProperty("like_count")
     private String likeCount;
     @JsonProperty("comment_count")
-    private int commentCount;
+    private String commentCount;
     @JsonProperty("is_featured")
     private boolean isFeatured;
     @JsonProperty("is_nsfw")
@@ -44,7 +44,7 @@ public class ThingiverseSearchObject {
         this.likeCount = likeCount;
     }
 
-    public void setCommentCount(int commentCount) {
+    public void setCommentCount(String commentCount) {
         this.commentCount = commentCount;
     }
 
@@ -76,7 +76,7 @@ public class ThingiverseSearchObject {
         return previewImage;
     }
 
-    public int getCommentCount() {
+    public String getCommentCount() {
         return commentCount;
     }
 

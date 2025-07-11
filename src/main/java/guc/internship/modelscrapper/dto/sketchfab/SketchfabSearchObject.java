@@ -14,7 +14,7 @@ public class SketchfabSearchObject {
     @JsonProperty("likeCount")
     private String likesCount;
     @JsonProperty("commentCount")
-    private int commentCount;
+    private String commentCount;
     @JsonProperty("isAgeRestricted")
     private boolean isNsfw;
     @JsonProperty("thumbnails")
@@ -36,7 +36,7 @@ public class SketchfabSearchObject {
         this.thumbnails = thumbnails;
     }
 
-    public void setCommentCount(int commentCount) {
+    public void setCommentCount(String commentCount) {
         this.commentCount = commentCount;
     }
 
@@ -72,7 +72,7 @@ public class SketchfabSearchObject {
         return likesCount;
     }
 
-    public int getCommentCount() {
+    public String getCommentCount() {
         return commentCount;
     }
 
