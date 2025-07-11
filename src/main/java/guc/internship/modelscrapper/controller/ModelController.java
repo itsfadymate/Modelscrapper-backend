@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.controller;
 
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
 import guc.internship.modelscrapper.service.scraping.ModelScrapingOrchestrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,9 @@ public class ModelController {
     @Autowired
     private ModelScrapingOrchestrator scrapingOrchestrator;
 
+    @Autowired
+    private LocalFileHostingService fileHoster;
+
     @GetMapping("/search")
     public List<ModelPreview> searchModels(
         @RequestParam String searchTerm,
@@ -37,6 +41,18 @@ public class ModelController {
         logger.debug("Received request for model {} in {}",id,sourceName);
         List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id);
         logger.debug("found the following download links: {}",results);
+        return results;
+    }
+
+    @GetMapping("/download/localhostedlinks")
+    public List<ModelPreview.File> downloadLocalLinks(@RequestParam String sourceName,
+                                                 @RequestParam String id){
+        List<ModelPreview.File>  results = downloadLinks(sourceName,id);
+        results = results.stream().map(file -> new ModelPreview.File(
+                file.getName(),
+                fileHoster.downloadAndRehost(file.getDownloadUrl(), file.getName())))
+                .toList();
+        logger.debug("success creating local Hosted links");
         return results;
     }
 
