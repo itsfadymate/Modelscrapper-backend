@@ -119,9 +119,28 @@ public class Printables implements ScrapingService{
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
-        //TODO: get download URL
+        List<ModelPreview.File> files = new ArrayList<>();
+        try (Playwright playwright = Playwright.create()) {
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(headers));
+            Page page = context.newPage();
+            page.navigate(downloadPageUrl);
+            page.waitForSelector("[data-testid=show-download-files]");
+            page.click("[data-testid=show-download-files]");
 
-        return List.of();
+
+            page.waitForSelector("[data-testid=download-file]");
+            Download download = page.waitForDownload(() -> {
+                page.click("[data-testid=download-file]");
+            });
+            String url = download.url();
+            String suggestedFilename = download.suggestedFilename();
+            files.add(new ModelPreview.File(suggestedFilename, url));
+            browser.close();
+        } catch (Exception e) {
+            logger.error("Failed to get download links from Printables", e);
+        }
+        return files;
     }
 
     @Override
