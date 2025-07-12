@@ -1,15 +1,21 @@
 package guc.internship.modelscrapper.service.scraping;
 
+import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +27,10 @@ public class Cults3DScrapper implements ScrapingService {
 
     @Autowired
     private Cults3DApiClient apiClient;
+
+    @Value("${cults3D.cookies}")
+    private String cookies;
+
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
@@ -121,17 +131,48 @@ public class Cults3DScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
-        String query = String.format("""
-                {"query": "query Creation {
-                               creation(slug: \\"%s\\") {
-                                   url
-                               }
-                           }"
-                }
-                """,id).replaceAll("\n","");
-        Cults3DUrlResponse urlResponse = apiClient.getUrl(query);
+        logger.debug("getting download links from  {}",downloadPageUrl);
+        if (downloadPageUrl.isEmpty()){
+            String query = String.format("""
+                    {"query": "query Creation {
+                                   creation(slug: \\"%s\\") {
+                                       url
+                                   }
+                               }"
+                    }
+                    """,id).replaceAll("\n","");
+            Cults3DUrlResponse urlResponse = apiClient.getUrl(query);
+            downloadPageUrl = urlResponse.getUrl();
+        }
 
-        //TODO: use playwright to try and fetch the download links
+        List<ModelPreview.File> files = new ArrayList<>();
+        try(Playwright playwright= Playwright.create();) {
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            HashMap<String, String> finalHeaders = new HashMap<>(HttpHeadersUtil.DEFAULT_HEADERS);
+            finalHeaders.put("Cookie", cookies);
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(finalHeaders));
+            Page page = context.newPage();
+            page.navigate(downloadPageUrl);
+            page.waitForSelector("form.button_to .btn-group--large ");
+            page.querySelector("form.button_to .btn-group--large ").click();
+            //TODO: Login is bypassed through cookies which is not a sustainable solution
+            List<ElementHandle> sliceButtons = page.querySelectorAll("div.mb-0\\.25 div.grid-cell--fit a.btn.btn-second");
+            for (ElementHandle slice : sliceButtons){
+                   slice.click();
+                   page.waitForSelector(".mt-1 a.btn.btn-second");
+                   ElementHandle downloadButton = page.querySelector(".mt-1 a.btn.btn-second");
+                   Download download = page.waitForDownload(downloadButton::click);
+                   files.add(new ModelPreview.File(download.suggestedFilename(),  download.url()));
+                   ElementHandle closeButton = page.querySelector(".dialog__header .btn-close");
+                   closeButton.click();
+                   page.waitForSelector(".dialog__header .btn-close", new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+                }
+            browser.close();
+            return files;
+        }catch (Exception e){
+            logger.debug("Failed to getDownloadLinks for Cults");
+        }
+
         return List.of();
     }
 
