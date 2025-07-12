@@ -99,6 +99,7 @@ public class Printables implements ScrapingService{
             boolean isFeatured = card.selectFirst(".featured-badge")!=null;
 
             return new ModelPreview()
+                    .setId(modelLink)
                     .setModelName(modelName)
                     .setWebsiteLink(modelLink)
                     .setImageLink(imageUrl)
@@ -119,6 +120,7 @@ public class Printables implements ScrapingService{
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
+        logger.debug("Fetching download links for page {}",downloadPageUrl);
         List<ModelPreview.File> files = new ArrayList<>();
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
@@ -130,12 +132,11 @@ public class Printables implements ScrapingService{
 
 
             page.waitForSelector("[data-testid=download-file]");
-            Download download = page.waitForDownload(() -> {
-                page.click("[data-testid=download-file]");
-            });
-            String url = download.url();
-            String suggestedFilename = download.suggestedFilename();
-            files.add(new ModelPreview.File(suggestedFilename, url));
+            List<ElementHandle> downloadButtons = page.querySelectorAll("[data-testid=download-file]");
+            for (ElementHandle button : downloadButtons) {
+                Download download = page.waitForDownload(() -> {button.click();});
+                files.add(new ModelPreview.File(download.suggestedFilename(),  download.url()));
+            }
             browser.close();
         } catch (Exception e) {
             logger.error("Failed to get download links from Printables", e);
