@@ -83,7 +83,7 @@ public class Printables implements ScrapingService{
             if (nameAndLinkElement!=null){
                 modelName = nameAndLinkElement.text();
                 modelLink = nameAndLinkElement.attr("href");
-                modelLink = modelLink.startsWith("/")? baseUrl+modelLink : modelLink;
+                modelLink = modelLink.startsWith("/")? baseUrl+modelLink.substring(1) : modelLink;
             }
             if (modelName==null)throw new Exception("couldn't extract crucial modelName or link");
 
@@ -120,6 +120,7 @@ public class Printables implements ScrapingService{
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         //TODO: get download URL
+
         return List.of();
     }
 
