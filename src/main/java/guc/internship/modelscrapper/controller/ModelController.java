@@ -37,17 +37,19 @@ public class ModelController {
     }
     @GetMapping("/download")
     public List<ModelPreview.File> downloadLinks(@RequestParam String sourceName,
-                                                 @RequestParam String id){
+                                                 @RequestParam String id,
+                                                 @RequestParam String downloadPageUrl){
         logger.debug("Received request for model {} in {}",id,sourceName);
-        List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id);
+        List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id,downloadPageUrl );
         logger.debug("found the following download links: {}",results);
         return results;
     }
 
     @GetMapping("/download/localhostedlinks")
     public List<ModelPreview.File> downloadLocalLinks(@RequestParam String sourceName,
-                                                 @RequestParam String id){
-        List<ModelPreview.File>  results = downloadLinks(sourceName,id);
+                                                      @RequestParam String id,
+                                                      @RequestParam String downloadPageUrl){
+        List<ModelPreview.File>  results = downloadLinks(sourceName,id,downloadPageUrl);
         results = results.stream().map(file -> new ModelPreview.File(
                 file.getName(),
                 fileHoster.downloadAndRehost(file.getDownloadUrl(), file.getName())))

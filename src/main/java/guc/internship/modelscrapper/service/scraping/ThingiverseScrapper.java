@@ -61,7 +61,7 @@ public class ThingiverseScrapper implements ScrapingService {
     }
 
     @Override
-    public List<ModelPreview.File> getDownloadLinks(String id) {
+    public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         return thingiverseApiClient.getThing(id).getFiles();
     }
 

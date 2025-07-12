@@ -6,7 +6,7 @@ import java.util.List;
 public interface ScrapingService {
     List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly);
     String getSourceName();
-    List<ModelPreview.File> getDownloadLinks(String id);
+    List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl);
     boolean isEnabled();
 
 }

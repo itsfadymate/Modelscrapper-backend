@@ -96,10 +96,10 @@ public class ModelScrapingOrchestrator {
         return sources;
     }
 
-    public List<ModelPreview.File> getDownloadLinks(String sourceName, String id) {
+    public List<ModelPreview.File> getDownloadLinks(String sourceName, String id, String downloadPageUrl) {
         for (ScrapingService service : scrapingServices){//I should probably use a map if the sources become too many
             if (service.getSourceName().equalsIgnoreCase(sourceName)){
-                return service.getDownloadLinks(id);
+                return service.getDownloadLinks(id,downloadPageUrl);
             }
         }
         return List.of();//should probably throw an Exception to indicate no such service exists w handle using aspects but will do it later

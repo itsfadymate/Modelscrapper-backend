@@ -120,7 +120,7 @@ public class Cults3DScrapper implements ScrapingService {
     }
 
     @Override
-    public List<ModelPreview.File> getDownloadLinks(String id) {
+    public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         String query = String.format("""
                 {"query": "query Creation {
                                creation(slug: \\"%s\\") {

@@ -56,7 +56,7 @@ public class MyMiniFactoryScrapper implements ScrapingService {
     }
 
     @Override
-    public List<ModelPreview.File> getDownloadLinks(String id) {
+    public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         //TODO: something along the lines of getting the download links yada-yada
         return List.of();
     }
