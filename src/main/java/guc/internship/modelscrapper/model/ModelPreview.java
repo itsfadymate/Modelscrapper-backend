@@ -149,6 +149,14 @@ public class ModelPreview {
         public String getDownloadUrl() {
             return downloadUrl;
         }
+
+        @Override
+        public String toString() {
+            return "File{" +
+                    "name='" + name + '\'' +
+                    ", downloadUrl='" + downloadUrl + '\'' +
+                    '}';
+        }
     }
 
 
