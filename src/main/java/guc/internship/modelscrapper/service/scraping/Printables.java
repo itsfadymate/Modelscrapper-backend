@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 @Service
 public class Printables implements ScrapingService{
@@ -24,27 +25,14 @@ public class Printables implements ScrapingService{
     private String baseUrl;
 
     private final static String ordering ="makes_count";
-    private final static Map<String, String> headers = Map.ofEntries(
-        Map.entry("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
-        Map.entry("Accept-Encoding", "gzip, deflate, br, zstd"),
-        Map.entry("Accept-Language", "en-US,en;q=0.9,de-DE;q=0.8,de;q=0.7"),
-        Map.entry("Connection", "keep-alive"),
-        Map.entry("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"),
-        Map.entry("Sec-CH-UA-Platform", "\"Windows\""),
-        Map.entry("Sec-CH-UA-Mobile", "?0"),
-        Map.entry("Sec-CH-UA", "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\""),
-        Map.entry("Sec-Fetch-Dest", "document"),
-        Map.entry("Sec-Fetch-Mode", "navigate"),
-        Map.entry("Sec-Fetch-Site", "same-origin"),
-        Map.entry("Sec-Fetch-User", "?1")
-);
+
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
         logger.debug("Scrapping printables for preview data");
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
-            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(headers));
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(HttpHeadersUtil.DEFAULT_HEADERS));
             Page page = context.newPage();
             String searchUrl = String.format(baseUrl +"search/models?q=%s&ordering=%s",searchTerm,ordering);
             logger.debug(searchUrl);
@@ -124,7 +112,7 @@ public class Printables implements ScrapingService{
         List<ModelPreview.File> files = new ArrayList<>();
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
-            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(headers));
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(HttpHeadersUtil.DEFAULT_HEADERS));
             Page page = context.newPage();
             page.navigate(downloadPageUrl);
             page.waitForSelector("[data-testid=show-download-files]");
