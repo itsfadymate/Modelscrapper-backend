@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/files")
+@CrossOrigin(origins = "https://grid.space")
 public class FileController {
     
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
