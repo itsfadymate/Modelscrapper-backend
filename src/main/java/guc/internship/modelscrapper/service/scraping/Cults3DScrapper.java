@@ -152,7 +152,8 @@ public class Cults3DScrapper implements ScrapingService {
             finalHeaders.put("Cookie", cookies);
             BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(finalHeaders));
             Page page = context.newPage();
-            page.navigate(downloadPageUrl);
+            page.navigate(downloadPageUrl,new Page.NavigateOptions()
+                    .setTimeout(130000));
             page.waitForSelector("form.button_to .btn-group--large ");
             page.querySelector("form.button_to .btn-group--large ").click();
             //TODO: Login is bypassed through cookies which is not a sustainable solution
@@ -170,7 +171,7 @@ public class Cults3DScrapper implements ScrapingService {
             browser.close();
             return files;
         }catch (Exception e){
-            logger.debug("Failed to getDownloadLinks for Cults");
+            logger.debug("Failed to getDownloadLinks for Cults {}",e.getMessage());
         }
 
         return List.of();
