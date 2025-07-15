@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,6 +26,9 @@ public class GrabCadScrapper implements ScrapingService {
 
     @Value("${GrabCad.search.url}")
     private String GRABCAD_SEARCH_URL;
+
+    @Value("${GrabCad.cookies}")
+    private String cookies;
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
@@ -127,8 +132,37 @@ public class GrabCadScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
-        //TODO: As the method name suggests
-        return List.of();
+        logger.debug("getting grabcad download links from {}",downloadPageUrl);
+        List<ModelPreview.File> resultFiles = new ArrayList<>();
+        try(Playwright playwright = Playwright.create()){
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+            HashMap<String,String> headers = new HashMap<>(HttpHeadersUtil.DEFAULT_HEADERS);
+            headers.put("Cookie",cookies);
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(headers));
+
+            Page page = context.newPage();
+            page.navigate(downloadPageUrl,new Page.NavigateOptions().setTimeout(300000));
+            logger.debug("navigating to {}",downloadPageUrl);
+
+            page.waitForSelector(".tbody .row.ng-scope");
+            List<ElementHandle> elements = page.querySelectorAll(".tbody .row.ng-scope");
+
+            for (ElementHandle e : elements){
+                e.click();
+                page.waitForSelector("span.actions");
+                ElementHandle downloadButton = page.querySelector("span.downloadText");
+                Download download = page.waitForDownload(()->{
+                    downloadButton.click();
+                    logger.debug("clicked download button");
+                });
+                resultFiles.add(new ModelPreview.File(download.suggestedFilename(),download.url()));
+                page.querySelector("a.close.link").click();
+                logger.debug("clicked close button");
+            }
+        } catch (Exception e) {
+            logger.debug("couldnt get grabcad download links {} ",e.getMessage());
+        }
+        return resultFiles;
     }
 
     @Override
