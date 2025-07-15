@@ -1,13 +1,17 @@
 package guc.internship.modelscrapper.controller;
 
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.estimator.EstimatingStrategy;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
 import guc.internship.modelscrapper.service.scraping.ModelScrapingOrchestrator;
+import guc.internship.modelscrapper.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +27,9 @@ public class ModelController {
 
     @Autowired
     private LocalFileHostingService fileHoster;
+
+    @Autowired
+    private EstimatingStrategy estimator;
 
     @GetMapping("/search")
     public List<ModelPreview> searchModels(
@@ -41,6 +48,19 @@ public class ModelController {
                                                  @RequestParam String downloadPageUrl){
         logger.debug("Received request for model {} in {}",id,sourceName);
         List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id,downloadPageUrl );
+        results.stream().forEach(resultFile -> {
+            if (!resultFile.getName().endsWith(".stl")) return;
+            File stlFile = null;
+            try {
+                 stlFile= FileManager.downloadFile(resultFile.getDownloadUrl(), resultFile.getName());
+                resultFile.setVolume(estimator.getVolume(stlFile));
+            } catch (IOException e) {
+                logger.debug("couldn't download stl File ",e);
+            }finally {
+                FileManager.deleteFile(stlFile);
+            }
+
+        });
         logger.debug("found the following download links: {}",results);
         return results;
     }
