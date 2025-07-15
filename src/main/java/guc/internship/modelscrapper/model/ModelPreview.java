@@ -127,6 +127,8 @@ public class ModelPreview {
         @JsonAlias({"url","download_url"})
         private String downloadUrl;
 
+        private String volume;
+
         public File() {}
 
         public File(String name, String downloadUrl) {
@@ -142,12 +144,20 @@ public class ModelPreview {
             this.downloadUrl = downloadUrl;
         }
 
+        public void setVolume(String volume){
+            this.volume = volume;
+        }
+
         public String getName() {
             return name;
         }
 
         public String getDownloadUrl() {
             return downloadUrl;
+        }
+
+        public String getVolume() {
+            return volume;
         }
 
         @Override
