@@ -1,10 +1,13 @@
 package guc.internship.modelscrapper.service.estimator;
 
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.regex.*;
 
+@Service
 public class StlParser implements EstimatingStrategy {
     @Override
     public String getVolume(File stlFile) {
