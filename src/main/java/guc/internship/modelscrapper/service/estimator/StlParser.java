@@ -1,5 +1,7 @@
 package guc.internship.modelscrapper.service.estimator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -9,9 +11,13 @@ import java.util.regex.*;
 
 @Service
 public class StlParser implements EstimatingStrategy {
+
+    private Logger logger = LoggerFactory.getLogger(StlParser.class);
+
     @Override
     public String getVolume(File stlFile) {
         try (FileInputStream fis = new FileInputStream(stlFile)) {
+            logger.debug("getting volume for stlFile");
             byte[] header = new byte[80];
             fis.read(header);
             String headerStr = new String(header);
@@ -25,7 +31,7 @@ public class StlParser implements EstimatingStrategy {
                 volume = parseBinaryStl(stlFile);
             }
 
-            return String.format("%.2f", Math.abs(volume));
+            return String.format("%.2f mm³", Math.abs(volume));
         } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
@@ -46,6 +52,7 @@ public class StlParser implements EstimatingStrategy {
     }
 
     private double parseAsciiStl(File stlFile) throws IOException {
+        logger.debug("Stl is Ascii");
         Pattern vertexPattern = Pattern.compile("vertex\\s+([\\d\\.-eE]+)\\s+([\\d\\.-eE]+)\\s+([\\d\\.-eE]+)");
         double[][] vertices = new double[3][3];
         int vertexCount = 0;
@@ -70,6 +77,7 @@ public class StlParser implements EstimatingStrategy {
     }
 
     private double parseBinaryStl(File stlFile) throws IOException {
+        logger.debug("stl is binary");
         try (DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(stlFile)))) {
             byte[] header = new byte[80];
             dis.readFully(header);
