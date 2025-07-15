@@ -165,6 +165,7 @@ public class ModelPreview {
             return "File{" +
                     "name='" + name + '\'' +
                     ", downloadUrl='" + downloadUrl + '\'' +
+                    ", volume=" + getVolume() + '\'' +
                     '}';
         }
     }
