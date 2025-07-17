@@ -134,15 +134,28 @@ public class GrabCadScrapper implements ScrapingService {
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         logger.debug("getting grabcad download links from {}",downloadPageUrl);
         List<ModelPreview.File> resultFiles = new ArrayList<>();
+        Page page = null;
         try(Playwright playwright = Playwright.create()){
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             HashMap<String,String> headers = new HashMap<>(HttpHeadersUtil.DEFAULT_HEADERS);
             headers.put("Cookie",cookies);
             BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(headers));
 
-            Page page = context.newPage();
+            page = context.newPage();
             page.navigate(downloadPageUrl,new Page.NavigateOptions().setTimeout(300000));
             logger.debug("navigating to {}",downloadPageUrl);
+
+            try {
+                Locator consentButton = page.locator("button:has-text(\"Accept\")").first();
+                logger.debug("trying to click consent button, html {}",page.content());
+                if (consentButton.isVisible()) {
+                    consentButton.click();
+                    logger.debug("clicked consent button");
+                }
+                logger.debug("end of cookie consent overlay try block");
+            } catch (Exception e) {
+                logger.debug("No consent dialog found or error clicking consent: {}", e.getMessage());
+            }
 
             page.waitForSelector(".tbody .row.ng-scope");
             List<ElementHandle> elements = page.querySelectorAll(".tbody .row.ng-scope");
@@ -159,8 +172,11 @@ public class GrabCadScrapper implements ScrapingService {
                 page.querySelector("a.close.link").click();
                 logger.debug("clicked close button");
             }
+            browser.close();
         } catch (Exception e) {
             logger.debug("couldnt get grabcad download links {} ",e.getMessage());
+            if (page!=null)
+                logger.debug(page.content());
         }
         return resultFiles;
     }
