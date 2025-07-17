@@ -24,6 +24,11 @@ public class ThangsScrapper implements ScrapingService {
     @Value("${Thangs.search.url}")
     private String url;
 
+    @Value("${Thangs.username}")
+    private String email;
+    @Value("${Thangs.password}")
+    private String password;
+
     private static final String QUERY_PARAMETERS="?scope=thangs"+
             "&view=grid"+
             "&fileTypes=stl"
@@ -150,6 +155,18 @@ public class ThangsScrapper implements ScrapingService {
             Download download = page.waitForDownload(()->{
                downloadButton.click();
                 logger.debug("clicked downloadButton");
+                boolean loginOverlayAppeared = page.waitForSelector("[class*=StandardOverlay]", new Page.WaitForSelectorOptions().setTimeout(3000)) != null;
+
+                if (loginOverlayAppeared) {
+                    logger.debug("Login overlay appeared, attempting login...");
+                    page.fill("input[id=email]", email);
+                    page.fill("input[id=current-password]", password);
+                    page.click("button[class*=Signin_Button]");
+                 
+                    page.waitForSelector("[class*=Model__desktop] [class*=DownloadLink]");
+                    page.querySelector("[class*=Model__desktop] [class*=DownloadLink]").click();
+                    logger.debug("Logged in and clicked downloadButton again");
+                }
             });
 
             return List.of(new ModelPreview.File(download.suggestedFilename(), download.url()));
