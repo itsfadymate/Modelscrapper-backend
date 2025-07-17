@@ -89,6 +89,7 @@ public class ThangsScrapper implements ScrapingService {
 
             if (modelName != null && !modelName.isEmpty() && modelLink != null) {
                 return new ModelPreview()
+                        .setId(modelLink)
                         .setImageLink(imageSrc)
                         .setModelName(modelName)
                         .setWebsiteName(this.getSourceName())
