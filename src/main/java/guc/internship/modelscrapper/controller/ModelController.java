@@ -49,11 +49,12 @@ public class ModelController {
         logger.debug("Received request for model {} in {}",id,sourceName);
         List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id,downloadPageUrl );
         results.stream().forEach(resultFile -> {
-            if (!resultFile.getName().endsWith(".stl")) return;
+            if (!resultFile.getName().toLowerCase().endsWith(".stl")) return;
             File stlFile = null;
             try {
                  stlFile= FileManager.downloadFile(resultFile.getDownloadUrl(), resultFile.getName());
                 resultFile.setVolume(estimator.getVolume(stlFile));
+                logger.debug("estimated volume for {} is {}",resultFile.getName(),resultFile.getVolume());
             } catch (IOException e) {
                 logger.debug("couldn't download stl File ",e);
             }finally {

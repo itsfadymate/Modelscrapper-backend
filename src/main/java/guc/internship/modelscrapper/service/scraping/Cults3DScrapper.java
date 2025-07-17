@@ -143,6 +143,7 @@ public class Cults3DScrapper implements ScrapingService {
                     """,id).replaceAll("\n","");
             Cults3DUrlResponse urlResponse = apiClient.getUrl(query);
             downloadPageUrl = urlResponse.getUrl();
+            logger.debug("got the url from the API");
         }
 
         List<ModelPreview.File> files = new ArrayList<>();
@@ -156,6 +157,7 @@ public class Cults3DScrapper implements ScrapingService {
                     .setTimeout(130000));
             page.waitForSelector("form.button_to .btn-group--large ");
             page.querySelector("form.button_to .btn-group--large ").click();
+            logger.debug("clicked the download button");
             //TODO: Login is bypassed through cookies which is not a sustainable solution
             List<ElementHandle> sliceButtons = page.querySelectorAll("div.mb-0\\.25 div.grid-cell--fit a.btn.btn-second");
             for (ElementHandle slice : sliceButtons){
@@ -163,11 +165,13 @@ public class Cults3DScrapper implements ScrapingService {
                    page.waitForSelector(".mt-1 a.btn.btn-second");
                    ElementHandle downloadButton = page.querySelector(".mt-1 a.btn.btn-second");
                    Download download = page.waitForDownload(downloadButton::click);
+                   logger.debug("clicked download for {} ",download.suggestedFilename());
                    files.add(new ModelPreview.File(download.suggestedFilename(),  download.url()));
                    ElementHandle closeButton = page.querySelector(".dialog__header .btn-close");
                    closeButton.click();
                    page.waitForSelector(".dialog__header .btn-close", new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-                }
+            }
+            logger.debug("end of slice buttons");
             browser.close();
             return files;
         }catch (Exception e){
