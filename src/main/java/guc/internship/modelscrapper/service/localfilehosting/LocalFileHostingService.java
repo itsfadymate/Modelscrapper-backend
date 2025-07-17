@@ -6,12 +6,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import guc.internship.modelscrapper.model.ModelPreview;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @Service
 public class LocalFileHostingService {
@@ -62,6 +69,47 @@ public class LocalFileHostingService {
             throw new RuntimeException("Failed to download and rehost file", e);
         }
     }
+
+    public List<ModelPreview.File> downloadZipAndRehostContent(String zipUrl) {
+    List<ModelPreview.File> hostedFiles = new ArrayList<>();
+    Path tempZip = null;
+    Path tempDir = null;
+    try {
+        tempZip = Files.createTempFile("downloaded_", ".zip");
+        try (InputStream in = new URL(zipUrl).openStream()) {
+            Files.copy(in, tempZip, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        tempDir = Files.createTempDirectory("extracted_zip_");
+        try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(tempZip))) {
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null) {
+                if (!entry.isDirectory()) {
+                    Path extractedFile = tempDir.resolve(entry.getName());
+                    Files.createDirectories(extractedFile.getParent());
+                    try (OutputStream os = Files.newOutputStream(extractedFile)) {
+                        zis.transferTo(os);
+                    }
+                    String hostedUrl = uploadFile(Files.newInputStream(extractedFile), entry.getName(), detectContentType(entry.getName()));
+                    hostedFiles.add(new ModelPreview.File(entry.getName(), hostedUrl));
+                }
+            }
+        }
+    } catch (Exception e) {
+        logger.error("Failed to download and rehost zip content from {}", zipUrl, e);
+    } finally {
+        try {
+            if (tempZip != null) Files.deleteIfExists(tempZip);
+            if (tempDir != null) Files.walk(tempDir)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+        } catch (Exception cleanupEx) {
+            logger.warn("Failed to clean up temp files", cleanupEx);
+        }
+    }
+    return hostedFiles;
+}
     
     public FileInfo getFileInfo(String fileName) {
         try {
