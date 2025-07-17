@@ -1,6 +1,9 @@
 package guc.internship.modelscrapper.service.scraping;
 
+import com.microsoft.playwright.*;
+
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -133,8 +136,27 @@ public class ThangsScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
-        //TODO: get download links
-        return List.of();
+        logger.debug("getting download links from thangs for: {}",downloadPageUrl);
+        try(Playwright playwright = Playwright.create()){
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(HttpHeadersUtil.DEFAULT_HEADERS));
+            Page page = context.newPage();
+            page.navigate(downloadPageUrl);
+
+            page.waitForSelector("[class*=Model__desktop] [class*=DownloadLink]");
+            ElementHandle downloadButton = page.querySelector("[class*=Model__desktop] [class*=DownloadLink]");
+
+            Download download = page.waitForDownload(()->{
+               downloadButton.click();
+                logger.debug("clicked downloadButton");
+            });
+
+            return List.of(new ModelPreview.File(download.suggestedFilename(), download.url()));
+        }
+        catch(Exception e){
+            logger.error("couldn't get download links from Thangs: {}", e.getMessage());
+            return List.of();
+        }
     }
 
     @Override
