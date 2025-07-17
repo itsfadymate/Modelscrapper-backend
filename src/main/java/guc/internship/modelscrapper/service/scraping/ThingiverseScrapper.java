@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping;
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ThingiverseScrapper implements ScrapingService {
     @Autowired
     private ThingiverseApiClient thingiverseApiClient;
 
+    @Autowired
+    private LocalFileHostingService fileHoster;
+
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) { //haven't found a paid model here
         try {
@@ -35,7 +39,13 @@ public class ThingiverseScrapper implements ScrapingService {
                     .map((searchObject)-> new ModelPreview()
                             .setId(searchObject.getId())
                             .setModelName(searchObject.getName())
-                            .setImageLink(searchObject.getPreviewImage())
+                            .setImageLink(
+                                    fileHoster.downloadAndRehost(
+                                            searchObject.getPreviewImage()
+                                            ,searchObject.getPreviewImage().substring(searchObject.getPreviewImage().lastIndexOf('.')
+                                            )
+                                    )
+                            )
                             .setWebsiteLink(searchObject.getPublicUrl())
                             .setWebsiteName(this.getSourceName())
                             .setMakesCount(searchObject.getMakeCount())
