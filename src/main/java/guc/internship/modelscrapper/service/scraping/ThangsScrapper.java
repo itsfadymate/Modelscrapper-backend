@@ -144,7 +144,7 @@ public class ThangsScrapper implements ScrapingService {
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         logger.debug("getting download links from thangs for: {}",downloadPageUrl);
         try(Playwright playwright = Playwright.create()){
-            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(HttpHeadersUtil.DEFAULT_HEADERS));
             Page page = context.newPage();
             page.navigate(downloadPageUrl);

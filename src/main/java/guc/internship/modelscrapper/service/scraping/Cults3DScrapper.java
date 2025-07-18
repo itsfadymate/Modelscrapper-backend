@@ -148,7 +148,7 @@ public class Cults3DScrapper implements ScrapingService {
 
         List<ModelPreview.File> files = new ArrayList<>();
         try(Playwright playwright= Playwright.create();) {
-            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             HashMap<String, String> finalHeaders = new HashMap<>(HttpHeadersUtil.DEFAULT_HEADERS);
             finalHeaders.put("Cookie", cookies);
             BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(finalHeaders));
