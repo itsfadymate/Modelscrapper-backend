@@ -42,6 +42,7 @@ public class FileController {
 
             LocalFileHostingService.FileInfo fileInfo = fileHostingService.getFileInfo(filename);
             String contentType = fileInfo.getContentType();
+            logger.debug("Serving file: {}, Content-Type: {}", filename, contentType);
             String disposition = "attachment";
 
             StreamingResponseBody responseBody = outputStream -> {

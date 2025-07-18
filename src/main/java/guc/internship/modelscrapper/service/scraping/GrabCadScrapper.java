@@ -147,7 +147,7 @@ public class GrabCadScrapper implements ScrapingService {
 
             try {
                 Locator consentButton = page.locator("button:has-text(\"Accept\")").first();
-                logger.debug("trying to click consent button, html {}", page.content());
+                logger.debug("trying to click consent button");
                 if (consentButton.isVisible()) {
                     consentButton.click();
                     logger.debug("clicked consent button");
