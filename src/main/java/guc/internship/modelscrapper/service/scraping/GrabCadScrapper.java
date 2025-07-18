@@ -155,18 +155,6 @@ public class GrabCadScrapper implements ScrapingService {
                 logger.debug("end of cookie consent overlay try block");
             } catch (Exception e) {
                 logger.debug("No consent dialog found or error clicking consent: {}", e.getMessage());
-                try {
-                    Locator overlay = page.locator("div.fc-dialog-overlay");
-                    if (overlay.count() > 0) {
-                        logger.debug("Blocking overlay HTML: {}", overlay.first().evaluate("el => el.outerHTML"));
-                    }
-                    Locator consentRoot = page.locator("div.fc-consent-root");
-                    if (consentRoot.count() > 0) {
-                        logger.debug("Consent root HTML: {}", consentRoot.first().evaluate("el => el.outerHTML"));
-                    }
-                } catch (Exception ex) {
-                    logger.debug("Could not print blocking overlay HTML: {}", ex.getMessage());
-                }
             }
 
             try {
@@ -178,6 +166,20 @@ public class GrabCadScrapper implements ScrapingService {
             } catch (Exception e) {
                 logger.debug("couldn't click on hide modal button");
             }
+
+            try {
+                Locator overlay = page.locator("div.fc-dialog-overlay");
+                if (overlay.count() > 0) {
+                    logger.debug("Blocking overlay HTML: {}", overlay.first().evaluate("el => el.outerHTML"));
+                }
+                Locator consentRoot = page.locator("div.fc-consent-root");
+                if (consentRoot.count() > 0) {
+                    logger.debug("Consent root HTML: {}", consentRoot.first().evaluate("el => el.outerHTML"));
+                }
+            } catch (Exception ex) {
+                logger.debug("Could not print blocking overlay HTML: {}", ex.getMessage());
+            }
+
             page.navigate(downloadPageUrl, new Page.NavigateOptions().setTimeout(300000));
             logger.debug("Renavigated to {}", downloadPageUrl);
 
