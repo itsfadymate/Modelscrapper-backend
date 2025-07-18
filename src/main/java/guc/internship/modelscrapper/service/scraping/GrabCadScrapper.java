@@ -157,6 +157,18 @@ public class GrabCadScrapper implements ScrapingService {
                 logger.debug("No consent dialog found or error clicking consent: {}", e.getMessage());
             }
 
+            try {
+                Locator modalCloseButton = page.locator("img.gc-shared-homepagev2modal__hidebutton").first();
+                if (modalCloseButton.isVisible()) {
+                    modalCloseButton.click();
+                    logger.debug("Closed homepage modal popup");
+                }
+            } catch (Exception e) {
+                logger.debug("couldn't click on hide modal button");
+            }
+            page.navigate(downloadPageUrl, new Page.NavigateOptions().setTimeout(300000));
+            logger.debug("Renavigated to {}", downloadPageUrl);
+
             page.waitForSelector(".tbody .row.ng-scope");
             List<ElementHandle> elements = page.querySelectorAll(".tbody .row.ng-scope");
 
