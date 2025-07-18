@@ -147,7 +147,7 @@ public class GrabCadScrapper implements ScrapingService {
 
             try {
                 Locator consentButton = page.locator("button:has-text(\"Accept\")").first();
-                logger.debug("trying to click consent button, html {}",page.content());
+                logger.debug("trying to click consent button, html {}", page.content());
                 if (consentButton.isVisible()) {
                     consentButton.click();
                     logger.debug("clicked consent button");
@@ -155,6 +155,18 @@ public class GrabCadScrapper implements ScrapingService {
                 logger.debug("end of cookie consent overlay try block");
             } catch (Exception e) {
                 logger.debug("No consent dialog found or error clicking consent: {}", e.getMessage());
+                try {
+                    Locator overlay = page.locator("div.fc-dialog-overlay");
+                    if (overlay.count() > 0) {
+                        logger.debug("Blocking overlay HTML: {}", overlay.first().evaluate("el => el.outerHTML"));
+                    }
+                    Locator consentRoot = page.locator("div.fc-consent-root");
+                    if (consentRoot.count() > 0) {
+                        logger.debug("Consent root HTML: {}", consentRoot.first().evaluate("el => el.outerHTML"));
+                    }
+                } catch (Exception ex) {
+                    logger.debug("Could not print blocking overlay HTML: {}", ex.getMessage());
+                }
             }
 
             try {
@@ -187,8 +199,7 @@ public class GrabCadScrapper implements ScrapingService {
             browser.close();
         } catch (Exception e) {
             logger.debug("couldnt get grabcad download links {} ",e.getMessage());
-            if (page!=null)
-                logger.debug(page.content());
+            ;
         }
         return resultFiles;
     }
