@@ -2,6 +2,8 @@ package guc.internship.modelscrapper.service.scraping;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
+
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.jsoup.Jsoup;
@@ -146,13 +148,19 @@ public class GrabCadScrapper implements ScrapingService {
             logger.debug("navigating to {}",downloadPageUrl);
 
             try {
-                Locator consentButton = page.locator("button:has-text(\"Accept\")").first();
-                logger.debug("trying to click consent button");
-                if (consentButton.isVisible()) {
-                    consentButton.click();
-                    logger.debug("clicked consent button");
+                // Wait for the overlay to appear (if it does)
+                page.waitForSelector("div.fc-dialog-overlay", new Page.WaitForSelectorOptions().setTimeout(5000));
+                // Try to click the accept button if visible
+                ElementHandle acceptBtn = page.querySelector("button.fc-vendor-preferences-accept-all");
+                if (acceptBtn != null && acceptBtn.isVisible()) {
+                    acceptBtn.click();
+                    logger.debug("Clicked consent accept button");
+                    // Wait for overlay to disappear
+                    page.waitForSelector("div.fc-dialog-overlay", new Page.WaitForSelectorOptions().setState(WaitForSelectorState.DETACHED).setTimeout(10000));
+                    logger.debug("Consent overlay dismissed");
+                } else {
+                    logger.debug("Consent accept button not found or not visible");
                 }
-                logger.debug("end of cookie consent overlay try block");
             } catch (Exception e) {
                 logger.debug("No consent dialog found or error clicking consent: {}", e.getMessage());
             }
@@ -167,28 +175,16 @@ public class GrabCadScrapper implements ScrapingService {
                 logger.debug("couldn't click on hide modal button");
             }
 
-            try {
-                Locator overlay = page.locator("div.fc-dialog-overlay");
-                if (overlay.count() > 0) {
-                    logger.debug("Blocking overlay HTML: {}", overlay.first().evaluate("el => el.outerHTML"));
-                }
-                Locator consentRoot = page.locator("div.fc-consent-root");
-                if (consentRoot.count() > 0) {
-                    logger.debug("Consent root HTML: {}", consentRoot.first().evaluate("el => el.outerHTML"));
-                }
-            } catch (Exception ex) {
-                logger.debug("Could not print blocking overlay HTML: {}", ex.getMessage());
-            }
-
-            page.navigate(downloadPageUrl, new Page.NavigateOptions().setTimeout(300000));
+           /* page.navigate(downloadPageUrl, new Page.NavigateOptions().setTimeout(300000));
             logger.debug("Renavigated to {}", downloadPageUrl);
-
+*/
             page.waitForSelector(".tbody .row.ng-scope");
             List<ElementHandle> elements = page.querySelectorAll(".tbody .row.ng-scope");
 
             for (ElementHandle e : elements){
                 e.click();
                 page.waitForSelector("span.actions");
+                page.waitForSelector("span.downloadText", new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE));
                 ElementHandle downloadButton = page.querySelector("span.downloadText");
                 Download download = page.waitForDownload(()->{
                     downloadButton.click();
@@ -201,7 +197,6 @@ public class GrabCadScrapper implements ScrapingService {
             browser.close();
         } catch (Exception e) {
             logger.debug("couldnt get grabcad download links {} ",e.getMessage());
-            ;
         }
         return resultFiles;
     }
