@@ -17,12 +17,19 @@ public class GoogleSearchResponse {
         this.items = items;
     }
 
+    @Override
+    public String toString() {
+        return "GoogleSearchResponse{" +
+                "items=" + items +
+                '}';
+    }
+
     static class Item {
         @JsonProperty("link")
         private String link;
 
         public String getID() {
-            return link.substring(link.lastIndexOf(":"));
+            return link.substring(link.lastIndexOf(":")+1);
         }
 
         public void setLink(String link) {
