@@ -34,7 +34,7 @@ public class ApiPreviewData implements ScrapePreviewData {
 
             ThingiverseSearchResponse response = thingiverseApiClient.searchThings(searchTerm,type,hasMakes,sortCriteria);
 
-
+            String websiteName = new ThingiverseScrapper().getSourceName();
             List<ModelPreview> previews = response.getHits().stream()
                     .filter(searchObject -> !searchObject.isNsfw())
                     .map((searchObject)-> new ModelPreview()
@@ -48,7 +48,7 @@ public class ApiPreviewData implements ScrapePreviewData {
                                     )
                             )
                             .setWebsiteLink(searchObject.getPublicUrl())
-                            .setWebsiteName(new ThingiverseScrapper().getSourceName())
+                            .setWebsiteName(websiteName)
                             .setMakesCount(searchObject.getMakeCount())
                             .setPrice("0")
                             .setLikesCount(searchObject.getLikeCount())
