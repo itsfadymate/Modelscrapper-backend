@@ -1,0 +1,14 @@
+package guc.internship.modelscrapper.client.google;
+
+import guc.internship.modelscrapper.dto.google.GoogleResponse;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@FeignClient(name="google", url="${google.api.url}")
+public interface GoogleApiClient {
+  @GetMapping("customsearch/v1?")
+  GoogleResponse searchTerm(@RequestParam("key") String apiKey,
+          @RequestParam("cx") String searchEngine,
+          @RequestParam("q") String searchTerm);
+}
