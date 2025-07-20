@@ -4,7 +4,7 @@ import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
-import guc.internship.modelscrapper.service.scraping.ScrapePreviewData;
+import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("ApiPreviewData")
-public class ApiPreviewData implements ScrapePreviewData {
-    private static final Logger logger = LoggerFactory.getLogger(ApiPreviewData.class);
+public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
+    private static final Logger logger = LoggerFactory.getLogger(ApiPreviewDataStrategy.class);
     private static final int hasMakes =1;
     private static final String type ="thing";
     private static final String sortCriteria = "relevant";

@@ -6,7 +6,7 @@ import guc.internship.modelscrapper.dto.google.GoogleSearchResponse;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseThing;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
-import guc.internship.modelscrapper.service.scraping.ScrapePreviewData;
+import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("GooglePreviewData")
-public class GooglePreviewData implements ScrapePreviewData {
+public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
-    private final static Logger logger = LoggerFactory.getLogger(GooglePreviewData.class);
+    private final static Logger logger = LoggerFactory.getLogger(GooglePreviewDataStrategy.class);
     @Value("${google.api.key}")
     private String apiKey;
     @Value("${google.custom.searchengine}")
