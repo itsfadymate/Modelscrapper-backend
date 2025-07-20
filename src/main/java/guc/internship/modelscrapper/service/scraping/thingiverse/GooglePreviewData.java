@@ -35,10 +35,12 @@ public class GooglePreviewData implements ScrapePreviewData {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
-          try{
-              logger.debug("scraping thingiverse preview data from google");
-              GoogleSearchResponse response = googleApiClient.searchTerm(apiKey,customSearchEngineID,searchTerm);
-              List<String> ids = response.getIds();
+          logger.debug("scraping thingiverse preview data from google");
+          GoogleSearchResponse response = null;
+          List<String> ids = List.of();
+          try {
+              response = googleApiClient.searchTerm(apiKey,customSearchEngineID,searchTerm);
+              ids = response.getIds();
               List<ModelPreview> modelPreviews = new ArrayList<>();
               String websiteName = new ThingiverseScrapper().getSourceName();
               for (String id : ids){
@@ -50,8 +52,8 @@ public class GooglePreviewData implements ScrapePreviewData {
                           .setWebsiteName(websiteName)
                           .setImageLink(
                                   fileHoster.downloadAndRehost(
-                                          model.getPreviewImage()
-                                          ,model.getPreviewImage().substring(model.getPreviewImage().lastIndexOf('.')
+                                          model.getPreviewImages()
+                                          ,model.getPreviewImages().substring(model.getPreviewImages().lastIndexOf('.')
                                           )
                                   )
                           )
@@ -65,7 +67,9 @@ public class GooglePreviewData implements ScrapePreviewData {
               }
               return modelPreviews;
           }catch (Exception e){
-              logger.debug("something went wrong while getting previewData from google");
+              logger.debug("something went wrong while getting previewData from google {}", e.getMessage());
+              logger.debug("    google response {}",response);
+              logger.debug("    ids: {}",ids);
               return List.of();
           }
     }
