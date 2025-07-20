@@ -4,6 +4,6 @@ import java.util.List;
 
 import guc.internship.modelscrapper.model.ModelPreview;
 
-public interface ScrapePreviewData {
+public interface ScrapePreviewDataStrategy {
     List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly);
 }
