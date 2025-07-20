@@ -1,8 +1,9 @@
-package guc.internship.modelscrapper.service.scraping;
+package guc.internship.modelscrapper.service.scraping.printables;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +19,7 @@ import java.util.List;
 
 
 @Service
-public class Printables implements ScrapingService{
+public class Printables implements ScrapingService {
     private static final Logger logger = LoggerFactory.getLogger(Printables.class);
 
     @Value("${Printables.base.url}")

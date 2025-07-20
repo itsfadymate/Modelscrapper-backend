@@ -1,8 +1,9 @@
-package guc.internship.modelscrapper.service.scraping;
+package guc.internship.modelscrapper.service.scraping.sketchfab;
 
 import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
 import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

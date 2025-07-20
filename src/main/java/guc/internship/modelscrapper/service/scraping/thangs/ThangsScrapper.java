@@ -1,8 +1,9 @@
-package guc.internship.modelscrapper.service.scraping;
+package guc.internship.modelscrapper.service.scraping.thangs;
 
 import com.microsoft.playwright.*;
 
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

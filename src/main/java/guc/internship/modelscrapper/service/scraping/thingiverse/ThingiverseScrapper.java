@@ -1,9 +1,10 @@
-package guc.internship.modelscrapper.service.scraping;
+package guc.internship.modelscrapper.service.scraping.thingiverse;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
+import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

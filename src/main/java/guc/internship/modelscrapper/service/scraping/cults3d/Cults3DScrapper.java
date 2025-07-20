@@ -1,4 +1,4 @@
-package guc.internship.modelscrapper.service.scraping;
+package guc.internship.modelscrapper.service.scraping.cults3d;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -7,6 +7,7 @@ import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
+import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
