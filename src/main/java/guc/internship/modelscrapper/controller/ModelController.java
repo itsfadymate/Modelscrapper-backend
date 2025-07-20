@@ -35,10 +35,11 @@ public class ModelController {
     public List<ModelPreview> searchModels(
         @RequestParam String searchTerm,
         @RequestParam(required = false) List<String> sources,
-        @RequestParam(required = false, defaultValue = "false") Boolean showFreeOnly) {
+        @RequestParam(required = false, defaultValue = "false") Boolean showFreeOnly,
+        @RequestParam(required = false) List<String> sourcesToGoogle) {
         
         logger.debug("Received search request for: {}", searchTerm);
-        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources,showFreeOnly);
+        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources,showFreeOnly,sourcesToGoogle);
         logger.debug("Found {} models for search term: {}", results.size(), searchTerm);
         return results;
     }
