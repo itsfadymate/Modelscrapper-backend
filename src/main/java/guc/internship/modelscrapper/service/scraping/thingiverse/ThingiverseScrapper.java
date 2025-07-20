@@ -2,7 +2,7 @@ package guc.internship.modelscrapper.service.scraping.thingiverse;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.model.ModelPreview;
-import guc.internship.modelscrapper.service.scraping.ScrapePreviewData;
+import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,11 +19,15 @@ public class ThingiverseScrapper implements ScrapingService {
 
     @Autowired
     @Qualifier("GooglePreviewData")
-    private ScrapePreviewData previewDataScrapper;
+    private ScrapePreviewDataStrategy googleDataScrapper;
+
+    @Autowired
+    @Qualifier("ApiPreviewData")
+    private ScrapePreviewDataStrategy ApiDataScrapper;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) { //haven't found a paid model here
-        return previewDataScrapper.scrapePreviewData(searchTerm,showFreeOnly);
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) { //haven't found a paid model here
+        return useGoogleEngine? googleDataScrapper.scrapePreviewData(searchTerm,showFreeOnly) : ApiDataScrapper.scrapePreviewData(searchTerm,showFreeOnly);
     }
 
     @Override
