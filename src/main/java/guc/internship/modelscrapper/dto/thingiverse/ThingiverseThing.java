@@ -13,8 +13,8 @@ public class ThingiverseThing {
     private String publicUrl;
     @JsonProperty("make_count")
     private int makeCount;
-    @JsonProperty("preview_image")
-    private String previewImage;
+    @JsonProperty("default_image")
+    private Images previewImages;
     @JsonProperty("like_count")
     private String likeCount;
     @JsonProperty("comment_count")
@@ -43,8 +43,8 @@ public class ThingiverseThing {
         this.publicUrl = publicUrl;
     }
 
-    public void setPreviewImage(String previewImage) {
-        this.previewImage = previewImage;
+    public void setPreviewImages(Images previewImages) {
+        this.previewImages = previewImages;
     }
 
     public void setLikeCount(String likeCount) {
@@ -87,8 +87,8 @@ public class ThingiverseThing {
         return makeCount;
     }
 
-    public String getPreviewImage() {
-        return previewImage;
+    public String getPreviewImages() {
+        return previewImages.getThumbnail();
     }
 
     public String getCommentCount() {
@@ -116,6 +116,40 @@ public class ThingiverseThing {
         }
         public void setFiles(List<ModelPreview.File> files) {
             this.files = files;
+        }
+    }
+
+    private static class Images{
+        @JsonProperty("sizes")
+        List<Image> sizes;
+
+        public void setSizes(List<Image> sizes) {
+            this.sizes = sizes;
+        }
+        public String getThumbnail(){
+            return sizes.getFirst().getUrl();
+        }
+    }
+    private static class Image{
+        @JsonProperty("size")
+        private String size;
+        @JsonProperty("url")
+        private String url;
+
+        public String getSize() {
+            return size;
+        }
+
+        public void setSize(String size) {
+            this.size = size;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
         }
     }
 }
