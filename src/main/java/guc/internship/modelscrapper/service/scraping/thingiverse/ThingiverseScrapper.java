@@ -18,7 +18,7 @@ public class ThingiverseScrapper implements ScrapingService {
     private ThingiverseApiClient thingiverseApiClient;
 
     @Autowired
-    @Qualifier("ApiPreviewData")
+    @Qualifier("GooglePreviewData")
     private ScrapePreviewData previewDataScrapper;
 
     @Override
