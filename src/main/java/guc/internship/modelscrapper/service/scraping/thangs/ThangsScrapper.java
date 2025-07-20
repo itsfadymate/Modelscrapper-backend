@@ -38,7 +38,7 @@ public class ThangsScrapper implements ScrapingService {
     private static final Logger logger = LoggerFactory.getLogger(ThangsScrapper.class);
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
         url = url+searchTerm+QUERY_PARAMETERS + (showFreeOnly? "" : "&paidModels=true" );
         logger.info("searching for {} in url {}",searchTerm,url);
         try{

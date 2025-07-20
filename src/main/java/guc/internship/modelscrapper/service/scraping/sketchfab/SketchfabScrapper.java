@@ -22,7 +22,7 @@ public class SketchfabScrapper implements ScrapingService {
     private static final Logger logger = LoggerFactory.getLogger(SketchfabScrapper.class);
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly,boolean useGoogleEngine) {
         try{
             SketchfabSearchResponse searchResponse = apiClient.searchSketchfab(searchTerm,showFreeOnly);
 

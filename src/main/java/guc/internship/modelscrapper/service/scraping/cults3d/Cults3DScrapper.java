@@ -34,7 +34,7 @@ public class Cults3DScrapper implements ScrapingService {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
         logger.debug("Searching Cults3D API for: {}", searchTerm);
 
         String query = String.format("""

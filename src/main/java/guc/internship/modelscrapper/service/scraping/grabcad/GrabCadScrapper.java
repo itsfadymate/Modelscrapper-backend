@@ -34,7 +34,7 @@ public class GrabCadScrapper implements ScrapingService {
     private String cookies;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
         logger.debug("Scraping GrabCAD for: {}", searchTerm);
 
         try (Playwright playwright = Playwright.create()) {

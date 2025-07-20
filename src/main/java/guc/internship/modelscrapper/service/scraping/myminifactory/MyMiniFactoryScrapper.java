@@ -19,7 +19,7 @@ public class MyMiniFactoryScrapper implements ScrapingService {
     private MyMiniFactoryApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
         if (showFreeOnly) return List.of(); //I am assuming all are paid
         try {
             logger.debug("Searching MyMiniFactory API for: {}", searchTerm);

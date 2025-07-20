@@ -29,7 +29,7 @@ public class Printables implements ScrapingService {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly,boolean useGoogleEnine) {
         logger.debug("Scrapping printables for preview data");
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
