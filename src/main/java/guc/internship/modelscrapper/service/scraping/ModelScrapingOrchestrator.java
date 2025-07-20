@@ -37,7 +37,7 @@ public class ModelScrapingOrchestrator {
         List<CompletableFuture<List<ModelPreview>>> futures = new ArrayList<>();
 
         HashSet<String> enabledSourcesSet = new HashSet<>(enabledSources==null? List.of() : enabledSources);
-        HashSet<String> googleSources = new HashSet<>(googleSearchSources);
+        HashSet<String> googleSources = new HashSet<>(googleSearchSources==null? List.of() : googleSearchSources);
         
         for (ScrapingService service : scrapingServices) {
             boolean shouldInclude = service.isEnabled() && 
