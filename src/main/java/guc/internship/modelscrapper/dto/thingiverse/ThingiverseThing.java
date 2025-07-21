@@ -27,6 +27,9 @@ public class ThingiverseThing {
     @JsonProperty("zip_data")
     private ZipData zipData;
 
+    @JsonProperty("error")
+    private String error;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -67,6 +70,10 @@ public class ThingiverseThing {
         this.zipData = zipData;
     }
 
+    public void setError(String error) {
+        this.error = error;
+    }
+
     public List<ModelPreview.File> getFiles() {
         return zipData.getFiles();
     }
@@ -105,6 +112,10 @@ public class ThingiverseThing {
 
     public boolean isNsfw() {
         return isNsfw;
+    }
+
+    public String getError() {
+        return  error;
     }
 
 
