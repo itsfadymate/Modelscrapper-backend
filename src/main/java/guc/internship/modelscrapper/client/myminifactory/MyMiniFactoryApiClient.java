@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.client.myminifactory;
 
+import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactoryDTO;
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactoryObjectMakes;
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactorySearchResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,4 +16,7 @@ public interface MyMiniFactoryApiClient {
 
     @GetMapping("/objects/{objectId}/prints")
     MyMiniFactoryObjectMakes getObjectPrints(@PathVariable("objectId")String id);
+
+    @GetMapping("/objects/{objectId}")
+    MyMiniFactoryDTO getObject(@PathVariable("objectId")String id);
 }
