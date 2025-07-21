@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
     private final static Logger logger = LoggerFactory.getLogger(GooglePreviewDataStrategy.class);
 
-    private final static int PAGES_TO_FETCH = 7;
+    private final static int PAGES_TO_FETCH = 4;
 
     @Autowired
     private GoogleApiClient googleApiClient;
@@ -63,7 +64,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
         logger.debug("getting cults google preview data");
         List<String> slugs = List.of();
-        List<ModelPreview> modelPreviews = List.of();
+        List<ModelPreview> modelPreviews = new ArrayList<>();
         String websiteName = new Cults3DScrapper().getSourceName();
         for (int page = 0; page < PAGES_TO_FETCH; page++){
             try {
@@ -93,7 +94,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                 ).filter(Objects::nonNull).toList());
                 logger.debug("retrieved cults3d google models");
             } catch (Exception e) {
-                logger.error("couldn't get cults' google preview data {} ", e.getMessage());
+                logger.error("couldn't get cults' google preview data {} exception ", e.getMessage());
                 logger.error("obtained slugs {}", slugs);
             }
         }
