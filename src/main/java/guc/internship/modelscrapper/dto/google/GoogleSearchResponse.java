@@ -9,8 +9,9 @@ public class GoogleSearchResponse {
     @JsonProperty("items")
     private List<Item> items;
 
-    public List<String> getIds(){
-        return items.stream().map(Item::getID).toList();
+
+    public List<String> getLinks(){
+        return items.stream().map(Item::getLink).toList();
     }
 
     public void setItems(List<Item> items) {
@@ -28,8 +29,10 @@ public class GoogleSearchResponse {
         @JsonProperty("link")
         private String link;
 
-        public String getID() {
-            return link.substring(link.lastIndexOf(":")+1);
+
+
+        public String getLink() {
+            return link;
         }
 
         public void setLink(String link) {
