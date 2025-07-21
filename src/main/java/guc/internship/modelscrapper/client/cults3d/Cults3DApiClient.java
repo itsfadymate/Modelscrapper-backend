@@ -1,5 +1,5 @@
 package guc.internship.modelscrapper.client.cults3d;
-import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
+import guc.internship.modelscrapper.dto.cults3d.Cults3DCreation;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,5 +18,5 @@ public interface Cults3DApiClient {
     Cults3DUrlResponse getUrl(@RequestBody String urlQuery);
 
     @PostMapping("/graphql")
-    Cults3DDTO getModel(@RequestBody String query);
+    Cults3DCreation getModel(@RequestBody String query);
 }
