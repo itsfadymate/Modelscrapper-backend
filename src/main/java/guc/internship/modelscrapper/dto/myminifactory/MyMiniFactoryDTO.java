@@ -33,6 +33,9 @@ public class MyMiniFactoryDTO {
     @JsonProperty("price")
     private Price price;
 
+    @JsonProperty("error")
+    private String error;
+
     // Getters and setters
     public int getId() {
         return id;
@@ -119,6 +122,14 @@ public class MyMiniFactoryDTO {
 
     public void setPrice(Price price) {
         this.price = price;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     @Override
