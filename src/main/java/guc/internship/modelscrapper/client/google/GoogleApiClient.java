@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name="google-api", url="${google.api.url}",configuration = GoogleFeignConfig.class)
 public interface GoogleApiClient {
+
+  int RESULTS_PER_PAGE = 10;
+
   @GetMapping("customsearch/v1")
   GoogleSearchResponse searchTerm(@RequestParam("cx") String searchEngine,
-                                  @RequestParam("q") String searchTerm);
+                                  @RequestParam("q") String searchTerm,
+                                  @RequestParam("start") int startIndex);
 }
