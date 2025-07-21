@@ -30,6 +30,9 @@ public class MyMiniFactoryDTO {
     @JsonProperty("material_quantity")
     private String materialQuantity;
 
+    @JsonProperty("price")
+    private Price price;
+
     // Getters and setters
     public int getId() {
         return id;
@@ -108,6 +111,14 @@ public class MyMiniFactoryDTO {
 
     public String getMaterialQuantity() {
         return this.materialQuantity;
+    }
+
+    public String getPrice() {
+        return price==null?"0":price.getPrice();
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
     }
 
     @Override
@@ -194,5 +205,19 @@ public class MyMiniFactoryDTO {
         public int getMakeCount() {
             return makeCount;
         }
+    }
+
+    private static class Price{
+        @JsonProperty("symbol")
+        private String symbol;
+        @JsonProperty("value")
+        private String value;
+        public void setValue(String value) {
+            this.value = value;
+        }
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
+        public String getPrice(){return value+symbol;}
     }
 }

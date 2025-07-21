@@ -40,7 +40,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setMakesCount(dto.getMakesCount())
                             .setFiles(dto.getFiles())
                             .setLikesCount(dto.getLikesCount())
-                            .setPrice("could be paid")
+                            .setPrice(dto.getPrice())
 
                     )
                     .collect(Collectors.toList());
