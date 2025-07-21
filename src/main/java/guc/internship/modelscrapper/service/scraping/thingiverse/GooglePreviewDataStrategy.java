@@ -21,8 +21,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     private final static Logger logger = LoggerFactory.getLogger(GooglePreviewDataStrategy.class);
-    @Value("${google.api.key}")
-    private String apiKey;
+
     @Value("${google.custom.searchengine}")
     private String customSearchEngineID;
     @Autowired
@@ -39,7 +38,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
           GoogleSearchResponse response = null;
           List<String> ids = List.of();
           try {
-              response = googleApiClient.searchTerm(apiKey,customSearchEngineID,searchTerm);
+              response = googleApiClient.searchTerm(customSearchEngineID,searchTerm);
               ids = response.getIds();
               List<ModelPreview> modelPreviews = new ArrayList<>();
               String websiteName = new ThingiverseScrapper().getSourceName();
