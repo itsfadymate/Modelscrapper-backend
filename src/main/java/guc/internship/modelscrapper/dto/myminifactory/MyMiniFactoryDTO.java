@@ -6,16 +6,16 @@ import guc.internship.modelscrapper.model.ModelPreview;
 import java.util.List;
 
 public class MyMiniFactoryDTO {
-    
+
     @JsonProperty("id")
     private int id;
-    
+
     @JsonProperty("name")
     private String name;
-    
+
     @JsonProperty("url")
     private String url;
-    
+
     @JsonProperty("images")
     private List<Image> images;
 
@@ -34,23 +34,23 @@ public class MyMiniFactoryDTO {
     public int getId() {
         return id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getUrl() {
         return url;
     }
-    
+
     public void setUrl(String url) {
         this.url = url;
     }
@@ -63,8 +63,12 @@ public class MyMiniFactoryDTO {
         this.files = files;
     }
 
-    public List<ModelPreview.File> getFiles(){
-        return this.files.getItems();
+    public List<ModelPreview.File> getFiles() {
+        final String downloadUrlPattern = "https://www.myminifactory.com/download/%s?downloadfile=%s";
+        return this.files.getItems().stream().map(item -> {
+                    String downloadUrl = String.format(downloadUrlPattern, this.getId(), item.getName());
+                   return  new ModelPreview.File(item.getName(), downloadUrl);
+                }).toList();
     }
 
     public String getPreviewImageUrl() {
@@ -86,23 +90,23 @@ public class MyMiniFactoryDTO {
         this.prints = prints;
     }
 
-    public int getMakesCount(){
+    public int getMakesCount() {
         return this.prints.getMakeCount();
     }
 
-    public void setLikeCount(String likeCount){
+    public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
 
-    public String getLikesCount(){
+    public String getLikesCount() {
         return this.likeCount;
     }
 
-    public void setMaterialQuantity(String materialQuantity){
+    public void setMaterialQuantity(String materialQuantity) {
         this.materialQuantity = materialQuantity;
     }
 
-    public String getMaterialQuantity(){
+    public String getMaterialQuantity() {
         return this.materialQuantity;
     }
 
@@ -165,12 +169,14 @@ public class MyMiniFactoryDTO {
         }
     }
 
-    private static class Files{
+    private static class Files {
         @JsonProperty("items")
         private List<ModelPreview.File> items;
+
         public void setItems(List<ModelPreview.File> items) {
             this.items = items;
         }
+
 
         public List<ModelPreview.File> getItems() {
             return items;
