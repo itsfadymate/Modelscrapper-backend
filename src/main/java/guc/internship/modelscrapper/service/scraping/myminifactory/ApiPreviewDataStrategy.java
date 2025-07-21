@@ -22,7 +22,6 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
-        if (showFreeOnly) return List.of(); //I am assuming all are paid
         String websiteName = new MyMiniFactoryScrapper().getSourceName();
         List<ModelPreview> previews = new ArrayList<>();
         try {
@@ -42,7 +41,9 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setLikesCount(dto.getLikesCount())
                             .setPrice(dto.getPrice())
 
-                    )
+                    ).filter(showFreeOnly?
+                            model->model.getPrice().equals("0")
+                            :model->true)
                     .collect(Collectors.toList());
 
             logger.debug("Found {} results from MyMiniFactory API", previews.size());
