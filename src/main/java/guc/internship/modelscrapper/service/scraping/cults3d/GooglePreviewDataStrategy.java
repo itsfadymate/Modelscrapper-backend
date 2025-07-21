@@ -21,7 +21,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
     private final static Logger logger = LoggerFactory.getLogger(GooglePreviewDataStrategy.class);
 
-    private final static int PAGES_TO_FETCH = 4;
+    private final static int PAGES_TO_FETCH = 7;
 
     @Autowired
     private GoogleApiClient googleApiClient;
@@ -69,7 +69,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
             try {
                 GoogleSearchResponse response = googleApiClient.searchTerm(cx, searchTerm, page * GoogleApiClient.RESULTS_PER_PAGE);
                 slugs = response.getLinks().stream().map(l -> l.substring(l.lastIndexOf("/") + 1)).toList();
-                modelPreviews = slugs.stream().map(slug -> {
+                modelPreviews.addAll(slugs.stream().map(slug -> {
                             String query = String.format(QUERY, slug).replaceAll("\n", "");
                             Cults3DCreation model = cultsApi.getModel(query);
                             if (model.getData().getCreation() == null) {
@@ -90,7 +90,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                     .setCommentsCount(String.valueOf(dto.getCommentCount()))
                                     .setFeatured(dto.isFeatured());
                         }
-                ).filter(Objects::nonNull).toList();
+                ).filter(Objects::nonNull).toList());
                 logger.debug("retrieved cults3d google models");
             } catch (Exception e) {
                 logger.error("couldn't get cults' google preview data {} ", e.getMessage());
