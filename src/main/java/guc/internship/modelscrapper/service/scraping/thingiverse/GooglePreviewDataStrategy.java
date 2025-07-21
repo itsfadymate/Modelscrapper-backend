@@ -47,27 +47,31 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                 ids = response.getLinks().stream().map(link -> link.substring(link.lastIndexOf(":") + 1)).toList();
                 String websiteName = new ThingiverseScrapper().getSourceName();
                 for (String id : ids) {
-                    ThingiverseThing model = thingiverseApiClient.getThing(id);
-                    if (model.getError()!=null)continue;
-                    modelPreviews.add(new ModelPreview()
-                            .setId(model.getPublicUrl())
-                            .setModelName(model.getName())
-                            .setWebsiteLink(model.getPublicUrl())
-                            .setWebsiteName(websiteName)
-                            .setImageLink(
-                                    fileHoster.downloadAndRehost(
-                                            model.getPreviewImages()
-                                            , model.getPreviewImages().substring(model.getPreviewImages().lastIndexOf('.')
-                                            )
-                                    )
-                            )
-                            .setPrice("0")
-                            .setFeatured(model.isFeatured())
-                            .setMakesCount(model.getMakeCount())
-                            .setLikesCount(model.getLikeCount())
-                            .setCommentsCount(model.getCommentCount())
-                            .setFiles(model.getFiles())
-                    );
+                    try {
+                        ThingiverseThing model = thingiverseApiClient.getThing(id);
+                        if (model.getError() != null) continue;
+                        modelPreviews.add(new ModelPreview()
+                                .setId(model.getPublicUrl())
+                                .setModelName(model.getName())
+                                .setWebsiteLink(model.getPublicUrl())
+                                .setWebsiteName(websiteName)
+                                .setImageLink(
+                                        fileHoster.downloadAndRehost(
+                                                model.getPreviewImages()
+                                                , model.getPreviewImages().substring(model.getPreviewImages().lastIndexOf('.')
+                                                )
+                                        )
+                                )
+                                .setPrice("0")
+                                .setFeatured(model.isFeatured())
+                                .setMakesCount(model.getMakeCount())
+                                .setLikesCount(model.getLikeCount())
+                                .setCommentsCount(model.getCommentCount())
+                                .setFiles(model.getFiles())
+                        );
+                    } catch (Exception e) {
+                        logger.debug("couldn't fetch object with id {} exception: {}", id, e.getMessage());
+                    }
                 }
 
             } catch (Exception e) {

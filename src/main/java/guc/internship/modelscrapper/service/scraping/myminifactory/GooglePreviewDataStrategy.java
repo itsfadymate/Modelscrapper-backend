@@ -44,25 +44,27 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                 ids = response.getLinks().stream().map(link -> link.substring(link.lastIndexOf("-") + 1)).toList();
                 String websiteName = new MyMiniFactoryScrapper().getSourceName();
                 for (String id : ids) {
-                    MyMiniFactoryDTO dto = miniFactoryApiClient.getObject(id);
-                    if (dto.getError() != null) continue;
-                    modelPreviews.add(new ModelPreview()
-                            .setId(String.valueOf(dto.getId()))
-                            .setImageLink(dto.getPreviewImageUrl())
-                            .setModelName(dto.getName())
-                            .setWebsiteName(websiteName)
-                            .setWebsiteLink(dto.getUrl())
-                            .setMakesCount(dto.getMakesCount())
-                            .setFiles(dto.getFiles())
-                            .setLikesCount(dto.getLikesCount())
-                            .setPrice(dto.getPrice())
-                    );
+                    try {
+                        MyMiniFactoryDTO dto = miniFactoryApiClient.getObject(id);
+                        modelPreviews.add(new ModelPreview()
+                                .setId(String.valueOf(dto.getId()))
+                                .setImageLink(dto.getPreviewImageUrl())
+                                .setModelName(dto.getName())
+                                .setWebsiteName(websiteName)
+                                .setWebsiteLink(dto.getUrl())
+                                .setMakesCount(dto.getMakesCount())
+                                .setFiles(dto.getFiles())
+                                .setLikesCount(dto.getLikesCount())
+                                .setPrice(dto.getPrice())
+                        );
+                    } catch (Exception e) {
+                        logger.debug("couldn't fetch object with id {} exception: {}", id, e.getMessage());
+                    }
                 }
             } catch (Exception e) {
                 logger.debug("something went wrong while getting previewData from google {}", e.getMessage());
                 logger.debug("    google response {}", response);
                 logger.debug("    ids: {}", ids);
-
             }
         }
         return modelPreviews;
