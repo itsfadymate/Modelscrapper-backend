@@ -39,7 +39,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
           List<String> ids = List.of();
           try {
               response = googleApiClient.searchTerm(customSearchEngineID,searchTerm);
-              ids = response.getIds();
+              ids = response.getLinks().stream().map(link->link.substring(link.lastIndexOf(":")+1)).toList();
               List<ModelPreview> modelPreviews = new ArrayList<>();
               String websiteName = new ThingiverseScrapper().getSourceName();
               for (String id : ids){
