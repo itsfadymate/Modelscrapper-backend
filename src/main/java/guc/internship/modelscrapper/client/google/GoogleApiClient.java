@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="google-api", url="${google.api.url}")
+@FeignClient(name="google-api", url="${google.api.url}",configuration = GoogleFeignConfig.class)
 public interface GoogleApiClient {
   @GetMapping("customsearch/v1")
   GoogleSearchResponse searchTerm(@RequestParam("cx") String searchEngine,
