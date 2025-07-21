@@ -65,7 +65,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
         String websiteName = new Cults3DScrapper().getSourceName();
         try{
             GoogleSearchResponse response = googleApiClient.searchTerm(cx,searchTerm);
-            slugs = response.getLinks().stream().map(l->l.substring(l.lastIndexOf("/"))).toList();
+            slugs = response.getLinks().stream().map(l->l.substring(l.lastIndexOf("/")+1)).toList();
             modelPreviews = slugs.stream().map(slug->{
                 String query = String.format(QUERY,slug).replaceAll("\n","");
                 Cults3DCreation model = cultsApi.getModel(query);
