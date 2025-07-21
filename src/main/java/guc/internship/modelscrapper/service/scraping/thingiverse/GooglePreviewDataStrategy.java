@@ -24,7 +24,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
     private final static int PAGES_TO_FETCH = 4;
 
-    @Value("${google.custom.searchengine}")
+    @Value("${thingiverse.google.searchengine}")
     private String customSearchEngineID;
     @Autowired
     private ThingiverseApiClient thingiverseApiClient;
