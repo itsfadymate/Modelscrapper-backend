@@ -27,7 +27,7 @@ public class ThingiverseScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) { //haven't found a paid model here
-        return useGoogleEngine? googleDataScrapper.scrapePreviewData(searchTerm,showFreeOnly) : ApiDataScrapper.scrapePreviewData(searchTerm,showFreeOnly);
+        return useGoogleEngine? googleDataScrapper.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : ApiDataScrapper.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
     }
 
     @Override

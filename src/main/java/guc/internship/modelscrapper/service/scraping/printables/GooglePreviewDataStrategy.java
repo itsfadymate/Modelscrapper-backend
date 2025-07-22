@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service("GooglePrintables")
 public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
@@ -28,10 +27,9 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     private static final int PAGES_TO_SEARCH = 7;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         logger.info("getting printables preview data from google");
         List<ModelPreview> models = new ArrayList<>();
-        String websiteName = new Printables().getSourceName();
         for (int page=0;page<PAGES_TO_SEARCH;page++){
             List<GoogleItem> items = googleApi.searchTerm(cx,searchTerm,page*GoogleApiClient.RESULTS_PER_PAGE).getItems();
             for (GoogleItem item : items){

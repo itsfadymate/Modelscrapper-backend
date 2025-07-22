@@ -23,7 +23,7 @@ public class MyMiniFactoryScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly) : ApiPreviewer.scrapePreviewData(searchTerm,showFreeOnly);
+        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : ApiPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
     }
 
     @Override

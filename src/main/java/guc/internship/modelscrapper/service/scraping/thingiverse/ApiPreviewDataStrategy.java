@@ -28,14 +28,13 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         try {
             logger.debug("Searching Thingiverse API for: {}", searchTerm);
 
             ThingiverseSearchResponse response = thingiverseApiClient.searchThings(searchTerm,type,hasMakes,sortCriteria);
 
-            String websiteName = new ThingiverseScrapper().getSourceName();
-            List<ModelPreview> previews = response.getHits().stream()
+             List<ModelPreview> previews = response.getHits().stream()
                     .filter(searchObject -> !searchObject.isNsfw())
                     .map((searchObject)-> new ModelPreview()
                             .setId(searchObject.getId())

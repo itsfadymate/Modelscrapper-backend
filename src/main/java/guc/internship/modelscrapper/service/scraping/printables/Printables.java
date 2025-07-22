@@ -29,7 +29,7 @@ public class Printables implements ScrapingService {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly,boolean useGoogleEnine) {
-        return useGoogleEnine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly) : playwrightPreviewer.scrapePreviewData(searchTerm,showFreeOnly);
+        return useGoogleEnine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : playwrightPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
     }
 
 

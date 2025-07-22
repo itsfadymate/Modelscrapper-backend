@@ -20,7 +20,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     @Autowired
     private GoogleApiClient googleApiClient;
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         return List.of();
     }
 }

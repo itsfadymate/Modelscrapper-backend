@@ -21,9 +21,8 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
     private SketchfabApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         logger.debug("getting sketchfab api previewData");
-        String websiteName = new SketchfabScrapper().getSourceName();
         try {
             SketchfabSearchResponse searchResponse = apiClient.searchSketchfab(searchTerm, showFreeOnly);
 

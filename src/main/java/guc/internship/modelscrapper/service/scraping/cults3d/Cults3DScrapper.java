@@ -3,8 +3,6 @@ package guc.internship.modelscrapper.service.scraping.cults3d;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
-import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
-import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 //The website API doesn't provide download APIs for "legal reasons"
 @Service
@@ -45,7 +42,7 @@ public class Cults3DScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly) : apiPreviewer.scrapePreviewData(searchTerm,showFreeOnly);
+        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : apiPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
     }
 
     @Override

@@ -1,7 +1,5 @@
 package guc.internship.modelscrapper.service.scraping.sketchfab;
 
-import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
-import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
@@ -30,7 +28,7 @@ public class SketchfabScrapper implements ScrapingService {
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine?googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly) : ApiPreviewer.scrapePreviewData(searchTerm,showFreeOnly);
+        return useGoogleEngine?googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : ApiPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
     }
 
     @Override

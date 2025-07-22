@@ -61,11 +61,10 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
             """;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         logger.debug("getting cults google preview data");
         List<String> slugs = List.of();
         List<ModelPreview> modelPreviews = new ArrayList<>();
-        String websiteName = new Cults3DScrapper().getSourceName();
         for (int page = 0; page < PAGES_TO_FETCH; page++){
             try {
                 GoogleSearchResponse response = googleApiClient.searchTerm(cx, searchTerm, page * GoogleApiClient.RESULTS_PER_PAGE);

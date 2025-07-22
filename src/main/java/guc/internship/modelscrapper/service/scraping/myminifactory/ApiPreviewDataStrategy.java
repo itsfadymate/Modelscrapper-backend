@@ -21,8 +21,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
     private MyMiniFactoryApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
-        String websiteName = new MyMiniFactoryScrapper().getSourceName();
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         List<ModelPreview> previews = new ArrayList<>();
         try {
             logger.debug("Searching MyMiniFactory API for: {}", searchTerm);

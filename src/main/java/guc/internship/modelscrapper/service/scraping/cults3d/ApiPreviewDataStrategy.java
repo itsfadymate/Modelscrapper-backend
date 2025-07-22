@@ -52,7 +52,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         logger.debug("Searching Cults3D API for: {}", searchTerm);
         String query = String.format(QUERY,searchTerm).replaceAll("\n","");
 
@@ -64,7 +64,6 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                 logger.warn("getSearchResults() returned null");
                 return List.of();
             }
-            String websiteName = new Cults3DScrapper().getSourceName();
 
             List<ModelPreview> previews = response.stream().filter(dto-> {
                 if (showFreeOnly){

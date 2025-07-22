@@ -29,7 +29,7 @@ public class PlaywrightPreviewDataStrategy implements ScrapePreviewDataStrategy 
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         logger.debug("Scrapping printables for preview data");
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
@@ -51,7 +51,6 @@ public class PlaywrightPreviewDataStrategy implements ScrapePreviewDataStrategy 
             Elements cards = doc.select("[data-testid=model]");
 
             List<ModelPreview> models = new ArrayList<>();
-            String websiteName = new Printables().getSourceName();
             for (Element card : cards){
                 ModelPreview preview = extractCardData(card,websiteName);
                 if (preview != null) {

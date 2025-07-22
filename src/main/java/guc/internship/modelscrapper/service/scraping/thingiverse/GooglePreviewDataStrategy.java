@@ -35,7 +35,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
         logger.debug("scraping thingiverse preview data from google");
         GoogleSearchResponse response = null;
         List<ModelPreview> modelPreviews = List.of();
@@ -45,7 +45,6 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
             try {
                 response = googleApiClient.searchTerm(customSearchEngineID, searchTerm, page * GoogleApiClient.RESULTS_PER_PAGE);
                 ids = response.getLinks().stream().map(link -> link.substring(link.lastIndexOf(":") + 1)).toList();
-                String websiteName = new ThingiverseScrapper().getSourceName();
                 for (String id : ids) {
                     try {
                         ThingiverseThing model = thingiverseApiClient.getThing(id);
