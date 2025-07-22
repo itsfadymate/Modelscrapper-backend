@@ -37,7 +37,7 @@ public class GoogleItem {
 
 
     private static class PageMap {
-        @JsonProperty("cse_thumbnails")
+        @JsonProperty("cse_thumbnail")
         private List<thumbnailAttributes> thumbnails;
     }
 
