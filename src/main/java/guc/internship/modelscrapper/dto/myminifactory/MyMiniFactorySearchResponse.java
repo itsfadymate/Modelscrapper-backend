@@ -16,16 +16,8 @@ public class MyMiniFactorySearchResponse {
         return totalCount;
     }
     
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-    
     public List<MyMiniFactoryDTO> getItems() {
         return items;
-    }
-    
-    public void setItems(List<MyMiniFactoryDTO> items) {
-        this.items = items;
     }
     
     @Override

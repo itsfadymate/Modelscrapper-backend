@@ -22,6 +22,7 @@ public class MyMiniFactoryDTO {
     @JsonProperty("files")
     private Files files;
 
+    @JsonProperty("prints")
     private Makes prints;
 
     @JsonProperty("likes")
@@ -36,38 +37,22 @@ public class MyMiniFactoryDTO {
     @JsonProperty("error")
     private String error;
 
-    // Getters and setters
+    // Getters
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
-
-    public void setFiles(Files files) {
-        this.files = files;
-    }
 
     public List<ModelPreview.File> getFiles() {
         final String downloadUrlPattern = "https://www.myminifactory.com/download/%s?downloadfile=%s";
@@ -92,24 +77,12 @@ public class MyMiniFactoryDTO {
         return null;
     }
 
-    public void setPrints(Makes prints) {
-        this.prints = prints;
-    }
-
     public int getMakesCount() {
         return this.prints.getMakeCount();
     }
 
-    public void setLikeCount(String likeCount) {
-        this.likeCount = likeCount;
-    }
-
     public String getLikesCount() {
         return this.likeCount;
-    }
-
-    public void setMaterialQuantity(String materialQuantity) {
-        this.materialQuantity = materialQuantity;
     }
 
     public String getMaterialQuantity() {
@@ -118,10 +91,6 @@ public class MyMiniFactoryDTO {
 
     public String getPrice() {
         return price==null?"0":price.getPrice();
-    }
-
-    public void setPrice(Price price) {
-        this.price = price;
     }
 
     public String getError() {
@@ -160,45 +129,25 @@ public class MyMiniFactoryDTO {
                 return url;
             }
 
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
         }
 
         public int getId() {
             return id;
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
-
         public boolean isPrimary() {
             return isPrimary;
-        }
-
-        public void setPrimary(boolean primary) {
-            isPrimary = primary;
         }
 
         public ImageMetaData getThumbnail() {
             return thumbnail;
         }
 
-        public void setThumbnail(ImageMetaData thumbnail) {
-            this.thumbnail = thumbnail;
-        }
     }
 
     private static class Files {
         @JsonProperty("items")
         private List<ModelPreview.File> items;
-
-        public void setItems(List<ModelPreview.File> items) {
-            this.items = items;
-        }
-
 
         public List<ModelPreview.File> getItems() {
             return items;
@@ -208,10 +157,6 @@ public class MyMiniFactoryDTO {
     private static class Makes {
         @JsonProperty("total_count")
         private int makeCount;
-
-        public void setMakeCount(int makeCount) {
-            this.makeCount = makeCount;
-        }
 
         public int getMakeCount() {
             return makeCount;
@@ -223,12 +168,6 @@ public class MyMiniFactoryDTO {
         private String symbol;
         @JsonProperty("value")
         private String value;
-        public void setValue(String value) {
-            this.value = value;
-        }
-        public void setSymbol(String symbol) {
-            this.symbol = symbol;
-        }
         public String getPrice(){return value+symbol;}
     }
 }

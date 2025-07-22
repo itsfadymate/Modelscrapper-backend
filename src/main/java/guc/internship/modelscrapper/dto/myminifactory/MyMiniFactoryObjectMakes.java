@@ -6,9 +6,6 @@ public class MyMiniFactoryObjectMakes {
     @JsonProperty("total_count")
     private int makesCount;
 
-    public void setMakesCount(int makesCount) {
-        this.makesCount = makesCount;
-    }
 
     public int getMakesCount() {
         return makesCount;
