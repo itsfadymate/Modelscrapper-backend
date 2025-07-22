@@ -7,15 +7,15 @@ import java.util.List;
 public class GoogleSearchResponse {
 
     @JsonProperty("items")
-    private List<Item> items;
+    private List<GoogleItem> items;
 
 
     public List<String> getLinks(){
-        return items.stream().map(Item::getLink).toList();
+        return items.stream().map(GoogleItem::getLink).toList();
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public List<GoogleItem> getItems() {
+        return items;
     }
 
     @Override
@@ -25,25 +25,5 @@ public class GoogleSearchResponse {
                 '}';
     }
 
-    static class Item {
-        @JsonProperty("link")
-        private String link;
 
-
-
-        public String getLink() {
-            return link;
-        }
-
-        public void setLink(String link) {
-            this.link = link;
-        }
-
-        @Override
-        public String toString() {
-            return "Item{" +
-                    "link='" + link + '\'' +
-                    '}';
-        }
-    }
 }
