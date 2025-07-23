@@ -39,6 +39,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                 List<String> uids = response.getLinks().stream().map(this::getUidFromLink).filter(this::isValidUid).toList();
                 for (String uid : uids){
                     SketchfabSearchObject model = sketchFabApiClient.getModel(uid);
+                    if (!model.isDownloadable())continue;
                     models.add(new ModelPreview()
                                     .setModelName(model.getName())
                                     .setId(model.getId())

@@ -27,7 +27,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
             SketchfabSearchResponse searchResponse = apiClient.searchSketchfab(searchTerm, showFreeOnly);
 
             return searchResponse.getResults().stream()
-                    .filter(o -> !o.isNsfw())
+                    .filter(o ->!o.isNsfw() && o.isDownloadable())
                     .map(dto -> new ModelPreview()
                             .setId(dto.getId())
                             .setModelName(dto.getName())
