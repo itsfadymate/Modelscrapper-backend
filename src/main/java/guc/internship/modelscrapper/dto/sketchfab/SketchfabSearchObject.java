@@ -23,9 +23,11 @@ public class SketchfabSearchObject {
     private String viewerUrl;
     @JsonProperty("isDownloadable")
     private boolean isDownloadable;
-
     @JsonProperty("embedUrl")
     private String embedUrl;
+    @JsonProperty("price")
+    private String price;
+
 
     public String getId() {
         return id;
@@ -63,6 +65,10 @@ public class SketchfabSearchObject {
 
     public String getEmbedUrl() {
         return embedUrl;
+    }
+
+    public String getPrice() {
+        return price;
     }
 
     public static class Thumbnails {

@@ -47,7 +47,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                     .setLikesCount(model.getLikesCount())
                                     .setCommentsCount(model.getCommentCount())
                                     .setFeatured(model.isFeatured())
-                                    .setPrice(model.isDownloadable()? "0" : "paid")
+                                    .setPrice(model.getPrice()==null? "0" : model.getPrice())
                                     .setEmbeddedViewerUrl(model.getEmbedUrl())
                     );
                 }

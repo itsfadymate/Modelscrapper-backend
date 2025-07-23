@@ -37,7 +37,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setCommentsCount(dto.getCommentCount())
                             .setLikesCount(dto.getLikesCount())
                             .setFeatured(dto.isFeatured())
-                            .setPrice(dto.isDownloadable() ? "0" : "paid")
+                            .setPrice(dto.getPrice()==null? "0" : dto.getPrice())
                             .setEmbeddedViewerUrl(dto.getEmbedUrl())
                     ).toList();
         } catch (Exception e) {
