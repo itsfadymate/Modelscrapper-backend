@@ -27,7 +27,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     @Value("${Sketchfab.google.searchengine}")
     private String cx;
 
-    private static final int PAGES_TO_SEARCH = 2;
+    private static final int PAGES_TO_SEARCH = 4;
 
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
