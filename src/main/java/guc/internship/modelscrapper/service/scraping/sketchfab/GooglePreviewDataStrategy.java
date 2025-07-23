@@ -44,6 +44,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                     .setModelName(model.getName())
                                     .setId(model.getId())
                                     .setWebsiteName(websiteName)
+                                    .setWebsiteLink(model.getUrl())
                                     .setImageLink(model.getPreviewImageUrl())
                                     .setLikesCount(model.getLikesCount())
                                     .setCommentsCount(model.getCommentCount())
