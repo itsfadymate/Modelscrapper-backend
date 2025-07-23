@@ -17,6 +17,7 @@ public class ModelPreview {
     private String likesCount;
     private String commentsCount;
     private boolean isFeatured;
+    private String embeddedViewerUrl;
 
 
 
@@ -83,6 +84,11 @@ public class ModelPreview {
         return this;
     }
 
+    public ModelPreview setEmbeddedViewerUrl(String embeddedViewerUrl) {
+        this.embeddedViewerUrl = embeddedViewerUrl;
+        return this;
+    }
+
     public String getImageLink() {
         return imageLink;
     }
@@ -119,6 +125,10 @@ public class ModelPreview {
 
     public boolean isFeatured() {
         return isFeatured;
+    }
+
+    public String getEmbeddedViewerUrl() {
+        return embeddedViewerUrl;
     }
 
     public static class File {
