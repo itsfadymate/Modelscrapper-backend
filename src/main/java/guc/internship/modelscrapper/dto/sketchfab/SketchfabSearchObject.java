@@ -24,41 +24,8 @@ public class SketchfabSearchObject {
     @JsonProperty("isDownloadable")
     private boolean isDownloadable;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setViewerUrl(String viewerUrl) {
-        this.viewerUrl = viewerUrl;
-    }
-
-    public void setThumbnails(Thumbnails thumbnails) {
-        this.thumbnails = thumbnails;
-    }
-
-    public void setCommentCount(String commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public void setNsfw(boolean nsfw) {
-        isNsfw = nsfw;
-    }
-
-    public void setLikesCount(String likesCount) {
-        this.likesCount = likesCount;
-    }
-
-    public void setFeaturedDate(String featuredDate) {
-        this.featuredDate = featuredDate;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDownloadable(boolean downloadable) {
-        isDownloadable = downloadable;
-    }
+    @JsonProperty("embedUrl")
+    private String embedUrl;
 
     public String getId() {
         return id;
@@ -92,6 +59,10 @@ public class SketchfabSearchObject {
 
     public boolean isDownloadable() {
         return isDownloadable;
+    }
+
+    public String getEmbedUrl() {
+        return embedUrl;
     }
 
     public static class Thumbnails {

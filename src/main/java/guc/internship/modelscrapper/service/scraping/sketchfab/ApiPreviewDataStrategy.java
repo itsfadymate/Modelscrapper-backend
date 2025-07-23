@@ -38,6 +38,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setLikesCount(dto.getLikesCount())
                             .setFeatured(dto.isFeatured())
                             .setPrice(dto.isDownloadable() ? "0" : "paid")
+                            .setEmbeddedViewerUrl(dto.getEmbedUrl())
                     ).toList();
         } catch (Exception e) {
             logger.warn("An error occurred while scrapping sketchfab {}", e.getMessage());
