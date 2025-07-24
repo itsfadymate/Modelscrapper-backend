@@ -2,6 +2,21 @@
 
 ModelScrapper is a backend service that aggregates 3D printable models from popular websites, allowing users to search for STL files across multiple sources in one place. It was developed during my internship at a manufacturing company to streamline the process of finding 3D models, offering more features than alternatives like stlfinder.com.
 
+## Index
+- [Features](#features)
+- [Supported Sources](#supported-sources)
+- [API Endpoints](#api-endpoints)
+- [Setup & Installation](#setup--installation)
+  - [Prerequisites](#prerequisites)
+  - [Configuration](#configuration)
+  - [Running Locally](#running-locally)
+  - [Running with Docker](#running-with-docker)
+- [Tech Stack & Technologies (Backend)](#tech-stack--technologies-backend)
+- [Frontend](#frontend)
+- [Authentication & Security](#authentication--security)
+- [Contribution](#contribution)
+- [Contact](#contact)
+
 ## Features
 
 - Unified search for 3D printable models across multiple major websites
@@ -89,7 +104,7 @@ GrabCad.cookies=your_cookie_string
 
 ```
 
-You can check out application.properties to know exactly what environmental variables need to be set up
+>You can check out application.properties to know exactly what environmental variables need to be set up
 
 ### Running Locally
 
