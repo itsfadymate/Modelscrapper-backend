@@ -98,8 +98,24 @@ public class Cults3DScrapper implements ScrapingService {
         }catch (Exception e){
             logger.debug("Failed to getDownloadLinks for Cults {}",e.getMessage());
         }
-
-        return files;
+        if (!files.isEmpty())
+            return files;
+        String query = String.format("""
+                    {"query": "query Creation {
+                                   creation(slug: \\"%s\\") {
+                                       blueprints {
+                                         fileName
+                                       }
+                                   }
+                               }"
+                    }
+                    """,id).replaceAll("\n","");
+        try{
+            return apiClient.getModel(query).getData().getCreation().getFiles();
+        }catch (Exception e){
+            logger.error("fallback cults3d getDownloads strategy failed {}",e.getMessage());
+            return List.of();
+        }
     }
 
     @Override
