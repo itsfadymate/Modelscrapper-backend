@@ -80,6 +80,7 @@ public class Cults3DScrapper implements ScrapingService {
             page.querySelector("form.button_to .btn-group--large ").click();
             logger.debug("clicked the download button");
             //TODO: Login is bypassed through cookies which is not a sustainable solution
+            page.waitForSelector("div.mb-0\\.25 div.grid-cell--fit a.btn.btn-second");
             List<ElementHandle> sliceButtons = page.querySelectorAll("div.mb-0\\.25 div.grid-cell--fit a.btn.btn-second");
             for (ElementHandle slice : sliceButtons){
                    slice.click();
@@ -94,12 +95,11 @@ public class Cults3DScrapper implements ScrapingService {
             }
             logger.debug("end of slice buttons");
             browser.close();
-            return files;
         }catch (Exception e){
             logger.debug("Failed to getDownloadLinks for Cults {}",e.getMessage());
         }
 
-        return List.of();
+        return files;
     }
 
     @Override
