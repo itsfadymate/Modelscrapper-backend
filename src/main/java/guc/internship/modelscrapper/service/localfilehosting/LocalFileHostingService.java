@@ -58,7 +58,7 @@ public class LocalFileHostingService {
     public String downloadAndRehost(String originalUrl, String fileName) {
         try {
             logger.debug("Downloading file from: {}", originalUrl);
-
+            //for websites like myminifactory a 403 forbidden error is returned likely due to need of cookies to download
             URL url = new URL(originalUrl);
             try (InputStream inputStream = url.openStream()) {
                 String contentType = detectContentType(fileName);
