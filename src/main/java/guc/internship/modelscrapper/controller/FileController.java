@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/files")
-@CrossOrigin(origins = {"https://grid.space","https://modelscrapper3d.netlify.app"})
+@CrossOrigin(origins = {"https://grid.space","https://modelscrapper3d.netlify.app","http:192.168.1.18:5173"})
 public class FileController {
     
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
