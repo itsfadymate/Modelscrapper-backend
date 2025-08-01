@@ -48,23 +48,25 @@ public class Printables implements ScrapingService {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(HttpHeadersUtil.DEFAULT_HEADERS));
             Page page = context.newPage();
-            page.navigate(downloadPageUrl+"/files");
-
-
-            page.waitForSelector("[data-testid=download-file]");
-            List<ElementHandle> downloadButtons = page.querySelectorAll("[data-testid=download-file]");
-            for (ElementHandle button : downloadButtons) {
-                Download download = page.waitForDownload(() -> {
-                    button.click();
-                    logger.debug("clicked download button");
-                });
-                files.add(new ModelPreview.File(download.suggestedFilename(),  download.url()));
-            }
+            executeDownloadSteps(downloadPageUrl, page, files);
             browser.close();
         } catch (Exception e) {
             logger.error("Failed to get download links from Printables", e);
         }
         return files;
+    }
+
+    private  void executeDownloadSteps(String downloadPageUrl, Page page, List<ModelPreview.File> files) {
+        page.navigate(downloadPageUrl +"/files");
+        page.waitForSelector("[data-testid=download-file]");
+        List<ElementHandle> downloadButtons = page.querySelectorAll("[data-testid=download-file]");
+        for (ElementHandle button : downloadButtons) {
+            Download download = page.waitForDownload(() -> {
+                button.click();
+                logger.debug("clicked download button");
+            });
+            files.add(new ModelPreview.File(download.suggestedFilename(),  download.url()));
+        }
     }
 
     @Override
