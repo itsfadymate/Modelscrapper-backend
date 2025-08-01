@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service.scraping.myminifactory;
 
 
 import guc.internship.modelscrapper.client.myminifactory.MyMiniFactoryApiClient;
+import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactoryDTO;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -54,7 +55,9 @@ public class MyMiniFactoryScrapper implements ScrapingService {
 
     @Override
     public ModelDetails getModelDetails(String id, String downloadPageUrl) {
-        return null;
+        logger.debug("getting myminifactory modelDetails for {}, url: {}",id,downloadPageUrl);
+        MyMiniFactoryDTO model = this.apiClient.getObject(id);
+        return new ModelDetails(model.getLicense(),model.getDescription(),model.getFiles());
     }
 
     @Override
