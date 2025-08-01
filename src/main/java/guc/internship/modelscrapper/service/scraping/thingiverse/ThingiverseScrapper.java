@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.thingiverse;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
+import guc.internship.modelscrapper.dto.thingiverse.ThingiverseThing;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -43,7 +44,8 @@ public class ThingiverseScrapper implements ScrapingService {
 
     @Override
     public ModelDetails getModelDetails(String id, String downloadPageUrl) {
-        return null;
+        ThingiverseThing thing = thingiverseApiClient.getThing(id);
+        return new ModelDetails(thing.getLicense(),thing.getDescription(),thing.getFiles());
     }
 
     @Override
