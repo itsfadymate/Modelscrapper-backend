@@ -6,8 +6,9 @@ import guc.internship.modelscrapper.model.ModelPreview;
 import java.util.List;
 
 public class ThingiverseThing {
-
+    @JsonProperty("id")
     private String id;
+    @JsonProperty("name")
     private String name;
     @JsonProperty("public_url")
     private String publicUrl;
@@ -29,50 +30,6 @@ public class ThingiverseThing {
 
     @JsonProperty("error")
     private String error;
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setMakeCount(int makeCount) {
-        this.makeCount = makeCount;
-    }
-
-    public void setPublicUrl(String publicUrl) {
-        this.publicUrl = publicUrl;
-    }
-
-    public void setPreviewImages(Images previewImages) {
-        this.previewImages = previewImages;
-    }
-
-    public void setLikeCount(String likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public void setCommentCount(String commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public void setFeatured(boolean featured) {
-        isFeatured = featured;
-    }
-
-    public void setNsfw(boolean nsfw) {
-        isNsfw = nsfw;
-    }
-
-    public void setZipData(ZipData zipData) {
-        this.zipData = zipData;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
 
     public List<ModelPreview.File> getFiles() {
         return zipData.getFiles();
