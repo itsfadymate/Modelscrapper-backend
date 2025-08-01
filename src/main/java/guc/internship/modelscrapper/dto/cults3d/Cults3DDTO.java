@@ -41,6 +41,9 @@ public class Cults3DDTO {
     @JsonProperty("featured")
     private boolean featured;
 
+    @JsonProperty("license")
+    private License license;
+
     public String getSlug() {
         return slug;
     }
@@ -89,6 +92,14 @@ public class Cults3DDTO {
         return commentCount.size() ;
     }
 
+    public String getLicenseName(){
+        return license.name;
+    }
+
+    public boolean isForCommercialUse(){
+        return license.allowsCommercialUse;
+    }
+
     @Override
     public String toString() {
         return "Cults3DDTO{" +
@@ -102,12 +113,19 @@ public class Cults3DDTO {
     }
 
 
-     public static class Price {
+    static class Price {
         @JsonProperty("formatted")
         private String formatted;
 
         public String getFormatted(){
             return formatted;
         }
+    }
+
+    static class License{
+        @JsonProperty("name")
+        private String name;
+        @JsonProperty("allowsCommercialUse")
+        private boolean allowsCommercialUse;
     }
 }
