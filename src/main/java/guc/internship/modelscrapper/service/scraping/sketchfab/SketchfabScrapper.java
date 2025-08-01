@@ -1,5 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.sketchfab;
 
+import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
+import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchObject;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -25,6 +27,9 @@ public class SketchfabScrapper implements ScrapingService {
     @Qualifier("sketchFabApiPreviewer")
     private ScrapePreviewDataStrategy ApiPreviewer;
 
+    @Autowired
+    private SketchfabApiClient apiClient;
+
     private static final Logger logger = LoggerFactory.getLogger(SketchfabScrapper.class);
 
     @Override
@@ -45,7 +50,10 @@ public class SketchfabScrapper implements ScrapingService {
 
     @Override
     public ModelDetails getModelDetails(String id, String downloadPageUrl) {
-        return null;
+        logger.debug("getting ModelDetails of sketchFab {}", id);
+        List<ModelPreview.File> files = getDownloadLinks(id,downloadPageUrl);
+        SketchfabSearchObject model= this.apiClient.getModel(id);
+        return new ModelDetails(model.getLicense(),model.getDescription(),files);
     }
 
     @Override
