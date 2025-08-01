@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.thangs;
 import com.microsoft.playwright.*;
 
 import guc.internship.modelscrapper.client.google.GoogleApiClient;
+import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
@@ -80,6 +81,11 @@ public class ThangsScrapper implements ScrapingService {
             logger.error("couldn't get download links from Thangs: {}", e.getMessage());
             return List.of();
         }
+    }
+
+    @Override
+    public ModelDetails getModelDetails(String id, String downloadPageUrl) {
+        return null;
     }
 
     @Override

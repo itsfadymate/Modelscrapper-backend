@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.printables;
 
 import com.microsoft.playwright.*;
+import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
@@ -64,6 +65,11 @@ public class Printables implements ScrapingService {
             logger.error("Failed to get download links from Printables", e);
         }
         return files;
+    }
+
+    @Override
+    public ModelDetails getModelDetails(String id, String downloadPageUrl) {
+        return null;
     }
 
     @Override

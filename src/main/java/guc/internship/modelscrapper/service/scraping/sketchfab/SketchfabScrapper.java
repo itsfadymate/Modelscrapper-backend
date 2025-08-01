@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.service.scraping.sketchfab;
 
+import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
@@ -40,6 +41,11 @@ public class SketchfabScrapper implements ScrapingService {
     public List<ModelPreview.File> getDownloadLinks(String id, String downloadPageUrl) {
         //TODO: get download links
         return List.of();
+    }
+
+    @Override
+    public ModelDetails getModelDetails(String id, String downloadPageUrl) {
+        return null;
     }
 
     @Override

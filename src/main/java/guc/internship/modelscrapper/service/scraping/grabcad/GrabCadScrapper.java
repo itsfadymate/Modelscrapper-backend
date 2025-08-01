@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.grabcad;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
@@ -112,6 +113,11 @@ public class GrabCadScrapper implements ScrapingService {
             logger.debug("couldnt get grabcad download links {} ",e.getMessage());
         }
         return resultFiles;
+    }
+
+    @Override
+    public ModelDetails getModelDetails(String id, String downloadPageUrl) {
+        return null;
     }
 
     @Override
