@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.service.scraping;
 
+import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -111,5 +112,9 @@ public class ModelScrapingOrchestrator {
     public List<ModelPreview.File> getDownloadLinks(String sourceName, String id, String downloadPageUrl) {
         List<ModelPreview.File> files = serviceMap.get(sourceName).getDownloadLinks(id,downloadPageUrl);
         return files==null? List.of() : files;
+    }
+
+    public ModelDetails getModelDetails(String sourceName, String id, String downloadPageUrl) {
+        return serviceMap.get(sourceName).getModelDetails(id,downloadPageUrl);
     }
 }
