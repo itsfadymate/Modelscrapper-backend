@@ -48,9 +48,9 @@ public class ModelController {
     public List<ModelPreview.File> getDownloadLinks(@RequestParam String sourceName,
                                                     @RequestParam String id,
                                                     @RequestParam String downloadPageUrl){
-        logger.debug("Received request for model {} in {}",id,sourceName);
+        logger.debug("Received download request for model {} in {}",id,sourceName);
         List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id,downloadPageUrl );
-        results.stream().forEach(resultFile -> {
+        results.forEach(resultFile -> {
             if (!resultFile.getName().toLowerCase().endsWith(".stl")) return;
             File stlFile = null;
             try {
@@ -87,6 +87,22 @@ public class ModelController {
                                         @RequestParam String downloadPageUrl){
         logger.info("getting model details for model: {} with link {}",id,downloadPageUrl);
         ModelDetails details= scrapingOrchestrator.getModelDetails(sourceName,id,downloadPageUrl);
+
+
+        details.getFiles().forEach(resultFile -> {
+            if (!resultFile.getName().toLowerCase().endsWith(".stl")) return;
+            File stlFile = null;
+            logger.debug("estimating volume of files");
+            try {
+                stlFile= FileManager.downloadFile(resultFile.getDownloadUrl(), resultFile.getName());
+                resultFile.setVolume(estimator.getVolume(stlFile));
+            } catch (IOException e) {
+                logger.debug("couldn't download stl File ",e);
+            }finally {
+                FileManager.deleteFile(stlFile);
+            }
+
+        });
         logger.debug("got model details {}",details);
         return details;
     }
