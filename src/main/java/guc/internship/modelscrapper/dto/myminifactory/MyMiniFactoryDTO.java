@@ -37,22 +37,24 @@ public class MyMiniFactoryDTO {
     @JsonProperty("error")
     private String error;
 
+    @JsonProperty("license")
+    private String license;
+
+    @JsonProperty("description")
+    private String description;
+
     // Getters
     public int getId() {
         return id;
     }
 
-
-
     public String getName() {
         return name;
     }
 
-
     public String getUrl() {
         return url;
     }
-
 
     public List<ModelPreview.File> getFiles() {
         final String downloadUrlPattern = "https://www.myminifactory.com/download/%s?downloadfile=%s";
@@ -99,6 +101,14 @@ public class MyMiniFactoryDTO {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getLicense() {
+        return license;
     }
 
     @Override
