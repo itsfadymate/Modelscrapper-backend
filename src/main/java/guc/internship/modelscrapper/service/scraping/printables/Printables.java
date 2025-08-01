@@ -5,6 +5,9 @@ import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +74,39 @@ public class Printables implements ScrapingService {
 
     @Override
     public ModelDetails getModelDetails(String id, String downloadPageUrl) {
-        return null;
+        logger.debug("Fetching printables model details with url {}",downloadPageUrl);
+        List<ModelPreview.File> files = new ArrayList<>();
+        String description = null;
+        String license =null;
+        try (Playwright playwright = Playwright.create()) {
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setExtraHTTPHeaders(HttpHeadersUtil.DEFAULT_HEADERS));
+            Page page = context.newPage();
+            page.navigate(downloadPageUrl);
+            try{
+                page.waitForSelector(".svelte-aasxxg");
+                Document pageDoc = Jsoup.parse( page.content());
+                Element licenseElement = pageDoc.select(".svelte-aasxxg a").last();
+                logger.debug("license element: {}",licenseElement==null);
+                logger.debug("page {}", pageDoc.getElementsByClass("tab-content").html());
+                license = licenseElement==null? null : licenseElement.html();
+            } catch (Exception e) {
+                logger.debug("failed to get license {}",e.getMessage());
+            }
+            try {
+                Document pageDoc = Jsoup.parse( page.content());
+                description = pageDoc.getElementsByClass("user-inserted").html();
+            }catch (Exception e){
+                logger.debug("failed to get description {}",e.getMessage());
+            }
+            executeDownloadSteps(downloadPageUrl, page, files);
+            browser.close();
+        } catch (Exception e) {
+            logger.error("Failed to get model details from Printables", e);
+        }
+        return new ModelDetails(license,description,files);
     }
+
 
     @Override
     public boolean isEnabled() {
