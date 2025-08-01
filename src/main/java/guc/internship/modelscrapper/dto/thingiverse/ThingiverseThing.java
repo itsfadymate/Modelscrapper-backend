@@ -24,10 +24,12 @@ public class ThingiverseThing {
     private boolean isFeatured;
     @JsonProperty("is_nsfw")
     private boolean isNsfw;
-
+    @JsonProperty("license")
+    private String license;
+    @JsonProperty("description")
+    private String description;
     @JsonProperty("zip_data")
     private ZipData zipData;
-
     @JsonProperty("error")
     private String error;
 
@@ -70,6 +72,10 @@ public class ThingiverseThing {
     public boolean isNsfw() {
         return isNsfw;
     }
+
+    public String getLicense(){return license; }
+
+    public String getDescription(){return description;}
 
     public String getError() {
         return  error;
