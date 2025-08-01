@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.controller;
 
+import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.estimator.EstimatingStrategy;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
@@ -44,9 +45,9 @@ public class ModelController {
         return results;
     }
     @GetMapping("/download")
-    public List<ModelPreview.File> downloadLinks(@RequestParam String sourceName,
-                                                 @RequestParam String id,
-                                                 @RequestParam String downloadPageUrl){
+    public List<ModelPreview.File> getDownloadLinks(@RequestParam String sourceName,
+                                                    @RequestParam String id,
+                                                    @RequestParam String downloadPageUrl){
         logger.debug("Received request for model {} in {}",id,sourceName);
         List<ModelPreview.File> results = scrapingOrchestrator.getDownloadLinks(sourceName,id,downloadPageUrl );
         results.stream().forEach(resultFile -> {
@@ -68,16 +69,26 @@ public class ModelController {
     }
 
     @GetMapping("/download/localhostedlinks")
-    public List<ModelPreview.File> downloadLocalLinks(@RequestParam String sourceName,
-                                                      @RequestParam String id,
-                                                      @RequestParam String downloadPageUrl){
-        List<ModelPreview.File>  results = downloadLinks(sourceName,id,downloadPageUrl);
+    public List<ModelPreview.File> getLocalHostedDownloadLinks(@RequestParam String sourceName,
+                                                               @RequestParam String id,
+                                                               @RequestParam String downloadPageUrl){
+        List<ModelPreview.File>  results = getDownloadLinks(sourceName,id,downloadPageUrl);
         results = results.stream().map(file -> new ModelPreview.File(
                 file.getName(),
                 fileHoster.downloadAndRehost(file.getDownloadUrl(), file.getName())))
                 .toList();
         logger.debug("success creating local Hosted links");
         return results;
+    }
+
+    @GetMapping("/details")
+    public ModelDetails getModelDetails(@RequestParam String sourceName,
+                                        @RequestParam String id,
+                                        @RequestParam String downloadPageUrl){
+        logger.info("getting model details for model: {} with link {}",id,downloadPageUrl);
+        ModelDetails details= scrapingOrchestrator.getModelDetails(sourceName,id,downloadPageUrl);
+        logger.debug("got model details {}",details);
+        return details;
     }
 
     @GetMapping("/sources")
