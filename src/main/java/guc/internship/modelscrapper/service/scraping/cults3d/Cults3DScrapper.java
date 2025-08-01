@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.cults3d;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
+import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
@@ -121,7 +122,22 @@ public class Cults3DScrapper implements ScrapingService {
 
     @Override
     public ModelDetails getModelDetails(String id, String downloadPageUrl) {
-        return null;
+        logger.debug("getting modelDeatils for cullts3D {}",id);
+        List<ModelPreview.File> files = this.getDownloadLinks(id,downloadPageUrl);
+        String query = String.format("""
+                    {"query": "query Creation {
+                                   creation(slug: \\"%s\\") {
+                                       description(locale: EN)
+                                       license {
+                                               allowsCommercialUse
+                                               name
+                                       }
+                                   }
+                               }"
+                    }
+                    """,id).replaceAll("\n","");
+        Cults3DDTO model = this.apiClient.getModel(query).getData().getCreation();
+        return new ModelDetails(model.getLicenseName(),model.getDescription(),files);
     }
 
     @Override
