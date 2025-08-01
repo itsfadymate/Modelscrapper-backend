@@ -1,14 +1,13 @@
 package guc.internship.modelscrapper.service.scraping;
 
 import guc.internship.modelscrapper.model.ModelPreview;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,7 +22,15 @@ public class ModelScrapingOrchestrator {
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-    
+    Map<String, ScrapingService> serviceMap;
+
+    @PostConstruct
+    public void init() {
+        serviceMap = new HashMap<>();
+        for (ScrapingService service : scrapingServices) {
+            serviceMap.put(service.getSourceName().toLowerCase(), service);
+        }
+    }
 
     public List<ModelPreview> scrapeAll(String searchTerm, List<String> enabledSources,boolean showFreeOnly,List<String> googleSearchSources) {
         logger.debug("Starting scrape for all services with search term: {}", searchTerm);
@@ -102,11 +109,7 @@ public class ModelScrapingOrchestrator {
     }
 
     public List<ModelPreview.File> getDownloadLinks(String sourceName, String id, String downloadPageUrl) {
-        for (ScrapingService service : scrapingServices){//I should probably use a map if the sources become too many
-            if (service.getSourceName().equalsIgnoreCase(sourceName)){
-                return service.getDownloadLinks(id,downloadPageUrl);
-            }
-        }
-        return List.of();//should probably throw an Exception to indicate no such service exists w handle using aspects but will do it later
+        List<ModelPreview.File> files = serviceMap.get(sourceName).getDownloadLinks(id,downloadPageUrl);
+        return files==null? List.of() : files;
     }
 }
