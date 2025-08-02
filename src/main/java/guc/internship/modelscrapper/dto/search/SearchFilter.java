@@ -49,4 +49,15 @@ public class SearchFilter {
     public void setSourcesToGoogle(List<String> sourcesToGoogle) {
         this.sourcesToGoogle = sourcesToGoogle;
     }
+
+    @Override
+    public String toString() {
+        return "SearchFilter{\n" +
+                "sources=" + sources +
+                "\n, showFreeOnly=" + showFreeOnly +
+                "\n, descriptionSearchTerm='" + descriptionSearchTerm + '\'' +
+                "\n, licenseSearchTerm='" + licenseSearchTerm + '\'' +
+                "\n, sourcesToGoogle=" + sourcesToGoogle +
+                "\n}";
+    }
 }
