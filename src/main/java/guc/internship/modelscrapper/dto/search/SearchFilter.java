@@ -1,6 +1,8 @@
 package guc.internship.modelscrapper.dto.search;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SearchFilter {
     private List<String> sources;
@@ -8,6 +10,8 @@ public class SearchFilter {
     private String descriptionSearchTerm;
     private String licenseSearchTerm;
     private List<String> sourcesToGoogle;
+    private Set<String> sourcesToGoogleSet;
+    private Set<String> enabledSourcesSet;
 
 
     public List<String> getSources() {
@@ -26,12 +30,19 @@ public class SearchFilter {
         return licenseSearchTerm;
     }
 
-    public List<String> getSourcesToGoogle() {
-        return sourcesToGoogle;
+    public boolean isSourceToGoogle(String sourceName){
+        return sourcesToGoogleSet.contains(sourceName.toLowerCase());
+    }
+
+    public boolean isEnabledSource(String sourceName){
+        return enabledSourcesSet.contains(sourceName.toLowerCase());
     }
 
     public void setSources(List<String> sources) {
         this.sources = sources;
+        this.enabledSourcesSet = new HashSet<>();
+        for (String s:sources)
+            enabledSourcesSet.add(s.toLowerCase());
     }
 
     public void setShowFreeOnly(Boolean showFreeOnly) {
@@ -48,6 +59,9 @@ public class SearchFilter {
 
     public void setSourcesToGoogle(List<String> sourcesToGoogle) {
         this.sourcesToGoogle = sourcesToGoogle;
+        this.sourcesToGoogleSet = new HashSet<>();
+        for (String source : sourcesToGoogle)
+            sourcesToGoogleSet.add(source.toLowerCase());
     }
 
     @Override
