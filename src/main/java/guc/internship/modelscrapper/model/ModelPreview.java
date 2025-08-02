@@ -18,6 +18,8 @@ public class ModelPreview {
     private String commentsCount;
     private boolean isFeatured;
     private String embeddedViewerUrl;
+    private String description;
+    private String license;
 
 
 
@@ -129,6 +131,24 @@ public class ModelPreview {
 
     public String getEmbeddedViewerUrl() {
         return embeddedViewerUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ModelPreview setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public ModelPreview setLicense(String license) {
+        this.license = license;
+        return this;
     }
 
     public static class File {
