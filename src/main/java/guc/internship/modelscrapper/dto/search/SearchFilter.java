@@ -3,19 +3,12 @@ package guc.internship.modelscrapper.dto.search;
 import java.util.List;
 
 public class SearchFilter {
-    private final List<String> sources;
-    private final Boolean showFreeOnly;
-    private final String descriptionSearchTerm;
-    private final String licenseSearchTerm;
-    private final List<String> sourcesToGoogle;
+    private List<String> sources;
+    private Boolean showFreeOnly;
+    private String descriptionSearchTerm;
+    private String licenseSearchTerm;
+    private List<String> sourcesToGoogle;
 
-    public SearchFilter(List<String> sources, Boolean showFreeOnly, String descriptionSearchTerm, String licenseSearchTerm, List<String> sourcesToGoogle) {
-        this.sources = sources;
-        this.showFreeOnly = showFreeOnly;
-        this.descriptionSearchTerm = descriptionSearchTerm;
-        this.licenseSearchTerm = licenseSearchTerm;
-        this.sourcesToGoogle = sourcesToGoogle;
-    }
 
     public List<String> getSources() {
         return sources;
@@ -35,5 +28,25 @@ public class SearchFilter {
 
     public List<String> getSourcesToGoogle() {
         return sourcesToGoogle;
+    }
+
+    public void setSources(List<String> sources) {
+        this.sources = sources;
+    }
+
+    public void setShowFreeOnly(Boolean showFreeOnly) {
+        this.showFreeOnly = showFreeOnly;
+    }
+
+    public void setDescriptionSearchTerm(String descriptionSearchTerm) {
+        this.descriptionSearchTerm = descriptionSearchTerm;
+    }
+
+    public void setLicenseSearchTerm(String licenseSearchTerm) {
+        this.licenseSearchTerm = licenseSearchTerm;
+    }
+
+    public void setSourcesToGoogle(List<String> sourcesToGoogle) {
+        this.sourcesToGoogle = sourcesToGoogle;
     }
 }
