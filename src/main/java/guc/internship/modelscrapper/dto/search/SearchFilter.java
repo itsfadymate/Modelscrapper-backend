@@ -79,7 +79,7 @@ public class SearchFilter {
 
     public boolean isValidModel(ModelPreview model) {
         boolean keep = true;
-        if (this.showFreeOnly)
+        if (this.showFreeOnly && model.getPrice()!=null)
             keep = model.getPrice().equals("0");
         if (this.getDescriptionSearchTerm()!=null && !this.getDescriptionSearchTerm().isEmpty())
             keep = model.getDescription()!=null && model.getDescription().contains(this.getDescriptionSearchTerm());
