@@ -82,10 +82,10 @@ public class SearchFilter {
         if (this.showFreeOnly)
             keep = model.getPrice().equals("0");
         if (this.getDescriptionSearchTerm()!=null && !this.getDescriptionSearchTerm().isEmpty())
-            keep = model.getDescription().contains(this.getDescriptionSearchTerm());
+            keep = model.getDescription()!=null && model.getDescription().contains(this.getDescriptionSearchTerm());
 
         if (this.getLicenseSearchTerm()!=null && !this.getLicenseSearchTerm().isEmpty())
-            keep = model.getLicense().contains(this.getLicenseSearchTerm());
+            keep = model.getLicense()!=null&& model.getLicense().contains(this.getLicenseSearchTerm());
         return keep;
     }
 }
