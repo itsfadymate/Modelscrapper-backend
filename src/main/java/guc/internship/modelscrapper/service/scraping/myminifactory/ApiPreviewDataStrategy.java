@@ -40,10 +40,9 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setFiles(dto.getFiles())
                             .setLikesCount(dto.getLikesCount())
                             .setPrice(dto.getPrice())
-
-                    ).filter(filter.getShowFreeOnly()?
-                            model->model.getPrice().equals("0")
-                            :model->true)
+                            .setDescription(dto.getDescription())
+                            .setLicense(dto.getLicense())
+                    ).filter(filter::isValidModel)
                     .collect(Collectors.toList());
 
             logger.debug("Found {} results from MyMiniFactory API", previews.size());

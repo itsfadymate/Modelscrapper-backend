@@ -46,7 +46,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                 for (String id : ids) {
                     try {
                         MyMiniFactoryDTO dto = miniFactoryApiClient.getObject(id);
-                        modelPreviews.add(new ModelPreview()
+                        ModelPreview model = new ModelPreview()
                                 .setId(String.valueOf(dto.getId()))
                                 .setImageLink(dto.getPreviewImageUrl())
                                 .setModelName(dto.getName())
@@ -56,7 +56,10 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                 .setFiles(dto.getFiles())
                                 .setLikesCount(dto.getLikesCount())
                                 .setPrice(dto.getPrice())
-                        );
+                                .setDescription(dto.getDescription())
+                                .setLicense(dto.getLicense());
+                        if (!filter.isValidModel(model))continue;
+                        modelPreviews.add(model);
                     } catch (Exception e) {
                         logger.debug("couldn't fetch object with id {} exception: {}", id, e.getMessage());
                     }
