@@ -52,6 +52,7 @@ All endpoints are prefixed with `/api/models`.
 | `/search`                             | GET    | Search for models. Parameters: `searchTerm`, `sources` (optional), `showFreeOnly` (optional), `sourcesToGoogle`(optional) |
 | `/download`                           | GET    | Get download links for a model. Parameters: `sourceName`, `id`, `downloadPageUrl`                                         |
 | `/download/localhostedlinks`          | GET    | Get download links  for resources rehosted temporarily on the local server  (mainly to bypass CORS issues)                |
+| `/details`                            | GET    | Get details about a specific model Parameters: `sourceName`, `id`, `downloadPageUrl`                                      |
 | `/sources`                            | GET    | List all available sources                                                                                                |
 | `/health`                             | GET    | Health check                                                                                                              |
 
