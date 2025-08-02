@@ -38,8 +38,9 @@ public class GrabCadScrapper implements ScrapingService {
     private ScrapePreviewDataStrategy playwrightPreviewer;
     @Override
     public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
-        return filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm, filter,getSourceName()):
+        List<ModelPreview> models = filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm, filter,getSourceName()):
                 playwrightPreviewer.scrapePreviewData(searchTerm, filter,getSourceName());
+        return models.stream().filter(filter::isValidModel).toList();
     }
 
     @Override

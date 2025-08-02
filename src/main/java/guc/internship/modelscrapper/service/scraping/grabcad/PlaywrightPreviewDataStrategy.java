@@ -117,7 +117,8 @@ public class PlaywrightPreviewDataStrategy implements ScrapePreviewDataStrategy 
                         .setWebsiteName(websiteName)
                         .setWebsiteLink(modelLink)
                         .setLikesCount(likesCount)
-                        .setCommentsCount(commentCount);
+                        .setCommentsCount(commentCount)
+                        .setPrice("0");
             }
 
             logger.warn("Failed to extract essential data - name: {}, link: {}", modelName, modelLink);
