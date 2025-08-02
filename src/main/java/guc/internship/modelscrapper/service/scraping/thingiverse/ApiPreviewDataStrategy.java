@@ -36,7 +36,14 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
             ThingiverseSearchResponse response = thingiverseApiClient.searchThings(searchTerm,type,hasMakes,sortCriteria);
 
              List<ModelPreview> previews = response.getHits().stream()
-                    .filter(searchObject -> !searchObject.isNsfw())
+                    .filter(searchObject ->
+                            !searchObject.isNsfw() &&
+                            filter.isValidModel(new ModelPreview() //this is done on a temporary model to avoid download and rehost
+                                    .setDescription(searchObject.getDescription())
+                                    .setLicense(searchObject.getLicense())
+                                    .setPrice("0")
+                            )
+                    )
                     .map((searchObject)-> new ModelPreview()
                             .setId(searchObject.getId())
                             .setModelName(searchObject.getName())
@@ -54,6 +61,8 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setLikesCount(searchObject.getLikeCount())
                             .setCommentsCount(searchObject.getCommentCount())
                             .setFeatured(searchObject.isFeatured())
+                            .setDescription(searchObject.getDescription())
+                            .setLicense(searchObject.getLicense())
                     )
                     .collect(Collectors.toList());
 

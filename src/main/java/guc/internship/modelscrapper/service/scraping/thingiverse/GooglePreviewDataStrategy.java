@@ -50,6 +50,11 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                     try {
                         ThingiverseThing model = thingiverseApiClient.getThing(id);
                         if (model.getError() != null) continue;
+                        if (!filter.isValidModel(new ModelPreview()   //this is done on a temporary model to avoid download and rehost
+                                .setDescription(model.getDescription())
+                                .setLicense(model.getLicense())
+                                .setPrice("0")
+                        ))continue;
                         modelPreviews.add(new ModelPreview()
                                 .setId(model.getPublicUrl())
                                 .setModelName(model.getName())
