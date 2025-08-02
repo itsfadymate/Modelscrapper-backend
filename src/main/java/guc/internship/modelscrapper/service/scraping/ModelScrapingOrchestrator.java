@@ -115,6 +115,6 @@ public class ModelScrapingOrchestrator {
     }
 
     public ModelDetails getModelDetails(String sourceName, String id, String downloadPageUrl) {
-        return serviceMap.get(sourceName).getModelDetails(id,downloadPageUrl);
+        return serviceMap.get(sourceName.toLowerCase()).getModelDetails(id,downloadPageUrl);
     }
 }
