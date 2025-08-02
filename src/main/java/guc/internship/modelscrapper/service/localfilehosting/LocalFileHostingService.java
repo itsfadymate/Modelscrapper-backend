@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.localfilehosting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -218,5 +219,25 @@ public class LocalFileHostingService {
         
         public java.time.Instant getLastModified() { return lastModified; }
         public void setLastModified(java.time.Instant lastModified) { this.lastModified = lastModified; }
+    }
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void cleanUpUploads() {
+        logger.info("Starting hourly scheduled cleanup of upload directory: {}", uploadDirectory);
+        Path uploadPath = Paths.get(uploadDirectory);
+        try {
+            Files.list(uploadPath)
+                .filter(Files::isRegularFile)
+                .forEach(file -> {
+                    try {
+                        Files.deleteIfExists(file);
+                        logger.info("Deleted file: {}", file);
+                    } catch (IOException e) {
+                        logger.warn("Failed to delete file: {}", file, e);
+                    }
+                });
+        } catch (IOException e) {
+            logger.error("Failed to clean up upload directory", e);
+        }
     }
 }
