@@ -45,6 +45,10 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                                 likesCount
                                 featured
                                 slug
+                                license {
+                                        allowsCommercialUse
+                                        name
+                                }
                             }
                         }"
                 }

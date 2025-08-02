@@ -73,6 +73,8 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                 .setLikesCount(model.getLikeCount())
                                 .setCommentsCount(model.getCommentCount())
                                 .setFiles(model.getFiles())
+                                .setDescription(model.getDescription())
+                                .setLicense(model.getLicense())
                         );
                     } catch (Exception e) {
                         logger.debug("couldn't fetch object with id {} exception: {}", id, e.getMessage());

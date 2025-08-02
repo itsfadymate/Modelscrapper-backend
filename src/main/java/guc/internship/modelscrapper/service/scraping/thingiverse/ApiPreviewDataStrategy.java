@@ -63,6 +63,8 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setFeatured(searchObject.isFeatured())
                             .setDescription(searchObject.getDescription())
                             .setLicense(searchObject.getLicense())
+                            .setDescription(searchObject.getDescription())
+                            .setLicense(searchObject.getLicense())
                     )
                     .collect(Collectors.toList());
 
