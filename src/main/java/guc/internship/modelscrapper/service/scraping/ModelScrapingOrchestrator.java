@@ -37,10 +37,8 @@ public class ModelScrapingOrchestrator {
     public List<ModelPreview> scrapeAll(String searchTerm, SearchFilter filter) {
         logger.debug("Starting scrape for all services with search term: {}", searchTerm);
         logger.debug("Found {} preview scraping services", scrapingServices.size());
-        
-        if (filter.getSources() != null && !filter.getSources().isEmpty()) {
-            logger.debug("Filtering by enabled sources: {}", filter.getSources());
-        }
+        logger.debug("filters : {} ", filter);
+
         
         List<ModelPreview> allResults = new ArrayList<>();
         List<CompletableFuture<List<ModelPreview>>> futures = new ArrayList<>();
