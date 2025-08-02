@@ -40,7 +40,9 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setFeatured(dto.isFeatured())
                             .setPrice(dto.getPrice()==null? "0" : dto.getPrice())
                             .setEmbeddedViewerUrl(dto.getEmbedUrl())
-                    ).toList();
+                            .setDescription(dto.getDescription())
+                            .setLicense(dto.getLicense())
+                    ).filter(filter::isValidModel).toList();
         } catch (Exception e) {
             logger.warn("An error occurred while scrapping sketchfab {}", e.getMessage());
             return List.of();

@@ -41,18 +41,21 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                 for (String uid : uids){
                     SketchfabSearchObject model = sketchFabApiClient.getModel(uid);
                     if (!model.isDownloadable())continue;
-                    models.add(new ModelPreview()
-                                    .setModelName(model.getName())
-                                    .setId(model.getId())
-                                    .setWebsiteName(websiteName)
-                                    .setWebsiteLink(model.getUrl())
-                                    .setImageLink(model.getPreviewImageUrl())
-                                    .setLikesCount(model.getLikesCount())
-                                    .setCommentsCount(model.getCommentCount())
-                                    .setFeatured(model.isFeatured())
-                                    .setPrice(model.getPrice()==null? "0" : model.getPrice())
-                                    .setEmbeddedViewerUrl(model.getEmbedUrl())
-                    );
+                    ModelPreview modelPreview = new ModelPreview()
+                            .setModelName(model.getName())
+                            .setId(model.getId())
+                            .setWebsiteName(websiteName)
+                            .setWebsiteLink(model.getUrl())
+                            .setImageLink(model.getPreviewImageUrl())
+                            .setLikesCount(model.getLikesCount())
+                            .setCommentsCount(model.getCommentCount())
+                            .setFeatured(model.isFeatured())
+                            .setPrice(model.getPrice()==null? "0" : model.getPrice())
+                            .setEmbeddedViewerUrl(model.getEmbedUrl())
+                            .setDescription(model.getDescription())
+                            .setLicense(model.getLicense());
+                    if (!filter.isValidModel(modelPreview))continue;
+                    models.add(modelPreview);
                 }
             } catch (Exception e) {
                 logger.error("couldn't scrape google page {} for {} data. {}",page+1,websiteName,e.getMessage());
