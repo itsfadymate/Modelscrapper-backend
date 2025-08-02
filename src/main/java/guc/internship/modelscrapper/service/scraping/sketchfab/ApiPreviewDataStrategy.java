@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.sketchfab;
 
 import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -21,10 +22,10 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
     private SketchfabApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("getting sketchfab api previewData");
         try {
-            SketchfabSearchResponse searchResponse = apiClient.searchSketchfab(searchTerm, showFreeOnly);
+            SketchfabSearchResponse searchResponse = apiClient.searchSketchfab(searchTerm, filter.getShowFreeOnly());
 
             return searchResponse.getResults().stream()
                     .filter(o ->!o.isNsfw() && o.isDownloadable())

@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.printables;
 
 import com.microsoft.playwright.*;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
@@ -32,8 +33,8 @@ public class Printables implements ScrapingService {
     private GooglePreviewDataStrategy googlePreviewer;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly,boolean useGoogleEnine) {
-        return useGoogleEnine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : playwrightPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
+        return filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm, filter,getSourceName() ) : playwrightPreviewer.scrapePreviewData(searchTerm,filter ,getSourceName() );
     }
 
 

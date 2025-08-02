@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.thingiverse;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseSearchResponse;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
@@ -28,7 +29,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         try {
             logger.debug("Searching Thingiverse API for: {}", searchTerm);
 

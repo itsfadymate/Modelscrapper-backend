@@ -5,6 +5,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DUrlResponse;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -43,8 +44,8 @@ public class Cults3DScrapper implements ScrapingService {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : apiPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
+        return filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm, filter,getSourceName() ) : apiPreviewer.scrapePreviewData(searchTerm, filter,getSourceName() );
     }
 
     @Override

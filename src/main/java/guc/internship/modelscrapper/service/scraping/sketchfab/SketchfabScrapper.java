@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.sketchfab;
 
 import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchObject;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
@@ -33,8 +34,8 @@ public class SketchfabScrapper implements ScrapingService {
     private static final Logger logger = LoggerFactory.getLogger(SketchfabScrapper.class);
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine?googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : ApiPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
+        return filter.isSourceToGoogle(this.getSourceName())?googlePreviewer.scrapePreviewData(searchTerm,filter ,getSourceName() ) : ApiPreviewer.scrapePreviewData(searchTerm, filter,getSourceName() );
     }
 
     @Override

@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service.scraping.thangs;
 
 import guc.internship.modelscrapper.client.google.GoogleApiClient;
 import guc.internship.modelscrapper.dto.google.GoogleItem;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     private static final int PAGES_TO_SEARCH = 7;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.info("getting {} preview data from google", websiteName);
         List<ModelPreview> models = new ArrayList<>();
         for (int page = 0; page < PAGES_TO_SEARCH; page++) {
@@ -43,7 +43,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                         continue;
                     }
                     String price = figureOutPrice(item.getLink(), item.getTitle());
-                    if (showFreeOnly && !price.equals("could be paid")) continue;
+                    if (filter.getShowFreeOnly() && !price.equals("could be paid")) continue;
                     String modelLink = getProperLink(item.getLink());
                     String id = getIdFromProperLink(modelLink);
 

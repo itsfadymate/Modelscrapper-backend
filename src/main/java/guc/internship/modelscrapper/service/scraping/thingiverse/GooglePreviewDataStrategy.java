@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.thingiverse;
 import guc.internship.modelscrapper.client.google.GoogleApiClient;
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
 import guc.internship.modelscrapper.dto.google.GoogleSearchResponse;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseThing;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.localfilehosting.LocalFileHostingService;
@@ -35,7 +36,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("scraping thingiverse preview data from google");
         GoogleSearchResponse response = null;
         List<ModelPreview> modelPreviews = List.of();

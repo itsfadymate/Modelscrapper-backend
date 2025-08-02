@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.service.scraping.thangs;
 
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.jsoup.Jsoup;
@@ -30,8 +31,8 @@ public class JsoupPreviewDataStrategy implements ScrapePreviewDataStrategy {
     private static final Logger logger = LoggerFactory.getLogger(JsoupPreviewDataStrategy.class);
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
-        url = url+searchTerm+QUERY_PARAMETERS + (showFreeOnly? "" : "&paidModels=true" );
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
+        url = url+searchTerm+QUERY_PARAMETERS + (filter.getShowFreeOnly()? "" : "&paidModels=true" );
         logger.info("searching for {} in url {}",searchTerm,url);
         try{
             Document doc = Jsoup.connect(url)

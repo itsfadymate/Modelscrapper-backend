@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service.scraping.myminifactory;
 
 import guc.internship.modelscrapper.client.myminifactory.MyMiniFactoryApiClient;
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactorySearchResponse;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
     private MyMiniFactoryApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         List<ModelPreview> previews = new ArrayList<>();
         try {
             logger.debug("Searching MyMiniFactory API for: {}", searchTerm);
@@ -40,7 +41,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setLikesCount(dto.getLikesCount())
                             .setPrice(dto.getPrice())
 
-                    ).filter(showFreeOnly?
+                    ).filter(filter.getShowFreeOnly()?
                             model->model.getPrice().equals("0")
                             :model->true)
                     .collect(Collectors.toList());

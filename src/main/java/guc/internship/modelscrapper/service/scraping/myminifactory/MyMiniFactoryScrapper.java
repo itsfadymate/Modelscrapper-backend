@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.myminifactory;
 
 import guc.internship.modelscrapper.client.myminifactory.MyMiniFactoryApiClient;
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactoryDTO;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -33,8 +34,8 @@ public class MyMiniFactoryScrapper implements ScrapingService {
     private MyMiniFactoryApiClient apiClient;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : ApiPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
+        return filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm, filter,getSourceName() ) : ApiPreviewer.scrapePreviewData(searchTerm, filter,getSourceName() );
     }
 
     @Override

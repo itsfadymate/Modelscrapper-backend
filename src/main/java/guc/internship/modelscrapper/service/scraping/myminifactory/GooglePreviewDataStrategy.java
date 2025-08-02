@@ -4,6 +4,7 @@ import guc.internship.modelscrapper.client.google.GoogleApiClient;
 import guc.internship.modelscrapper.client.myminifactory.MyMiniFactoryApiClient;
 import guc.internship.modelscrapper.dto.google.GoogleSearchResponse;
 import guc.internship.modelscrapper.dto.myminifactory.MyMiniFactoryDTO;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("scraping myminifactory preview data from google");
         GoogleSearchResponse response = null;
         List<ModelPreview> modelPreviews = new ArrayList<>();

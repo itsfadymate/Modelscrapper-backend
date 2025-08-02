@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service.scraping.printables;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import guc.internship.modelscrapper.util.HttpHeadersUtil;
@@ -29,7 +30,7 @@ public class PlaywrightPreviewDataStrategy implements ScrapePreviewDataStrategy 
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("Scrapping printables for preview data");
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));

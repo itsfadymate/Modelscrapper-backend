@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.grabcad;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -36,9 +37,9 @@ public class GrabCadScrapper implements ScrapingService {
     @Qualifier("PlaywrightGrabcad")
     private ScrapePreviewDataStrategy playwrightPreviewer;
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
-        return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName()):
-                playwrightPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName());
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
+        return filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm, filter,getSourceName()):
+                playwrightPreviewer.scrapePreviewData(searchTerm, filter,getSourceName());
     }
 
     @Override

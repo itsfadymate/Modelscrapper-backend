@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.sketchfab;
 import guc.internship.modelscrapper.client.google.GoogleApiClient;
 import guc.internship.modelscrapper.client.sketchfab.SketchfabApiClient;
 import guc.internship.modelscrapper.dto.google.GoogleSearchResponse;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.dto.sketchfab.SketchfabSearchObject;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
@@ -30,7 +31,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     private static final int PAGES_TO_SEARCH = 4;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("scraping google for {} models", websiteName);
         List<ModelPreview> models = new ArrayList<>();
         for (int page = 0; page < PAGES_TO_SEARCH; page++) {

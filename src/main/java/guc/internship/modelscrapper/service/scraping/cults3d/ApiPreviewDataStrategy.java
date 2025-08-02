@@ -3,6 +3,7 @@ package guc.internship.modelscrapper.service.scraping.cults3d;
 import guc.internship.modelscrapper.client.cults3d.Cults3DApiClient;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DSearchResponse;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
@@ -52,7 +53,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("Searching Cults3D API for: {}", searchTerm);
         String query = String.format(QUERY,searchTerm).replaceAll("\n","");
 
@@ -66,7 +67,7 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
             }
 
             List<ModelPreview> previews = response.stream().filter(dto-> {
-                if (showFreeOnly){
+                if (filter.getShowFreeOnly()){
                     return isFree(dto.getFormattedPrice());
                 }
                 return true;

@@ -2,7 +2,7 @@ package guc.internship.modelscrapper.service.scraping.thangs;
 
 import com.microsoft.playwright.*;
 
-import guc.internship.modelscrapper.client.google.GoogleApiClient;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapingService;
@@ -37,9 +37,9 @@ public class ThangsScrapper implements ScrapingService {
     private static final Logger logger = LoggerFactory.getLogger(ThangsScrapper.class);
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) {
-       return useGoogleEngine? googlePreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName()) :
-                                jsoupPreviewer.scrapePreviewData(searchTerm,showFreeOnly,getSourceName());
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) {
+       return filter.isSourceToGoogle(this.getSourceName())? googlePreviewer.scrapePreviewData(searchTerm ,filter,getSourceName()) :
+                                jsoupPreviewer.scrapePreviewData(searchTerm, filter,getSourceName());
     }
 
 

@@ -1,6 +1,7 @@
 package guc.internship.modelscrapper.service.scraping.thingiverse;
 
 import guc.internship.modelscrapper.client.thingiverse.ThingiverseApiClient;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.dto.thingiverse.ThingiverseThing;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
@@ -28,8 +29,8 @@ public class ThingiverseScrapper implements ScrapingService {
     private ScrapePreviewDataStrategy ApiDataScrapper;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm,boolean showFreeOnly,boolean useGoogleEngine) { //haven't found a paid model here
-        return useGoogleEngine? googleDataScrapper.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() ) : ApiDataScrapper.scrapePreviewData(searchTerm,showFreeOnly,getSourceName() );
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter) { //haven't found a paid model here
+        return filter.isSourceToGoogle(this.getSourceName())? googleDataScrapper.scrapePreviewData(searchTerm, filter,getSourceName() ) : ApiDataScrapper.scrapePreviewData(searchTerm, filter,getSourceName() );
     }
 
     @Override

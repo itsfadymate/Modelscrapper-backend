@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.service.scraping;
 
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import jakarta.annotation.PostConstruct;
@@ -33,28 +34,24 @@ public class ModelScrapingOrchestrator {
         }
     }
 
-    public List<ModelPreview> scrapeAll(String searchTerm, List<String> enabledSources,boolean showFreeOnly,List<String> googleSearchSources) {
+    public List<ModelPreview> scrapeAll(String searchTerm, SearchFilter filter) {
         logger.debug("Starting scrape for all services with search term: {}", searchTerm);
         logger.debug("Found {} preview scraping services", scrapingServices.size());
         
-        if (enabledSources != null && !enabledSources.isEmpty()) {
-            logger.debug("Filtering by enabled sources: {}", enabledSources);
+        if (filter.getSources() != null && !filter.getSources().isEmpty()) {
+            logger.debug("Filtering by enabled sources: {}", filter.getSources());
         }
         
         List<ModelPreview> allResults = new ArrayList<>();
         List<CompletableFuture<List<ModelPreview>>> futures = new ArrayList<>();
 
-        HashSet<String> enabledSourcesSet = new HashSet<>(enabledSources==null? List.of() : enabledSources);
-        HashSet<String> googleSources = new HashSet<>(googleSearchSources==null? List.of() : googleSearchSources);
-        
         for (ScrapingService service : scrapingServices) {
             boolean shouldInclude = service.isEnabled() && 
-                (enabledSources == null || enabledSources.isEmpty() ||
-                        enabledSourcesSet.contains(service.getSourceName().toLowerCase()));
-            boolean searchUsingGoogle = googleSources.contains(service.getSourceName().toLowerCase());
-            
+                (filter.getSources() == null || filter.getSources().isEmpty() ||
+                        filter.isEnabledSource(service.getSourceName().toLowerCase()));
+
             logger.debug("Checking service: {}, enabled: {}, should include: {}, should google: {}",
-                service.getSourceName(), service.isEnabled(), shouldInclude,searchUsingGoogle);
+                service.getSourceName(), service.isEnabled(), shouldInclude,filter.isSourceToGoogle(service.getSourceName()));
             
             if (shouldInclude) {
                 logger.debug("Starting async scrape for service: {}", service.getSourceName());
@@ -63,7 +60,7 @@ public class ModelScrapingOrchestrator {
                     () -> {
                         try {
                             logger.debug("Executing scrape for service: {}", service.getSourceName());
-                            List<ModelPreview> results = service.scrapePreviewData(searchTerm,showFreeOnly,searchUsingGoogle);
+                            List<ModelPreview> results = service.scrapePreviewData(searchTerm,filter);
                             logger.debug("Service {} returned {} results", service.getSourceName(), results.size());
                             return results;
                         } catch (Exception e) {

@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service.scraping.grabcad;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.jsoup.Jsoup;
@@ -32,7 +33,7 @@ public class PlaywrightPreviewDataStrategy implements ScrapePreviewDataStrategy 
 
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("Scraping GrabCAD for: {}", searchTerm);
 
         try (Playwright playwright = Playwright.create()) {

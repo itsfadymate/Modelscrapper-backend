@@ -1,5 +1,6 @@
 package guc.internship.modelscrapper.controller;
 
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelDetails;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.estimator.EstimatingStrategy;
@@ -34,13 +35,11 @@ public class ModelController {
 
     @GetMapping("/search")
     public List<ModelPreview> searchModels(
-        @RequestParam String searchTerm,
-        @RequestParam(required = false) List<String> sources,
-        @RequestParam(required = false, defaultValue = "false") Boolean showFreeOnly,
-        @RequestParam(required = false) List<String> sourcesToGoogle) {
+            @RequestParam String searchTerm,
+            @ModelAttribute SearchFilter searchFilter) {
         
         logger.debug("Received search request for: {}", searchTerm);
-        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,sources,showFreeOnly,sourcesToGoogle);
+        List<ModelPreview> results = scrapingOrchestrator.scrapeAll(searchTerm,searchFilter);
         logger.debug("Found {} models for search term: {}", results.size(), searchTerm);
         return results;
     }

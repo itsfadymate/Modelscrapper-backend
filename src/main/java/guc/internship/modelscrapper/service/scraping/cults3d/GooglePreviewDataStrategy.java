@@ -5,6 +5,7 @@ import guc.internship.modelscrapper.client.google.GoogleApiClient;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DCreation;
 import guc.internship.modelscrapper.dto.cults3d.Cults3DDTO;
 import guc.internship.modelscrapper.dto.google.GoogleSearchResponse;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
             """;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.debug("getting cults google preview data");
         List<String> slugs = List.of();
         List<ModelPreview> modelPreviews = new ArrayList<>();

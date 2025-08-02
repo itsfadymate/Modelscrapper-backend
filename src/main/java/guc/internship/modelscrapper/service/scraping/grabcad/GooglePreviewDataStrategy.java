@@ -2,6 +2,7 @@ package guc.internship.modelscrapper.service.scraping.grabcad;
 
 import guc.internship.modelscrapper.client.google.GoogleApiClient;
 import guc.internship.modelscrapper.dto.google.GoogleItem;
+import guc.internship.modelscrapper.dto.search.SearchFilter;
 import guc.internship.modelscrapper.model.ModelPreview;
 import guc.internship.modelscrapper.service.scraping.ScrapePreviewDataStrategy;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
     private static final int PAGES_TO_SEARCH = 7;
 
     @Override
-    public List<ModelPreview> scrapePreviewData(String searchTerm, boolean showFreeOnly, String websiteName) {
+    public List<ModelPreview> scrapePreviewData(String searchTerm, SearchFilter filter, String websiteName) {
         logger.info("getting {} preview data from google", websiteName);
         List<ModelPreview> models = new ArrayList<>();
         for (int page = 0; page < PAGES_TO_SEARCH; page++) {
