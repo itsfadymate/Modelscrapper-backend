@@ -3,7 +3,9 @@ package guc.internship.modelscrapper.dto.thingiverse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ThingiverseSearchObject {
+    @JsonProperty
     private String id;
+    @JsonProperty
     private String name;
     @JsonProperty("public_url")
     private String publicUrl;
@@ -32,29 +34,7 @@ public class ThingiverseSearchObject {
         this.makeCount = makeCount;
     }
 
-    public void setPublicUrl(String publicUrl) {
-        this.publicUrl = publicUrl;
-    }
 
-    public void setPreviewImage(String previewImage) {
-        this.previewImage = previewImage;
-    }
-
-    public void setLikeCount(String likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public void setCommentCount(String commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public void setFeatured(boolean featured) {
-        isFeatured = featured;
-    }
-
-    public void setNsfw(boolean nsfw) {
-        isNsfw = nsfw;
-    }
 
     public String getId() {
         return id;
