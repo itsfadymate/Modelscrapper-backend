@@ -91,7 +91,7 @@ public class ModelController {
         details.getFiles().forEach(resultFile -> {
             if (!resultFile.getName().toLowerCase().endsWith(".stl")) return;
             File stlFile = null;
-            logger.debug("estimating volume of files");
+            logger.debug("estimating volume of files {}",resultFile.getDownloadUrl());
             try {
                 stlFile= FileManager.downloadFile(resultFile.getDownloadUrl(), resultFile.getName());
                 resultFile.setVolume(estimator.getVolume(stlFile));
