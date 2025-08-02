@@ -1,5 +1,7 @@
 package guc.internship.modelscrapper.dto.search;
 
+import guc.internship.modelscrapper.model.ModelPreview;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -73,5 +75,16 @@ public class SearchFilter {
                 "\n, licenseSearchTerm='" + licenseSearchTerm + '\'' +
                 "\n, sourcesToGoogle=" + sourcesToGoogle +
                 "\n}";
+    }
+
+    public boolean isValidModel(ModelPreview model) {
+        boolean keep = true;
+
+        if (this.getDescriptionSearchTerm()!=null && !this.getDescriptionSearchTerm().isEmpty())
+            keep = model.getDescription().contains(this.getDescriptionSearchTerm());
+
+        if (this.getLicenseSearchTerm()!=null && !this.getLicenseSearchTerm().isEmpty())
+            keep = model.getLicense().contains(this.getLicenseSearchTerm());
+        return keep;
     }
 }
