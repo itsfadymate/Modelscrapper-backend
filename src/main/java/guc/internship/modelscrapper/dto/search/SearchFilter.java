@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class SearchFilter {
     private List<String> sources;
-    private Boolean showFreeOnly;
+    private boolean showFreeOnly;
     private String descriptionSearchTerm;
     private String licenseSearchTerm;
     private List<String> sourcesToGoogle;
@@ -33,11 +33,11 @@ public class SearchFilter {
     }
 
     public boolean isSourceToGoogle(String sourceName){
-        return sourcesToGoogleSet.contains(sourceName.toLowerCase());
+        return sourcesToGoogleSet != null && sourcesToGoogleSet.contains(sourceName.toLowerCase());
     }
 
     public boolean isEnabledSource(String sourceName){
-        return enabledSourcesSet.contains(sourceName.toLowerCase());
+        return enabledSourcesSet!=null&&  enabledSourcesSet.contains(sourceName.toLowerCase());
     }
 
     public void setSources(List<String> sources) {
@@ -80,12 +80,18 @@ public class SearchFilter {
     public boolean isValidModel(ModelPreview model) {
         boolean keep = true;
         if (this.showFreeOnly && model.getPrice()!=null)
-            keep = model.getPrice().equals("0");
+            keep &= model.getPrice().equals("0");
         if (this.getDescriptionSearchTerm()!=null && !this.getDescriptionSearchTerm().isEmpty())
-            keep = model.getDescription()!=null && model.getDescription().contains(this.getDescriptionSearchTerm());
+            keep &= model.getDescription()!=null &&
+             (model.getDescription().toLowerCase().contains(this.getDescriptionSearchTerm().toLowerCase()) 
+             || 
+             model.getDescription().toLowerCase().matches(this.getDescriptionSearchTerm().toLowerCase()));
 
-        if (this.getLicenseSearchTerm()!=null && !this.getLicenseSearchTerm().isEmpty())
-            keep = model.getLicense()!=null&& model.getLicense().contains(this.getLicenseSearchTerm());
+        if (this.getLicenseSearchTerm() != null && !this.getLicenseSearchTerm().isEmpty()) {
+            keep &= model.getLicense() != null &&
+                    (model.getLicense().toLowerCase().contains(this.getLicenseSearchTerm().toLowerCase()) 
+                    || model.getLicense().toLowerCase().matches(this.getLicenseSearchTerm().toLowerCase()));
+        }
         return keep;
     }
 }
