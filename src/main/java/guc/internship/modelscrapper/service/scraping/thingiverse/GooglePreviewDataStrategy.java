@@ -56,7 +56,7 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                 .setPrice("0")
                         ))continue;
                         modelPreviews.add(new ModelPreview()
-                                .setId(model.getPublicUrl())
+                                .setId(id)
                                 .setModelName(model.getName())
                                 .setWebsiteLink(model.getPublicUrl())
                                 .setWebsiteName(websiteName)
