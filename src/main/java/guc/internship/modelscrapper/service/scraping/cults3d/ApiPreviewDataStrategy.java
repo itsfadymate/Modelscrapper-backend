@@ -84,7 +84,9 @@ public class ApiPreviewDataStrategy implements ScrapePreviewDataStrategy {
                             .setLikesCount(dto.getLikesCount())
                             .setCommentsCount(String.valueOf(dto.getCommentCount()))
                             .setFeatured(dto.isFeatured())
-            ).collect(Collectors.toList());
+                            .setDescription(dto.getDescription())
+                            .setLicense(dto.getLicenseName())
+            ).filter(filter::isValidModel).collect(Collectors.toList());
 
             logger.debug("Found {} results from Cults3D API", previews.size());
             return previews;

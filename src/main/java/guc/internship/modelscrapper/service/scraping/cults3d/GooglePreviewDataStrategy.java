@@ -89,9 +89,11 @@ public class GooglePreviewDataStrategy implements ScrapePreviewDataStrategy {
                                     .setMakesCount(dto.getMakeCount())
                                     .setLikesCount(dto.getLikesCount())
                                     .setCommentsCount(String.valueOf(dto.getCommentCount()))
-                                    .setFeatured(dto.isFeatured());
+                                    .setFeatured(dto.isFeatured())
+                                    .setDescription(dto.getDescription())
+                                    .setLicense(dto.getLicenseName());
                         }
-                ).filter(Objects::nonNull).toList());
+                ).filter(modelPreview -> Objects.nonNull(modelPreview) && filter.isValidModel(modelPreview)).toList());
                 logger.debug("retrieved cults3d google models");
             } catch (Exception e) {
                 logger.error("couldn't get cults' google preview data {} exception ", e.getMessage());
