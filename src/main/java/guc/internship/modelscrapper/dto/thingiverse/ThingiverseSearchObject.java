@@ -21,18 +21,10 @@ public class ThingiverseSearchObject {
     private boolean isFeatured;
     @JsonProperty("is_nsfw")
     private boolean isNsfw;
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setMakeCount(int makeCount) {
-        this.makeCount = makeCount;
-    }
+    @JsonProperty("license")
+    private String license;
+    @JsonProperty("description")
+    private String description;
 
 
 
@@ -70,5 +62,13 @@ public class ThingiverseSearchObject {
 
     public boolean isNsfw() {
         return isNsfw;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
